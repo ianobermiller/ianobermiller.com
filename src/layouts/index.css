@@ -107,7 +107,7 @@ body {
   padding: 0;
 }
 
-#root {
+.root {
   box-sizing: border-box;
   clear: both;
   margin: 0 auto;
