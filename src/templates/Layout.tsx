@@ -2,18 +2,18 @@ import * as React from 'react';
 import Link from 'gatsby-link';
 import Helmet from 'react-helmet';
 
-import './index.css';
+import './layout.css';
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
   location: {
     pathname: string;
   };
-  children: () => React.ReactNode;
+  children: React.ReactNode;
 }
 
 export default function Layout(props: Props): React.ReactNode {
   return (
-    <main>
+    <main className="root">
       <Helmet title="Ian Obermiller" />
 
       <div className="header left">
@@ -37,7 +37,7 @@ export default function Layout(props: Props): React.ReactNode {
         </ul>
       </nav>
 
-      <section className="content">{props.children()}</section>
+      <section className="content">{props.children}</section>
 
       <footer>
         Unless otherwise noted, source code on this blog is Licensed under the

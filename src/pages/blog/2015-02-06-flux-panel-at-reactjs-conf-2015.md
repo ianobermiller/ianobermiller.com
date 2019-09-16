@@ -1,0 +1,22 @@
+---
+title: Flux Panel at ReactJS Conf 2015
+author: iano
+type: post
+date: 2015-02-06T16:40:17+00:00
+url: /blog/2015/02/06/flux-panel-at-reactjs-conf-2015/
+categories:
+  - Flux
+  - JavaScript
+  - React
+
+---
+Last week in Menlo Park was the first ReactJS conference, hosted by Facebook. I had the honor of being on the Flux Panel with some amazing developers. [Bill Fisher][1] did an excellent job preparing us for the panel and moderating, and it is chock full of nuggets of wisdom from those of us building some of the largest React+Flux apps. Topics include Relay vs Flux, isomorphic apps, maintainability, and approaches to data fetching.<!--more-->
+
+(That&#8217;s me in the coveted React t-shirt, by the way)
+
+<span class="embed-youtube" style="text-align:center; display: block;"><iframe class='youtube-player' type='text/html' width='640' height='390' src='http://www.youtube.com/embed/LTj4O7WJJ98?version=3&#038;rel=1&#038;fs=1&#038;autohide=2&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent' allowfullscreen='true' style='border:0;'></iframe></span>
+
+For more Fluxxy goodness, check out my [Flux interview with Andrew Cholakian and Trenton Strong.][2]
+
+ [1]: https://twitter.com/fisherwebdev
+ [2]: http://ianobermiller.com/blog/2014/09/15/react-and-flux-interview/ "React and Flux Interview"

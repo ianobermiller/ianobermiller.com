@@ -1,0 +1,13 @@
+---
+title: Local time in UTC ticks with javascript
+author: iano
+type: post
+date: 2012-06-15T17:38:25+00:00
+url: /blog/2012/06/15/local-time-in-utc-ticks-with-javascript/
+categories:
+  - JavaScript
+
+---
+Simple method to get the current local time in UTC ticks (milliseconds since the epoch, 1970/01/01):
+
+<pre class="brush: jscript; title: ; notranslate" title="">var currentTime = Date.now() - new Date().getTimezoneOffset() * 60 * 1000;</pre>

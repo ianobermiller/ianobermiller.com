@@ -1,0 +1,37 @@
+---
+title: 'React Anti-Pattern: Positional Children'
+author: iano
+type: post
+date: 2015-05-18T01:25:35+00:00
+url: /blog/2015/05/17/react-anti-pattern-positional-children/
+categories:
+  - JavaScript
+  - React
+
+---
+When designing reusable components with React, you may need to dig into the `children` prop, say to wrap each child in another element or change the ordering. Once you&#8217;ve done so, you may also be tempted to do different things depending on the index of the child. An example from the Facebook codebase is the `<LeftRight>` component, which floats one child to the left, and another to the right. Its API looks like this:
+
+<pre class="brush: xml; title: ; notranslate" title="">&lt;LeftRight&gt;
+  &lt;div&gt;floated to the left&lt;/div&gt;
+  &lt;div&gt;floated to the right&lt;/div&gt;
+&lt;/LeftRight&gt;
+</pre>
+
+Instead, simplify the API of `<LeftRight>` and pass the two children as props instead:
+
+<pre class="brush: xml; title: ; notranslate" title="">&lt;LeftRight
+  left={&lt;div&gt;floated to the left&lt;/div&gt;}
+  right={&lt;div&gt;floated to the right&lt;/div&gt;}
+/&gt;
+</pre>
+
+The props-based version:
+
+  * Is easier to implement &#8211; no mucking about with `React.Children`
+  * Is easier to use, since the API to the component is now explicit
+  * Can have better validation, like requiring the props to be of a certain type
+  * Is more flexible &#8211; what if `left` wasn&#8217;t required?
+
+This post was inspired by [spicyj&#8217;s comment on a React issue][1].
+
+ [1]: https://github.com/facebook/react/issues/2956#issuecomment-90791665

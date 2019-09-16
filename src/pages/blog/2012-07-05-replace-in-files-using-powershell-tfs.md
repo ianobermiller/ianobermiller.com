@@ -1,0 +1,102 @@
+---
+title: Replace in files using Powershell and TFS
+author: iano
+type: post
+date: 2012-07-05T18:52:33+00:00
+url: /blog/2012/07/05/replace-in-files-using-powershell-tfs/
+categories:
+  - Powershell
+
+---
+Ever need to find and replace a regex within multiple files using Powershell, and possibly in a TFS workspace? The following function does just that.
+
+<!--more-->
+
+It searches the current directory recursively, and if you are in a TFS workspace it will edit the file in TFS before replacing. It also shows a progress bar and has a preview mode that only lists the matching files.
+
+<pre class="brush: powershell; title: ; notranslate" title="">function global:far(
+   [Parameter(Mandatory=$true)]$regexFind,
+   [Parameter(Mandatory=$true)]$regexReplace,
+   $filter = "*",
+   [switch]$preview)
+{
+    $files = Get-ChildItem -Recurse -Filter $filter | Where-object {!$_.psIsContainer -eq $true}
+    $index = 1
+    $found = 0
+
+    $inTfs = Test-TfsWorkspace
+
+    foreach($file in $files)
+    {
+        $filePath = $file.FullName
+
+        $percentDone = (($index / $files.Count) * 100)
+        Write-Progress -activity "Finding and replacing" -status $file.Name -percentComplete $percentDone
+
+        $fileText = [io.file]::ReadAllText($filePath)
+        if($fileText -match $regexFind)
+        {
+            Write-Host "Replacing in $filePath"
+
+            if (!$preview)
+            {
+                if ($inTfs)
+                {
+                    Add-TfsPendingChange -Edit $file.FullName
+                }
+
+                $replaced = $fileText -replace $regexFind, $regexReplace
+                Set-Content $file.FullName -value $replaced -encoding UTF8
+            }
+
+            $found += 1
+        }
+
+        $index += 1
+    }
+
+    "Replaced in {0} of {1} file{2}." -f $found, ($index - 1), (?: {$index -gt 2} {"s"} {""})
+}
+</pre>
+
+The script also depends on the following helper functions.
+
+Test-TfsWorkspace is a simple function that returns true if you are within a TFS workspace, and false otherwise.
+
+<pre class="brush: powershell; title: ; notranslate" title="">set-alias tf "C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\TF.exe" -Scope Global
+function global:Test-TfsWorkspace()
+{
+    tf dir . 1&gt;$null 2&gt;$null
+    $?
+}
+</pre>
+
+Invoke-Ternary is a handy helper for emulating the ternary ? : operator in powershell.
+
+<pre class="brush: powershell; title: ; notranslate" title=""># ---------------------------------------------------------------------------
+# Name:   Invoke-Ternary
+# Alias:  ?:
+# Author: Karl Prosser
+# Desc:   Similar to the C# ? : operator e.g.
+#            _name = (value != null) ? String.Empty : value;
+# Usage:  1..10 | ?: {$_ -gt 5} {"Greater than 5;$_} {"Not greater than 5";$_}
+# ---------------------------------------------------------------------------
+set-alias ?: Invoke-Ternary -Option AllScope -Description "PSCX filter alias" -Scope global
+filter global:Invoke-Ternary([scriptblock]$decider, [scriptblock]$ifTrue, [scriptblock]$ifFalse)
+{
+    if (&$decider)
+    {
+        &$ifTrue
+    }
+    else
+    {
+        &$ifFalse
+    }
+}
+</pre>
+
+References:
+
+  * <http://www.geoffhudik.com/tech/2012/2/16/tfs-checkout-search-and-replace-with-powershell.html>
+  * <http://elegantcode.com/2009/11/07/massive-search-replace-among-files-checked-in-to-tfs/>
+  * <http://blogs.msdn.com/b/powershell/archive/2006/12/29/dyi-ternary-operator.aspx>

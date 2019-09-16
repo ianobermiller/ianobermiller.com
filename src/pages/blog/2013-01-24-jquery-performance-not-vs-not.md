@@ -1,0 +1,33 @@
+---
+title: 'jQuery Performance: :not() vs .not()'
+author: iano
+type: post
+date: 2013-01-25T00:56:24+00:00
+url: /blog/2013/01/24/jquery-performance-not-vs-not/
+categories:
+  - JavaScript
+  - jQuery
+  - Performance
+
+---
+While doing some profiling on [Socl][1], I noticed a particular jQuery selector that was taking an inordinate amount of time to run:
+
+<pre class="brush: jscript; title: ; notranslate" title="">var toTranslate = this.$element.find('.translatable').not('.translated');</pre>
+
+The purpose of the code is to find elements that can be translated, but haven&#8217;t been already. My suspicion was on the `.not()` addition, and lo and behold, inlining the clause into the first selector dramatically increased performance:
+
+<pre class="brush: jscript; title: ; notranslate" title="">var toTranslate = this.$element.find('.translatable:not(.translated)');</pre>
+
+<!--more-->But, don&#8217;t take my word alone for it; check out this 
+
+[jsPerf testing jQuery CSS3 :not vs .not()][2]. The creator of the test summed it up nicely:
+
+> So the outcome is that it&#8217;s faster to use a CSS3 selector in virtually all browsers (except IE8), by a factor of around 2-3.
+
+Where performance isn&#8217;t critical, however, heeding this advice about readability from the [jQuery :not() Selector documentation][3] would be wise:
+
+> The .not() method will end up providing you with more readable selections than pushing complex selectors or variables into a :not() selector filter. In most cases, it is a better choice.
+
+ [1]: http://so.cl "Socl"
+ [2]: http://jsperf.com/jquery-css3-not-vs-not
+ [3]: http://api.jquery.com/not-selector/

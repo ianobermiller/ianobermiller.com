@@ -1,0 +1,62 @@
+---
+title: 'Side-by-side diffs for Mercurial (hg) & icdiff revisited'
+author: iano
+type: post
+date: 2016-07-14T18:22:58+00:00
+url: /blog/2016/07/14/side-by-side-diffs-for-mercurial-hg-icdiff-revisited/
+categories:
+  - Mercurial
+
+---
+A [while back][1] I told you how to get side-by-side diffs in Mercurial using icdiff. Turns out the author of icdiff has added the `--recursive` flag to make the tool accept directories and diff the contents of the files within. New setup instructions follow.
+
+## 1. Install icdiff
+
+Same as before: Download and install [icdiff][2], making sure `/usr/local/bin` is in your `$PATH.`
+
+## 2. Setup Mercurial
+
+Next, lets configure Mercurial so that it knows about `icdiff`. We&#8217;ll also set the default pager for all commands to `less`. Add the following to your `~/.hgrc`.
+
+<pre class="brush: bash; title: ; notranslate" title="">[extensions]
+extdiff=
+pager=
+
+[extdiff]
+cmd.icdiff=icdiff
+# extdiff passes two directories to the diff command
+# --recursive tells icdiff to treat the two params as directories
+# and recursively diff their contents.
+# -- line-numbers shows line numbers on both sides
+opts.icdiff=--recursive --line-numbers
+
+[pager]
+# Setting the variable LESS is like passing those options to less.
+# In this case, -F (quit if fits on screen), and -R (pass through control chars,
+# required for color output)
+pager = LESS='FR' less
+# Use pager for these commands only. Add any commands you use here.
+attend = icdiff,diff,status,log
+</pre>
+
+You can now replace `diff` in your Mercurial commands with `icdiff`, and it will do a side-by-side diff instead of inline.
+
+## 3. Aliases (optional)
+
+Finally, since `hg icdiff` is of course too long, add the following aliases to your `~/.bashrc` or `~/.zshrc`:
+
+<pre class="brush: bash; title: ; notranslate" title=""># side-by-side diffs for uncommitted files
+alias ic='hg icdiff'
+
+# diff all changes since the base revision, including uncommitted
+# (from master if you are using bookmarks, for example)
+alias ica='hg icdiff -r .^'
+
+# diff the existing changes, excluding uncommitted
+alias ice='hg icdiff --ch .'
+</pre>
+
+&nbsp;
+
+ [1]: http://ianobermiller.com/blog/2015/01/12/side-by-side-diffs-for-mercurial-hg/
+ [2]: http://www.jefftk.com/icdiff
