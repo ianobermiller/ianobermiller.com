@@ -1,8 +1,8 @@
 {
-  "name": "gatsby-starter-typescript",
-  "description": "Gatsby TypeScript starter",
+  "name": "ianobermiller.com",
+  "description": "Source code for ianobermiller.com",
   "version": "1.0.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Ian Obermiller <ian@obermillers.com>",
   "dependencies": {
     "@types/node": "^8.0.7",
     "@types/react": "15.0.21",
@@ -25,9 +25,5 @@
   },
   "devDependencies": {
     "prettier": "^1.8.2"
-  },
-  "contributors": [
-    "fabien0102 <fabien0102@gmail.com>",
-    "Hays Clark <hays.clark@gmail.com>"
-  ]
+  }
 }
