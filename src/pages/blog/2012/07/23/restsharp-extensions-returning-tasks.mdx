@@ -1,0 +1,68 @@
+---
+title: RestSharp Extensions Returning Tasks
+author: iano
+type: post
+date: 2012-07-24T06:01:03+00:00
+url: /blog/2012/07/23/restsharp-extensions-returning-tasks/
+categories:
+  - .NET 4.5
+  - async/await
+  - 'C#'
+  - Extensions
+  - RestSharp
+
+---
+In order to use RestSharp with the async/await keywords, the methods must return `Task` objects. Since this isn&#8217;t provided out of the box, some simple wrappers will do the trick:
+
+<!-- more -->
+
+```csharp
+using System;
+using System.Threading.Tasks;
+using RestSharp;
+
+namespace RestSharpEx
+{
+    public static class RestClientExtensions
+    {
+        private static Task&lt;T&gt; SelectAsync&lt;T&gt;(this RestClient client, IRestRequest request, Func&lt;IRestResponse, T&gt; selector)
+        {
+            var tcs = new TaskCompletionSource&lt;T&gt;();
+            var loginResponse = client.ExecuteAsync(request, r =&gt;
+            {
+                if (r.ErrorException == null)
+                {
+                    tcs.SetResult(selector(r));
+                }
+                else
+                {
+                    tcs.SetException(r.ErrorException);
+                }
+            });
+            return tcs.Task;
+        }
+
+        public static Task&lt;string&gt; GetContentAsync(this RestClient client, IRestRequest request)
+        {
+            return client.SelectAsync(request, r =&gt; r.Content);
+        }
+
+        public static Task&lt;IRestResponse&gt; GetResponseAsync(this RestClient client, IRestRequest request)
+        {
+            return client.SelectAsync(request, r =&gt; r);
+        }
+    }
+}
+
+```
+
+They can be used easily in the Async CTP or .NET 4.5 as follows:
+
+```csharp
+var client = new RestClient("http://example.org");
+var request = new RestRequest("product/42", Method.GET);
+var content = await client.GetContentAsync(request);
+
+```
+
+Enjoy!

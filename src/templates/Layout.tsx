@@ -3,15 +3,19 @@ import Link from 'gatsby-link';
 import Helmet from 'react-helmet';
 
 import './layout.css';
+import {ReactElement, ReactNodeArray} from 'react';
 
-interface Props extends React.HTMLProps<HTMLDivElement> {
-  location: {
-    pathname: string;
+interface Props {
+  children: ReactNodeArray;
+  pageContext?: {
+    frontmatter: {
+      title: string;
+    };
   };
-  children: React.ReactNode;
 }
 
-export default function Layout(props: Props): React.ReactNode {
+export default function Layout(props: Props): ReactElement {
+  const title = props.pageContext && props.pageContext.frontmatter.title;
   return (
     <main className="root">
       <Helmet title="Ian Obermiller" />
@@ -37,7 +41,11 @@ export default function Layout(props: Props): React.ReactNode {
         </ul>
       </nav>
 
-      <section className="content">{props.children}</section>
+      <section className="content">
+        {title && <h1>{title}</h1>}
+
+        {props.children}
+      </section>
 
       <footer>
         Unless otherwise noted, source code on this blog is Licensed under the

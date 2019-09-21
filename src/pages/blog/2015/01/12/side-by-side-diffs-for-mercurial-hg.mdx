@@ -1,0 +1,112 @@
+---
+title: Side-by-side diffs for Mercurial (hg)
+author: iano
+type: post
+date: 2015-01-12T22:25:32+00:00
+url: /blog/2015/01/12/side-by-side-diffs-for-mercurial-hg/
+categories:
+  - Mercurial
+
+---
+**UPDATE:** This is easier now! See my new post, [&#8220;Side-by-side diffs for Mercurial (hg) & icdiff revisited&#8221;][1].
+
+Ever wish for `hg diff` in side-by-side view? I find it much easier to scan, assuming you have the horizontal real-estate in your terminal. Here is a simple guide to setting up side-by-side diffs in Mercurial on Linux/OSX:<!-- more -->
+
+## 1. Install icdiff
+
+The grunt of this work will be done by [icdiff][2], an excellent tool by Jeff Kaufman. Download and install icdiff, making sure `/usr/local/bin` is in your `$PATH.`
+
+## 2. Adapter scripts
+
+Since icdiff only operates on individual files, we need to provide an adapter for it to work with directories. We&#8217;ll use a modified version of Bryan O&#8217;Sullivan&#8217;s hg-interdiff script. Drop this into `~/scripts/hg-icdiff`, and then run `chmod +x ~/scripts/hg-icdiff` to make it executable:
+
+```bash
+#!/usr/bin/env python
+#
+# Adapter for using interdiff with mercurial's extdiff extension.
+#
+# Copyright 2006 Bryan O'Sullivan &lt;bos@serpentine.com&gt;
+#
+# This software may be used and distributed according to the terms of
+# the GNU General Public License, incorporated herein by reference.
+
+import os, sys
+
+def walk(base):
+    # yield all non-directories below the base path.
+    for root, dirs, files in os.walk(base):
+        for f in files:
+            path = os.path.join(root, f)
+            yield path[len(base)+1:], path
+    else:
+        if os.path.isfile(base):
+            yield '', base
+
+# create list of unique file names under both directories.
+files = dict(walk(sys.argv[1]))
+files.update(walk(sys.argv[2]))
+files = files.keys()
+files.sort()
+
+def name(base, f):
+    if f:
+        path = os.path.join(base, f)
+    else:
+        path = base
+    # interdiff requires two files; use /dev/null if one is missing.
+    if os.path.exists(path):
+        return path
+    return '/dev/null'
+
+ret = 0
+
+for f in files:
+    if os.system('icdiff "%s" "%s"' % (name(sys.argv[1], f),
+                                          name(sys.argv[2], f))):
+        ret = 1
+
+sys.exit(ret)
+
+```
+
+Next, we want this to be piped into `less` for easy paging, so put the following code in `~/scripts/hg-icdiff-wrapper`, and also `chmod +x` it. The `-F` parameter makes `less` not page if the output fits in the screen.
+
+```bash
+$HOME/scripts/hg-icdiff "$@"|less -F -X
+
+```
+
+## 3. Mercurial settings
+
+Next, lets configure Mercurial so that it knows about our script. Add the following to your `~/.hgrc` (note the absolute path; I was not able to get it working with tilde `~` or `$HOME`):
+
+```bash
+[extensions]
+extdiff=
+
+[extdiff]
+cmd.icdiff=/home/iano/scripts/hg-icdiff-wrapper
+
+```
+
+You can now replace `diff` in your Mercurial commands with `icdiff`, and it will do a side-by-side diff instead of inline.
+
+## 4. Aliases
+
+Finally, since `hg icdiff` is too long, add the following aliases to your `~/.bashrc` or `~/.zshrc`:
+
+```bash
+# side-by-side diffs for uncommitted files
+alias ic='hg icdiff'
+
+# diff all changes since the base revision, including uncommitted
+# (from master if you are using bookmarks, for example)
+alias ica='hg icdiff -r .^'
+
+# diff the existing changes, excluding uncommitted
+alias ice='hg icdiff --ch .'
+
+```
+
+ [1]: http://ianobermiller.com/blog/2016/07/14/side-by-side-diffs-for-mercurial-hg-icdiff-revisited/
+ [2]: http://www.jefftk.com/icdiff

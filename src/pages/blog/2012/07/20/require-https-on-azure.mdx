@@ -1,0 +1,44 @@
+---
+title: Require HTTPS on Azure
+author: iano
+type: post
+date: 2012-07-20T15:38:05+00:00
+url: /blog/2012/07/20/require-https-on-azure/
+categories:
+  - ASP.NET
+  - Azure
+  - Configuration
+  - IIS
+  - MVC
+
+---
+Once you have configured an Azure web role with an SSL certificate and setup the port configuration in the Azure project, you may want to redirect anyone who comes to the http:// version of your page to the secured https:// version. To do so in production, add the following to your Web.Release.config:
+
+<!-- more -->
+
+```xml
+&lt;system.webServer&gt;
+    &lt;rewrite xdt:Transform="Insert"&gt;
+        &lt;rules&gt;
+            &lt;rule name="RedirectToHTTPS" stopProcessing="true"&gt;
+                &lt;match url="(.*)" /&gt;
+                &lt;conditions&gt;
+                    &lt;add input="{HTTPS}" pattern="off" ignoreCase="true" /&gt;
+                &lt;/conditions&gt;
+                &lt;action type="Redirect" url="https://{SERVER_NAME}/{R:1}" redirectType="Permanent" /&gt;
+            &lt;/rule&gt;
+        &lt;/rules&gt;
+    &lt;/rewrite&gt;
+&lt;/system.webServer&gt;
+
+```
+
+Some important things to note:
+
+  * The `rewrite` node has the attribute `xdt:Transform="Insert"`, because Web.config does not contain that node, so the transform needs to know to insert it.
+  * The `name` attribute of `rule` must not have spaces; the rule won&#8217;t work correctly in IIS on Azure with spaces in the name.
+
+References
+
+  * <http://blog.smarx.com/posts/redirecting-to-https-in-windows-azure-two-methods>
+  * <http://forums.asp.net/p/1704544/4527302.aspx/1?Azure+Url+Rewrite+not+working>
