@@ -8,7 +8,7 @@ categories:
   - Mercurial
 
 ---
-**UPDATE:** This is easier now! See my new post, [&#8220;Side-by-side diffs for Mercurial (hg) & icdiff revisited&#8221;][1].
+**UPDATE:** This is easier now! See my new post, ["Side-by-side diffs for Mercurial (hg) & icdiff revisited"][1].
 
 Ever wish for `hg diff` in side-by-side view? I find it much easier to scan, assuming you have the horizontal real-estate in your terminal. Here is a simple guide to setting up side-by-side diffs in Mercurial on Linux/OSX:<!-- more -->
 
@@ -18,14 +18,14 @@ The grunt of this work will be done by [icdiff][2], an excellent tool by Jeff Ka
 
 ## 2. Adapter scripts
 
-Since icdiff only operates on individual files, we need to provide an adapter for it to work with directories. We&#8217;ll use a modified version of Bryan O&#8217;Sullivan&#8217;s hg-interdiff script. Drop this into `~/scripts/hg-icdiff`, and then run `chmod +x ~/scripts/hg-icdiff` to make it executable:
+Since icdiff only operates on individual files, we need to provide an adapter for it to work with directories. We'll use a modified version of Bryan O'Sullivan's hg-interdiff script. Drop this into `~/scripts/hg-icdiff`, and then run `chmod +x ~/scripts/hg-icdiff` to make it executable:
 
 ```bash
 #!/usr/bin/env python
 #
 # Adapter for using interdiff with mercurial's extdiff extension.
 #
-# Copyright 2006 Bryan O'Sullivan &lt;bos@serpentine.com&gt;
+# Copyright 2006 Bryan O'Sullivan <bos@serpentine.com>
 #
 # This software may be used and distributed according to the terms of
 # the GNU General Public License, incorporated herein by reference.

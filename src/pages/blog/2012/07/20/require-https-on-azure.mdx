@@ -17,26 +17,26 @@ Once you have configured an Azure web role with an SSL certificate and setup the
 <!-- more -->
 
 ```xml
-&lt;system.webServer&gt;
-    &lt;rewrite xdt:Transform="Insert"&gt;
-        &lt;rules&gt;
-            &lt;rule name="RedirectToHTTPS" stopProcessing="true"&gt;
-                &lt;match url="(.*)" /&gt;
-                &lt;conditions&gt;
-                    &lt;add input="{HTTPS}" pattern="off" ignoreCase="true" /&gt;
-                &lt;/conditions&gt;
-                &lt;action type="Redirect" url="https://{SERVER_NAME}/{R:1}" redirectType="Permanent" /&gt;
-            &lt;/rule&gt;
-        &lt;/rules&gt;
-    &lt;/rewrite&gt;
-&lt;/system.webServer&gt;
+<system.webServer>
+    <rewrite xdt:Transform="Insert">
+        <rules>
+            <rule name="RedirectToHTTPS" stopProcessing="true">
+                <match url="(.*)" />
+                <conditions>
+                    <add input="{HTTPS}" pattern="off" ignoreCase="true" />
+                </conditions>
+                <action type="Redirect" url="https://{SERVER_NAME}/{R:1}" redirectType="Permanent" />
+            </rule>
+        </rules>
+    </rewrite>
+</system.webServer>
 
 ```
 
 Some important things to note:
 
   * The `rewrite` node has the attribute `xdt:Transform="Insert"`, because Web.config does not contain that node, so the transform needs to know to insert it.
-  * The `name` attribute of `rule` must not have spaces; the rule won&#8217;t work correctly in IIS on Azure with spaces in the name.
+  * The `name` attribute of `rule` must not have spaces; the rule won't work correctly in IIS on Azure with spaces in the name.
 
 References
 

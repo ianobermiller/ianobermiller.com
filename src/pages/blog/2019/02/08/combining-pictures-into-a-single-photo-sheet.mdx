@@ -10,21 +10,21 @@ categories:
   - Photos
 ---
 
-Ever wanted to print four photos on a single 4&#215;6 (this is all wallet photos are, after all)? While this sounds like it should be simple, most photo services, like Costco, don&#8217;t let you print 2&#215;3 photos unless you order 4 at once, and even then they charge several times the price of a single 4&#215;6. After searching around for solutions, I figured out how to spend a few minutes at the command line using ImageMagick instead.
+Ever wanted to print four photos on a single 4&#215;6 (this is all wallet photos are, after all)? While this sounds like it should be simple, most photo services, like Costco, don't let you print 2&#215;3 photos unless you order 4 at once, and even then they charge several times the price of a single 4&#215;6. After searching around for solutions, I figured out how to spend a few minutes at the command line using ImageMagick instead.
 
 ## Step 0: Install ImageMagick
 
 [Download][1] and install ImageMagick. On MacOS, it is easiest to use homebrew:
 
-```
+```shell
 brew install imagemagick
 ```
 
 ## Step 1: Make photos the same size
 
-First, you need to make sure all your photos are the same size, and thus aspect ratio. I&#8217;ll assume you want to combine four 2&#215;3 photos into a single 4&#215;6. To resize to a particular aspect ratio:
+First, you need to make sure all your photos are the same size, and thus aspect ratio. I'll assume you want to combine four 2&#215;3 photos into a single 4&#215;6. To resize to a particular aspect ratio:
 
-```
+```shell
 convert input.jpg -gravity north -crop 2:3 +repage output.jpg
 ```
 
@@ -32,7 +32,7 @@ You may want to swap out north for south or center, depending on the image. See 
 
 Now your photos will be the same aspect ratio, but if they are not the same size, you should resize them to the smallest size:
 
-```
+```shell
 # find the size using "identify"
 identify a.jpg
 
@@ -42,15 +42,15 @@ convert input.jpg -resize 2000x3000 output.jpg
 
 ## Step 2: Combine and tile
 
-Next, we&#8217;ll use the montage command to tile the photos into a single image. Since we are combining into two rows and two columns, the 2&#215;3 aspect ratio will be preserved.
+Next, we'll use the montage command to tile the photos into a single image. Since we are combining into two rows and two columns, the 2&#215;3 aspect ratio will be preserved.
 
-```
+```shell
 montage a.jpg b.jpg c.jpg d.jpg -geometry +0+0 -tile 2x2 combined.jpg
 ```
 
-Note the &#8220;-geometry +0+0&#8221;, which indicates there should be no horizontal or vertical spacing between them, and that they should be full size. &#8220;-tile 2&#215;2&#8221; indicates two rows and two columns.
+Note the "-geometry +0+0", which indicates there should be no horizontal or vertical spacing between them, and that they should be full size. "-tile 2&#215;2" indicates two rows and two columns.
 
-And there you have it! If you have to do this more frequently, I&#8217;d recommend a tool with a nice UI, like [Photosheet][3].
+And there you have it! If you have to do this more frequently, I'd recommend a tool with a nice UI, like [Photosheet][3].
 
 [1]: https://imagemagick.org/script/download.php
 [2]: http://www.imagemagick.org/Usage/crop/#crop_gravity

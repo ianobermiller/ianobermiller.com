@@ -9,23 +9,23 @@ categories:
   - React
 
 ---
-When designing reusable components with React, you may need to dig into the `children` prop, say to wrap each child in another element or change the ordering. Once you&#8217;ve done so, you may also be tempted to do different things depending on the index of the child. An example from the Facebook codebase is the `<LeftRight>` component, which floats one child to the left, and another to the right. Its API looks like this:
+When designing reusable components with React, you may need to dig into the `children` prop, say to wrap each child in another element or change the ordering. Once you've done so, you may also be tempted to do different things depending on the index of the child. An example from the Facebook codebase is the `<LeftRight>` component, which floats one child to the left, and another to the right. Its API looks like this:
 
 ```xml
-&lt;LeftRight&gt;
-  &lt;div&gt;floated to the left&lt;/div&gt;
-  &lt;div&gt;floated to the right&lt;/div&gt;
-&lt;/LeftRight&gt;
+<LeftRight>
+  <div>floated to the left</div>
+  <div>floated to the right</div>
+</LeftRight>
 
 ```
 
 Instead, simplify the API of `<LeftRight>` and pass the two children as props instead:
 
 ```xml
-&lt;LeftRight
-  left={&lt;div&gt;floated to the left&lt;/div&gt;}
-  right={&lt;div&gt;floated to the right&lt;/div&gt;}
-/&gt;
+<LeftRight
+  left={<div>floated to the left</div>}
+  right={<div>floated to the right</div>}
+/>
 
 ```
 
@@ -34,8 +34,8 @@ The props-based version:
   * Is easier to implement &#8211; no mucking about with `React.Children`
   * Is easier to use, since the API to the component is now explicit
   * Can have better validation, like requiring the props to be of a certain type
-  * Is more flexible &#8211; what if `left` wasn&#8217;t required?
+  * Is more flexible &#8211; what if `left` wasn't required?
 
-This post was inspired by [spicyj&#8217;s comment on a React issue][1].
+This post was inspired by [spicyj's comment on a React issue][1].
 
  [1]: https://github.com/facebook/react/issues/2956#issuecomment-90791665

@@ -9,7 +9,7 @@ categories:
   - TypeScript
 
 ---
-Microsoft recently released a new, open source language called [TypeScript][1]. It is a strict superset of Javascript, and compiles directly to Javascript. The compiler is open source, and written in TypeScript itself. My team at Microsoft has been dogfooding TypeScript for several months now, and I thought I&#8217;d share a few of my favorite parts of the language.
+Microsoft recently released a new, open source language called [TypeScript][1]. It is a strict superset of Javascript, and compiles directly to Javascript. The compiler is open source, and written in TypeScript itself. My team at Microsoft has been dogfooding TypeScript for several months now, and I thought I'd share a few of my favorite parts of the language.
 
 <!-- more -->
 
@@ -60,25 +60,25 @@ Classes can `extend` a single base class to inherit and optionally override all 
   
 class A {
       
-x() { alert(&#8216;a.x&#8217;); }
+x() { alert('a.x'); }
       
-y() { alert(&#8216;a.y&#8217;); }
+y() { alert('a.y'); }
   
 }
 
 class B extends A {
       
-y() { alert(&#8216;b.y&#8217;); }
+y() { alert('b.y'); }
   
 }
 
-new A().x(); // prints &#8216;a.x&#8217;
+new A().x(); // prints 'a.x'
   
-new A().y(); // prints &#8216;a.y&#8217;
+new A().y(); // prints 'a.y'
   
-new B().x(); // prints &#8216;a.x&#8217;
+new B().x(); // prints 'a.x'
   
-new B().y(); // prints &#8216;b.y&#8217;
+new B().y(); // prints 'b.y'
   
 
 ```
@@ -92,7 +92,7 @@ Lambdas are not only shortened syntax for the `function` keyword, but also captu
   
 class Greeter {
       
-greeting: string = &#8216;hello &#8216;;
+greeting: string = 'hello ';
 
 public makeGreeter(): (name: string) => string {
           
@@ -114,7 +114,7 @@ Interfaces are simple to use with internal and external code, and is checked usi
   
 class Greeter {
       
-greet() { alert(&#8216;Hello&#8217;); }
+greet() { alert('Hello'); }
   
 }
   
@@ -142,7 +142,7 @@ class Greet {
       
 greet(x: number) {
           
-var s = &#8216; greetings&#8217;;
+var s = ' greetings';
           
 return x + s;
       

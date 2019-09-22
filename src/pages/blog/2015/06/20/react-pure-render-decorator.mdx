@@ -12,7 +12,7 @@ tags:
   - decorators
 
 ---
-If you&#8217;ve adopted JavaScript classes when working with React, you may be missing `PureRenderMixin`. You can emulate it easily using decorators:
+If you've adopted JavaScript classes when working with React, you may be missing `PureRenderMixin`. You can emulate it easily using decorators:
 
 ```javascript
 var shallowEqual = require('react/lib/shallowEqual');
@@ -39,6 +39,6 @@ Button = PureRender(Button);
 
 ```
 
-The logic is exactly the same as `PureRenderMixin`. Keep in mind that this could break if/when React&#8217;s internals are rearranged, since we are deeply requiring `shallowEqual`. This hasn&#8217;t been published to NPM, but if you&#8217;d like to see it drop me a comment. Hopefully a pure rendering decorator will make its way into [react-pure-render][1] instead.
+The logic is exactly the same as `PureRenderMixin`. Keep in mind that this could break if/when React's internals are rearranged, since we are deeply requiring `shallowEqual`. This hasn't been published to NPM, but if you'd like to see it drop me a comment. Hopefully a pure rendering decorator will make its way into [react-pure-render][1] instead.
 
  [1]: https://github.com/gaearon/react-pure-render/pull/4

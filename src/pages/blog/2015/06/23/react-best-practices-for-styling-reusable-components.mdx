@@ -18,7 +18,7 @@ class TextInput extends Component {
   render() {
     const {style, ...propsWithoutStyle} = this.props;
     return (
-      &lt;input
+      <input
         style={[{
           background: 'white',
           border: '1px solid #666',
@@ -29,7 +29,7 @@ class TextInput extends Component {
         }, style]}
         type="text"
         {...propsWithoutStyle}
-      /&gt;
+      />
     );
   }
 }

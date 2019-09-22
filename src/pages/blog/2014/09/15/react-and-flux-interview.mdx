@@ -18,11 +18,11 @@ categories:
   
 **Andrew Cholakian**
 
-Trenton Strong and I are here with Ian Obermiller, who works with React at Facebook. Ian, what&#8217;s the exact nature of your work with React?
+Trenton Strong and I are here with Ian Obermiller, who works with React at Facebook. Ian, what's the exact nature of your work with React?
 
 **Ian Obermiller**
 
-I just use React. I&#8217;ve contributed a bit to React, but that&#8217;s not my primary job.
+I just use React. I've contributed a bit to React, but that's not my primary job.
 
 **Andrew Cholakian**
 
@@ -32,11 +32,11 @@ The first question we have for you is looking at the chat example app, which is 
 
 **Ian Obermiller**
 
-Everything is async by default, that gives you the flexibility to perform operations remotely or locally. There&#8217;s a few things that we do synchronously, but that&#8217;s a very small subset. Those things are not for really important data, stuff that we would perform in local storage anyway. It&#8217;s best to start off with everything async, then you don&#8217;t have to change it when you change your underlying transport later.
+Everything is async by default, that gives you the flexibility to perform operations remotely or locally. There's a few things that we do synchronously, but that's a very small subset. Those things are not for really important data, stuff that we would perform in local storage anyway. It's best to start off with everything async, then you don't have to change it when you change your underlying transport later.
 
-The thing that you need to think about more when you do that is you want to know when stuff is loading and when it&#8217;s not. If a component is requesting some kind of data, you want to know when that has started loading and when it has stopped loading. You can display a spinner, especially if you&#8217;re updating that data or invalidating that data and then updating it again. You want to know when it&#8217;s loading again, for instance.
+The thing that you need to think about more when you do that is you want to know when stuff is loading and when it's not. If a component is requesting some kind of data, you want to know when that has started loading and when it has stopped loading. You can display a spinner, especially if you're updating that data or invalidating that data and then updating it again. You want to know when it's loading again, for instance.
 
-There&#8217;s another big distinction we make with respect to writing data versus reading data. This actually affects a lot of what you guys are interested in learning more about here. We separate writes from reads. Writes actually all go through actions. By that I mean we have an action, which is basically a function you call. It actually talks directly to the API and does all of the handling of that, like the call back or the promise handling. It emits actions as it&#8217;s going along, just like in the example apps as you&#8217;ve seen. Then the stores can listen in to the actions.
+There's another big distinction we make with respect to writing data versus reading data. This actually affects a lot of what you guys are interested in learning more about here. We separate writes from reads. Writes actually all go through actions. By that I mean we have an action, which is basically a function you call. It actually talks directly to the API and does all of the handling of that, like the call back or the promise handling. It emits actions as it's going along, just like in the example apps as you've seen. Then the stores can listen in to the actions.
 
 On the other hand, for reads we actually have components talk to the store directly using either a call back or promise-based API. This has a lot of advantages.
 
@@ -50,19 +50,19 @@ Correct.
 
 **Andrew Cholakian**
 
-That&#8217;s the distinction. Reads are executed directly as a functional call on the store, writes are executed as actions, which are just functions.
+That's the distinction. Reads are executed directly as a functional call on the store, writes are executed as actions, which are just functions.
 
 **Ian Obermiller**
 
-Actually, to clarify, there is no action to fetch data. We don&#8217;t have any action type that&#8217;s like fetch messages or anything like that. The store takes care of all the fetching for you. It might be doing it from a cache. It might be actually contacting the server. It might be making multiple server calls just to get the data you need, stuff like that.
+Actually, to clarify, there is no action to fetch data. We don't have any action type that's like fetch messages or anything like that. The store takes care of all the fetching for you. It might be doing it from a cache. It might be actually contacting the server. It might be making multiple server calls just to get the data you need, stuff like that.
 
 **Andrew Cholakian**
 
-What&#8217;s the rationale behind that design decision? Was it always that way or is that something you guys learned through trial and error?
+What's the rationale behind that design decision? Was it always that way or is that something you guys learned through trial and error?
 
 **Ian Obermiller**
 
-For us it was mostly that way mainly because the stores end up being fairly complex. It&#8217;s evolved. We started out with basically everything on the server and we would page stuff in, and do sorting and filtering, and have to invalidate some things. We had a lot of caching logic on the client, and the stores in particular took care of that.
+For us it was mostly that way mainly because the stores end up being fairly complex. It's evolved. We started out with basically everything on the server and we would page stuff in, and do sorting and filtering, and have to invalidate some things. We had a lot of caching logic on the client, and the stores in particular took care of that.
 
 Also the stores do the informing when stuff comes back and they know if you were rendering on a specific item, but then someone fetched that item in a list and updated that item, so the store can basically say this item has changed, you can re-render, things like that.
 
@@ -74,7 +74,7 @@ How does Facebook handle retries against services using Flux?
 
 **Ian Obermiller**
 
-Actually we handle that all transparently at a low API level. Basically, everything goes through one API module that&#8217;s pretty generic. Since the API actually returns and retries in a structured manner we can automatically detect that there&#8217;s an error and retry at that level. If the retry fails the request fails. Then that actually floats all the way back to the component so the component can do something like render an error message.
+Actually we handle that all transparently at a low API level. Basically, everything goes through one API module that's pretty generic. Since the API actually returns and retries in a structured manner we can automatically detect that there's an error and retry at that level. If the retry fails the request fails. Then that actually floats all the way back to the component so the component can do something like render an error message.
 
 **Andrew Cholakian**
 
@@ -82,7 +82,7 @@ Makes complete sense and you might even be able to trigger an extra action on th
 
 **Ian Obermiller**
 
-Yeah, you can do that. We&#8217;ll have a button that says retry that fires off the action again and starts the whole process over.
+Yeah, you can do that. We'll have a button that says retry that fires off the action again and starts the whole process over.
 
 **Andrew Cholakian**
 
@@ -90,15 +90,15 @@ That makes a lot of sense. That answered some questions of mine and it leads int
 
 **Ian Obermiller**
 
-We call these things DAOs, but really it&#8217;s just an object-specific API module. We have the generic API module that allows you to make API calls. Then we have a layer on top of that that for each object type lets you make specific types of calls, like get by ID or list by ID. Then if you have custom things, say you add add favoriting for something then you&#8217;d have a special column in the DAO that lets you to favorite or unfavorite an item.
+We call these things DAOs, but really it's just an object-specific API module. We have the generic API module that allows you to make API calls. Then we have a layer on top of that that for each object type lets you make specific types of calls, like get by ID or list by ID. Then if you have custom things, say you add add favoriting for something then you'd have a special column in the DAO that lets you to favorite or unfavorite an item.
 
 **Andrew Cholakian**
 
-Now to be clear you said the DAO is code that is called directly by an action. We saw in the chat-app that the action actually executes code. It&#8217;s like an event bus that also executes code. There&#8217;s no listener, you just fire the action. Even if there&#8217;s no listener you&#8217;re still executing the IO code through the DAO, since that code is actually part of the action function body.
+Now to be clear you said the DAO is code that is called directly by an action. We saw in the chat-app that the action actually executes code. It's like an event bus that also executes code. There's no listener, you just fire the action. Even if there's no listener you're still executing the IO code through the DAO, since that code is actually part of the action function body.
 
 **Ian Obermiller**
 
-Yeah, this is one of the tricky parts about Flux regarding callbacks. We do use callbacks when fetching data from stores, but for writes that&#8217;s all handled through the action. This gets tricky because this is why the action calls the DAO directly, because then it can fire off the subsequent events like &#8220;I&#8217;m updating this, by the way now this succeeded or by the way now this failed.&#8221; One of the tricky parts of that is your component actually needs to know that it&#8217;s specific right call failed or completed. That gets hard. One of the patterns we&#8217;ve started using a lot is you pass along some kind of context that will get passed in. Then it will trigger, say, &#8220;message update succeeded&#8221; that will contain that context variable when it&#8217;s triggered.
+Yeah, this is one of the tricky parts about Flux regarding callbacks. We do use callbacks when fetching data from stores, but for writes that's all handled through the action. This gets tricky because this is why the action calls the DAO directly, because then it can fire off the subsequent events like "I'm updating this, by the way now this succeeded or by the way now this failed." One of the tricky parts of that is your component actually needs to know that it's specific right call failed or completed. That gets hard. One of the patterns we've started using a lot is you pass along some kind of context that will get passed in. Then it will trigger, say, "message update succeeded" that will contain that context variable when it's triggered.
 
 **Andrew Cholakian**
 
@@ -106,15 +106,15 @@ That is really interesting because we wound up with something similar in our own
 
 **Ian Obermiller**
 
-I mean context in a very specific case, for instance when you&#8217;re issuing a write. You&#8217;re saying &#8220;here&#8217;s the context of that write so I can know when that write call has completed or failed.&#8221;
+I mean context in a very specific case, for instance when you're issuing a write. You're saying "here's the context of that write so I can know when that write call has completed or failed."
 
-We also actually do have a concept of an app level context like here&#8217;s what is represented on the page and you can access it in a global manner. Is that what you&#8217;re thinking of?
+We also actually do have a concept of an app level context like here's what is represented on the page and you can access it in a global manner. Is that what you're thinking of?
 
 **Andrew Cholakian**
 
-That&#8217;s a really good question, I&#8217;m trying to turn it over in my head. Let me answer your question with a question. What we&#8217;re currently using context for is we have a case where we have a very large data set we need to paginate. We have this &#8216;context&#8217; which represents what the users sorted by, say &#8216;created_at descending limit 10&#8217;, for instance. And that context represents a given view. We have one store for all the users, for example, but we want to have this one page be representative of really one API call, representing a subset of all the users.
+That's a really good question, I'm trying to turn it over in my head. Let me answer your question with a question. What we're currently using context for is we have a case where we have a very large data set we need to paginate. We have this 'context' which represents what the users sorted by, say 'created_at descending limit 10', for instance. And that context represents a given view. We have one store for all the users, for example, but we want to have this one page be representative of really one API call, representing a subset of all the users.
 
-As far as I know, the store should track all users over all time, but you still might have a page that&#8217;s really just a view of the server API call the top 10 users or something like that, and you need to mix those two things together. That&#8217;s the context of which we&#8217;re using contexts. I don&#8217;t know if that&#8217;s helping answer your question.
+As far as I know, the store should track all users over all time, but you still might have a page that's really just a view of the server API call the top 10 users or something like that, and you need to mix those two things together. That's the context of which we're using contexts. I don't know if that's helping answer your question.
 
 **Ian Obermiller**
 
@@ -122,15 +122,15 @@ Is it defining the data you want from the store?
 
 **Andrew Cholakian**
 
-That&#8217;s a good question. Let&#8217;s say you have a data set you can&#8217;t fit in it&#8217;s entirety in your store, like all the users on Facebook, and you want to display on you page two lists. You want to display the most popular users on Facebook and since you&#8217;re a really mean-spirited person the least popular people on Facebook.
+That's a good question. Let's say you have a data set you can't fit in it's entirety in your store, like all the users on Facebook, and you want to display on you page two lists. You want to display the most popular users on Facebook and since you're a really mean-spirited person the least popular people on Facebook.
 
-You need to have in your store, let&#8217;s say it&#8217;s the top 10 and the lowest 10 people, but you don&#8217;t obviously have the full data set. How do you guys structure the store and represent these two different API calls and merge all this data together, keep track of it track changes, etc.
+You need to have in your store, let's say it's the top 10 and the lowest 10 people, but you don't obviously have the full data set. How do you guys structure the store and represent these two different API calls and merge all this data together, keep track of it track changes, etc.
 
 **Ian Obermiller**
 
 Yeah, we have this case a lot. We have probably a dozen different item types and the primary interfaces are list of things and forms to edit things. We talked about some of these hard issues and iterated on them a lot. The API for something like this, for us, usually ends up looking like: a query API which can be given filters, sort options and other things like that, or even multiple APIs backing a store.
 
-In the simple case you can just basically have it so that when you call into the store to fetch data it calls the API and then when it finally comes back it tells your component hey I&#8217;ve got the data here it is kind of thing. That&#8217;s okay, it works, but obviously whenever anything changes the component has to refetch the data. You want caching there.
+In the simple case you can just basically have it so that when you call into the store to fetch data it calls the API and then when it finally comes back it tells your component hey I've got the data here it is kind of thing. That's okay, it works, but obviously whenever anything changes the component has to refetch the data. You want caching there.
 
 We have a somewhat complex layer that knows how to cache the list of users, for instance in this case, based on whatever query there is. Filter equals popular, filter equals unpopular, sorted by popularity, ascending or descending, those are all examples of the sort of contexts we use there.
 
@@ -138,87 +138,87 @@ Basically we split it out into two things. You have the cache of all of the user
 
 **Andrew Cholakian**
 
-Got it. So, you have a query registry so you can say okay we have this whole key value index of users, then we add these sorted &#8216;views&#8217; representing queries, onto the index.
+Got it. So, you have a query registry so you can say okay we have this whole key value index of users, then we add these sorted 'views' representing queries, onto the index.
 
 **Ian Obermiller**
 
-When you go and say I need page two of the popular list, we go and look and we&#8217;re like oh well we only have the first 20 users so we&#8217;ll fetch the next 20 maybe based on some token that we have and load those in. Maybe they were already in the unpopular list. Maybe there&#8217;s only 40 so now we don&#8217;t actually have to load those users at all, though more likely we would just load the entire user objects and replace them all anyway.
+When you go and say I need page two of the popular list, we go and look and we're like oh well we only have the first 20 users so we'll fetch the next 20 maybe based on some token that we have and load those in. Maybe they were already in the unpopular list. Maybe there's only 40 so now we don't actually have to load those users at all, though more likely we would just load the entire user objects and replace them all anyway.
 
 **Andrew Cholakian**
 
-Do you also have on top of this a master users by ID look-up that also necessitates you doing your own GC, like if there&#8217;s no more views for that user maybe they should be purged from the cache?
+Do you also have on top of this a master users by ID look-up that also necessitates you doing your own GC, like if there's no more views for that user maybe they should be purged from the cache?
 
 **Ian Obermiller**
 
-Right, yeah. That&#8217;s what I was getting at. The store basically has 2 things. It has the cache of the query results and then the users are all cached separately in a big map.
+Right, yeah. That's what I was getting at. The store basically has 2 things. It has the cache of the query results and then the users are all cached separately in a big map.
 
 **Andrew Cholakian**
 
-Awesome. Any chance that&#8217;s going to be open sourced some time soon?
+Awesome. Any chance that's going to be open sourced some time soon?
 
 **Ian Obermiller**
 
-It could be. If something like that would be useful. It&#8217;s fairly specific to the query options we have.
+It could be. If something like that would be useful. It's fairly specific to the query options we have.
 
-It&#8217;s really not much more complicated than exactly what I described.
+It's really not much more complicated than exactly what I described.
 
-There is some trickiness in this. We have a fair amount of unit tests for this around when I fetch this page or what if I fetch some subset of it and how do you do that fetching and cache purging. We don&#8217;t actually do any cache purging in our app. It sticks around until you refresh the page actually.
+There is some trickiness in this. We have a fair amount of unit tests for this around when I fetch this page or what if I fetch some subset of it and how do you do that fetching and cache purging. We don't actually do any cache purging in our app. It sticks around until you refresh the page actually.
 
 **Andrew Cholakian**
 
-Interesting. That&#8217;s the right way to solve cache problems. Invalidating caches and naming things are the two hard things in CS of course.
+Interesting. That's the right way to solve cache problems. Invalidating caches and naming things are the two hard things in CS of course.
 
 **Ian Obermiller**
 
-I lied. We actually do invalidate the caches. If you change a value for instance, you can be really smart about it. Say you favorite something and you&#8217;re sorting by the number of favorites it has. You may need to invalidate that list or you could only invalidate the things that are sorted by that, something like that. You just dump all of your query things and start over from there.
+I lied. We actually do invalidate the caches. If you change a value for instance, you can be really smart about it. Say you favorite something and you're sorting by the number of favorites it has. You may need to invalidate that list or you could only invalidate the things that are sorted by that, something like that. You just dump all of your query things and start over from there.
 
 **Andrew Cholakian**
 
-Cool. That makes a lot of sense. That&#8217;s the question I&#8217;m really happy I decided to ask you because it&#8217;s the stuff that comes up with the larger-scale apps that we haven&#8217;t had a chance to see yet in the official examples.
+Cool. That makes a lot of sense. That's the question I'm really happy I decided to ask you because it's the stuff that comes up with the larger-scale apps that we haven't had a chance to see yet in the official examples.
 
-With regard to remote calls. We&#8217;ve noticed that there&#8217;s a &#8216;source&#8217; field sent along with actions and, as far as I&#8217;ve seen, there&#8217;s pretty much two types. There&#8217;s a view source, which used when someone clicked on something or typed something, or there&#8217;s a data source, which is something from an AJAX call coming back. I&#8217;m just curious are those the only 2 types or are there other ones for other stuff you guys have found useful?
+With regard to remote calls. We've noticed that there's a 'source' field sent along with actions and, as far as I've seen, there's pretty much two types. There's a view source, which used when someone clicked on something or typed something, or there's a data source, which is something from an AJAX call coming back. I'm just curious are those the only 2 types or are there other ones for other stuff you guys have found useful?
 
 **Ian Obermiller**
 
-Yeah, this is another thing that came to Flux after my team started using it. We don&#8217;t actually have this distinction at all. All of our actions are namespaced typically by the object that they&#8217;re working on. There&#8217;s also things like with actions to show a modal for instance. The reason we don&#8217;t make this distinction is because whoever needs to listen to an action just handles the action by the name. They don&#8217;t care about the source.
+Yeah, this is another thing that came to Flux after my team started using it. We don't actually have this distinction at all. All of our actions are namespaced typically by the object that they're working on. There's also things like with actions to show a modal for instance. The reason we don't make this distinction is because whoever needs to listen to an action just handles the action by the name. They don't care about the source.
 
 You never have the same action with a different source, as far as I can think.
 
 **Andrew Cholakian**
 
-So, You guys don&#8217;t use the source field internally, that was released as an OSS package with the thought that it might be a good idea.
+So, You guys don't use the source field internally, that was released as an OSS package with the thought that it might be a good idea.
 
 **Ian Obermiller**
 
-Yeah, we don&#8217;t actually even use any of that Flux stuff that was released. This action might be used in other apps, just not in ours.
+Yeah, we don't actually even use any of that Flux stuff that was released. This action might be used in other apps, just not in ours.
 
-It was more like we published this Flux pattern and people are interested in it, but they don&#8217;t really know where to start so we&#8217;ll put something up there so they can at least get an idea of what this looks like in a tangible manner.
+It was more like we published this Flux pattern and people are interested in it, but they don't really know where to start so we'll put something up there so they can at least get an idea of what this looks like in a tangible manner.
 
 **Andrew Cholakian**
 
-That makes sense to me. I don&#8217;t want to sound at all ungrateful. Flux has been the most innovative UI framework I&#8217;ve used since the web world has started. Okay, well, Backbone was really innovative when it came out too, but this is really amazing and we&#8217;re just really glad that you guys open sourced it. Even though it didn&#8217;t have all the great documentation we would have liked, we can&#8217;t complain because it was just such a great thing that it came out in the first place.
+That makes sense to me. I don't want to sound at all ungrateful. Flux has been the most innovative UI framework I've used since the web world has started. Okay, well, Backbone was really innovative when it came out too, but this is really amazing and we're just really glad that you guys open sourced it. Even though it didn't have all the great documentation we would have liked, we can't complain because it was just such a great thing that it came out in the first place.
 
-So, thank you for answering these questions today, they&#8217;re very helpful.
+So, thank you for answering these questions today, they're very helpful.
 
 **Ian Obermiller**
 
-Absolutely. I can&#8217;t take any credit for that. I&#8217;m just using it myself and contributing to it in my own way.
+Absolutely. I can't take any credit for that. I'm just using it myself and contributing to it in my own way.
 
 **Andrew Cholakian**
 
-Oh yeah, well documentation and that other stuff is important too. Related to that question, I wanted to ask you. I&#8217;m sure you guys have hundreds, if not thousands of actions at this point. How do you guys maintain those constants? Do you split them up in multiple files? Do you namespace them? Is there a hierarchy like if you delete a whole feature do you have to come through the app and find out it where you were using those, can you delete them safely. How does that all work?
+Oh yeah, well documentation and that other stuff is important too. Related to that question, I wanted to ask you. I'm sure you guys have hundreds, if not thousands of actions at this point. How do you guys maintain those constants? Do you split them up in multiple files? Do you namespace them? Is there a hierarchy like if you delete a whole feature do you have to come through the app and find out it where you were using those, can you delete them safely. How does that all work?
 
 **Ian Obermiller**
 
 Okay, as far as constants in general we started out with one constants file for our main app. That quickly became unmanageable. Our actions file right now is about 850 lines long.
 
-Yeah, you&#8217;re almost right there&#8217;s several hundred actions. That&#8217;s pretty crazy. I didn&#8217;t realize how many there were. First we split up basically everything that&#8217;s like an enumeration so we have an action type and that&#8217;s a core piece of Flux.
+Yeah, you're almost right there's several hundred actions. That's pretty crazy. I didn't realize how many there were. First we split up basically everything that's like an enumeration so we have an action type and that's a core piece of Flux.
 
-That goes in it&#8217;s own file. We use commonjs modules for everything.
+That goes in it's own file. We use commonjs modules for everything.
 
 **Andrew Cholakian**
 
-Oh, I&#8217;m sorry. Let my clarify, I meant the action type constant definitions themselves.
+Oh, I'm sorry. Let my clarify, I meant the action type constant definitions themselves.
 
 **Ian Obermiller**
 
@@ -226,47 +226,47 @@ Yeah, those are actually all in one file.
 
 **Andrew Cholakian**
 
-Okay. That way you can&#8217;t accidentally reuse one by mistake.
+Okay. That way you can't accidentally reuse one by mistake.
 
 **Ian Obermiller**
 
-Yeah. It actually would not be hard for us to split those up. They&#8217;re basically represented a giant two-level JavaScript object.
+Yeah. It actually would not be hard for us to split those up. They're basically represented a giant two-level JavaScript object.
 
 **Andrew Cholakian**
 
-Oh, what&#8217;s in the 2 levels?
+Oh, what's in the 2 levels?
 
 **Ian Obermiller**
 
-The first level is typically the item that you&#8217;re looking at, so let&#8217;s say a user. Then the next level would be &#8230; when you&#8217;re doing these mutation actions, you&#8217;d have something like create completed or create failed. Same thing for delete, for instance, or you&#8217;d have user.showDetails, or user.showList.
+The first level is typically the item that you're looking at, so let's say a user. Then the next level would be ... when you're doing these mutation actions, you'd have something like create completed or create failed. Same thing for delete, for instance, or you'd have user.showDetails, or user.showList.
 
-Then besides objects we might have something like &#8216;user form actions&#8217;, we&#8217;d have say saving the user form or validating the user form or something like that. Mostly they are corresponding to things that the user of the app performs.
+Then besides objects we might have something like 'user form actions', we'd have say saving the user form or validating the user form or something like that. Mostly they are corresponding to things that the user of the app performs.
 
-Besides that we have things like, for modals, each modal has it&#8217;s own action that says show this modal and that&#8217;s pretty much it.
+Besides that we have things like, for modals, each modal has it's own action that says show this modal and that's pretty much it.
 
-The only thing about splitting this up is that each one of those first levels has between 5 and 10 actions inside of them so there&#8217;s almost 100 of those, so that would be 100 separate files.
+The only thing about splitting this up is that each one of those first levels has between 5 and 10 actions inside of them so there's almost 100 of those, so that would be 100 separate files.
 
 **Andrew Cholakian**
 
-That&#8217;s a lot of files.
+That's a lot of files.
 
 **Ian Obermiller**
 
-Yeah, we don&#8217;t actually do that, but for the most part the rest of our constants are split into separate files.
+Yeah, we don't actually do that, but for the most part the rest of our constants are split into separate files.
 
 **Andrew Cholakian**
 
-That makes a lot of sense to me. I think it&#8217;s been answered before, but just to make absolutely sure, for a given type like a user or a post or whatever you never have two stores for that type there&#8217;s only ever one store, correct?
+That makes a lot of sense to me. I think it's been answered before, but just to make absolutely sure, for a given type like a user or a post or whatever you never have two stores for that type there's only ever one store, correct?
 
 **Ian Obermiller**
 
-We actually run into trouble with this. One thing we&#8217;re working on fixing in our own app is a lot of times APIs will provide you with ways to fetch dependent data in the same request.
+We actually run into trouble with this. One thing we're working on fixing in our own app is a lot of times APIs will provide you with ways to fetch dependent data in the same request.
 
-Ideally, say you have a message and the message has a &#8216;to&#8217; and a &#8216;from&#8217; field, which are both user objects. Those are user objects, maybe it just has a name, but it&#8217;s something keyed by an ID. In the ideal world users only live in the user store and messengers live in the messenger world.
+Ideally, say you have a message and the message has a 'to' and a 'from' field, which are both user objects. Those are user objects, maybe it just has a name, but it's something keyed by an ID. In the ideal world users only live in the user store and messengers live in the messenger world.
 
-It&#8217;s messy though, because when you fetch messages from your API, you can expand the user object for instance and your list of messages ends up coming back with a bunch of little embedded users in them.
+It's messy though, because when you fetch messages from your API, you can expand the user object for instance and your list of messages ends up coming back with a bunch of little embedded users in them.
 
-Right now we actually just keep those on the object. It&#8217;s usually only used for display purposes.
+Right now we actually just keep those on the object. It's usually only used for display purposes.
 
 **Andrew Cholakian**
 
@@ -274,7 +274,7 @@ Okay, so you get inconsistent data?
 
 **Ian Obermiller**
 
-You often don&#8217;t want to request the full object anyway.
+You often don't want to request the full object anyway.
 
 Usually if you need the full object you have to be more clever.
 
@@ -286,37 +286,37 @@ So those stubbed users on the message might have only a subset of their data bec
 
 Yeah. If you actually wanted to look at a list of users for instance that would not be useful those stubbed IDs.
 
-Ideally you might want to &#8230; maybe that is the ideal way. It&#8217;s hard to tell. It depends on how complex those objects are and if you&#8217;re actually manipulating them on your own. Let&#8217;s say you actually have a way to look at users and modify permissions on them or something, maybe you need that for some reason in the message list, I don&#8217;t know.
+Ideally you might want to ... maybe that is the ideal way. It's hard to tell. It depends on how complex those objects are and if you're actually manipulating them on your own. Let's say you actually have a way to look at users and modify permissions on them or something, maybe you need that for some reason in the message list, I don't know.
 
-One nice thing that we&#8217;d like to get to at some point is, when you fetch a list of messages and you fetch users along with it you should probably just push those users into the user store and not keep them anywhere actually, except as a reference from the message store, maybe just keyed by an ID, but no actual references between them.
-
-**Andrew Cholakian**
-
-The hard part of that it would seem to me is that you&#8217;d have to write a lot more code just to mark all the fields and delineate what&#8217;s where. I can see why that would be something to do down the road.
-
-**Ian Obermiller**
-
-Yeah, you can probably have some kind of action that says hey I loaded some users so user store if you&#8217;re listening you might want to update your cache or whatever that may be. The biggest part is it makes it much more complicated when you go to render because you get this list of message and now you actually have to go fetch the users instead of just depending on them being attached to the message object already.
+One nice thing that we'd like to get to at some point is, when you fetch a list of messages and you fetch users along with it you should probably just push those users into the user store and not keep them anywhere actually, except as a reference from the message store, maybe just keyed by an ID, but no actual references between them.
 
 **Andrew Cholakian**
 
-To switch focus a little bit, I have questions about two new technologies. One of them on Facebook, I&#8217;ll start with that one, which is you guys released immutable JS collections. Do you guys use that a lot for stores and things like that and React to Flux apps or not quite yet?
+The hard part of that it would seem to me is that you'd have to write a lot more code just to mark all the fields and delineate what's where. I can see why that would be something to do down the road.
 
 **Ian Obermiller**
 
-Our app predates that. We do make most of the data in our stores immutable so you don&#8217;t accidentally mutate something without propogating the changes correctly.
-
-React works pretty well with immutable data already. If you&#8217;ve seen the stuff going on with clojurescript and Ohm.
-
-It&#8217;s just really awesome and I&#8217;d love to try to do a prototype with that at some point. We also make really heavy use of the pure render mix-in, which is available with the React add-ons. Once you know you have immutable data you can just with really simple things like that you can make React even faster.
+Yeah, you can probably have some kind of action that says hey I loaded some users so user store if you're listening you might want to update your cache or whatever that may be. The biggest part is it makes it much more complicated when you go to render because you get this list of message and now you actually have to go fetch the users instead of just depending on them being attached to the message object already.
 
 **Andrew Cholakian**
 
-Do you think there&#8217;s any potential for Facebook to do some Ohm-React stuff?
+To switch focus a little bit, I have questions about two new technologies. One of them on Facebook, I'll start with that one, which is you guys released immutable JS collections. Do you guys use that a lot for stores and things like that and React to Flux apps or not quite yet?
 
 **Ian Obermiller**
 
-Yeah, I don&#8217;t know of anyone using clojurescript for production stuff here. This is one of the reasons why we did the mutable JS because mori is really awesome, but the syntax is not normal.
+Our app predates that. We do make most of the data in our stores immutable so you don't accidentally mutate something without propogating the changes correctly.
+
+React works pretty well with immutable data already. If you've seen the stuff going on with clojurescript and Ohm.
+
+It's just really awesome and I'd love to try to do a prototype with that at some point. We also make really heavy use of the pure render mix-in, which is available with the React add-ons. Once you know you have immutable data you can just with really simple things like that you can make React even faster.
+
+**Andrew Cholakian**
+
+Do you think there's any potential for Facebook to do some Ohm-React stuff?
+
+**Ian Obermiller**
+
+Yeah, I don't know of anyone using clojurescript for production stuff here. This is one of the reasons why we did the mutable JS because mori is really awesome, but the syntax is not normal.
 
 **Andrew Cholakian**
 
@@ -324,21 +324,21 @@ I was wondering why.
 
 **Ian Obermiller**
 
-At least that&#8217;s what I thought why. I can&#8217;t really speak to that.
+At least that's what I thought why. I can't really speak to that.
 
-**Trent Strong**: I&#8217;d like to ask you about the CQRS pattern. A lot of the Flux stuff does seem sort of like, an instantiation of the CQRS stuff.
+**Trent Strong**: I'd like to ask you about the CQRS pattern. A lot of the Flux stuff does seem sort of like, an instantiation of the CQRS stuff.
 
 **Ian Obermiller**
 
-Yeah, Basically doing things through actions. I see what you&#8217;re saying there.
+Yeah, Basically doing things through actions. I see what you're saying there.
 
 **Trent Strong**: Right. Okay, one thought I had about the stores problem basically, rewriting the reference to a user with a proxy. When you retrieve the list of messages and you have this user field, instead of replacing it was an ID and having to look at that idea can you replace it with a proxy object that is proxying back to the user store? Have you tried that?
 
 **Ian Obermiller**
 
-That&#8217;s an interesting approach actually. it&#8217;s hard through because you don&#8217;t want the message store to be that coupled to the user store.
+That's an interesting approach actually. it's hard through because you don't want the message store to be that coupled to the user store.
 
-You&#8217;d have to figure out ways to say this is the user, but you don&#8217;t really have to go through the whole rigmarole of fetching it. Maybe there&#8217;s a good way to do this with promises.
+You'd have to figure out ways to say this is the user, but you don't really have to go through the whole rigmarole of fetching it. Maybe there's a good way to do this with promises.
 
 **Andrew Cholakian**
 
@@ -354,7 +354,7 @@ Speaking of, do you guys use Typescript at all? We saw some Typescript released 
 
 **Ian Obermiller**
 
-We&#8217;re not using Typescript, but I know the React team is looking into making React work better with static analysis in particular. If you look with some of the API experimentations they&#8217;ve been doing a lot of that stuff is geared towards that. I believe JSX ships with a number of ES6 transformations. If you&#8217;re just using React in some project you get a lot of the es6 stuff that can compile down to being ES5 compatible. I was doing that on a side project and that was really, really convenient.
+We're not using Typescript, but I know the React team is looking into making React work better with static analysis in particular. If you look with some of the API experimentations they've been doing a lot of that stuff is geared towards that. I believe JSX ships with a number of ES6 transformations. If you're just using React in some project you get a lot of the es6 stuff that can compile down to being ES5 compatible. I was doing that on a side project and that was really, really convenient.
 
 **Andrew Cholakian**
 
@@ -362,7 +362,7 @@ Your project at facebook is mostly just ES5 it sounds like.
 
 **Ian Obermiller**
 
-Oh, no it&#8217;s all ES6.
+Oh, no it's all ES6.
 
 **Andrew Cholakian**
 
@@ -370,7 +370,7 @@ Got it.
 
 **Ian Obermiller**
 
-We don&#8217;t use subsets that can&#8217;t compile down to ES5.
+We don't use subsets that can't compile down to ES5.
 
 **Andrew Cholakian**
 
@@ -378,23 +378,23 @@ Cool.
 
 **Ian Obermiller**
 
-We have the luxury targeting IE9 and up for this app. Maybe it&#8217;s IE10 and up. We might even be able to use getters and setters.
+We have the luxury targeting IE9 and up for this app. Maybe it's IE10 and up. We might even be able to use getters and setters.
 
-**Trent Strong**: Do you want to go on the record about your general feelings? You&#8217;ve used Flux and React for probably as long as anybody has. If you want to just spill about how you feel overall, it could be motivational for a lot of people.
+**Trent Strong**: Do you want to go on the record about your general feelings? You've used Flux and React for probably as long as anybody has. If you want to just spill about how you feel overall, it could be motivational for a lot of people.
 
 **Ian Obermiller**
 
-I&#8217;ve actually said this many times to my team too, I love React. It&#8217;s really great for making these complex applications. One thing that really surprised me with it is that React combined with a sane module system like CommonJS, and making sure that you actually modulize your stuff properly has scaled really well to a team of almost 10 developers working on hundreds of files and tens of thousands of lines of code.
+I've actually said this many times to my team too, I love React. It's really great for making these complex applications. One thing that really surprised me with it is that React combined with a sane module system like CommonJS, and making sure that you actually modulize your stuff properly has scaled really well to a team of almost 10 developers working on hundreds of files and tens of thousands of lines of code.
 
-Really, a fairly large code base&#8230; stuff just works. You don&#8217;t have to worry about mutating, and the state of the DOM just really makes stuff easy. Just conceptually it&#8217;s easier just to think about here&#8217;s what I have, here&#8217;s my data, here&#8217;s how it renders, I don&#8217;t care about anything else. For most cases that is really simplifying and makes it really fast to do stuff.
+Really, a fairly large code base... stuff just works. You don't have to worry about mutating, and the state of the DOM just really makes stuff easy. Just conceptually it's easier just to think about here's what I have, here's my data, here's how it renders, I don't care about anything else. For most cases that is really simplifying and makes it really fast to do stuff.
 
 **Andrew Cholakian**
 
-That is really awesome. I&#8217;ve worked on UI projects that worked until at some point they stopped working.
+That is really awesome. I've worked on UI projects that worked until at some point they stopped working.
 
 **Ian Obermiller**
 
-Yup. The one thing that React is still trying to figure out is animations. You probably know that. That&#8217;s one area that is not quite as easy to use as it could be.
+Yup. The one thing that React is still trying to figure out is animations. You probably know that. That's one area that is not quite as easy to use as it could be.
 
 **Andrew Cholakian**
 
@@ -402,11 +402,11 @@ I had one question, which is related to the animations, how often do you think y
 
 **Ian Obermiller**
 
-We have some older libraries for working with DOM and things like that, or controls written earlier at Facebook. In some parts we&#8217;re interfacing with those and it does get a little bit ugly. For the most part we just try to contain that stuff to a lower-level component and not let it leak out.
+We have some older libraries for working with DOM and things like that, or controls written earlier at Facebook. In some parts we're interfacing with those and it does get a little bit ugly. For the most part we just try to contain that stuff to a lower-level component and not let it leak out.
 
-One of the things that you do have to deal with that you really can&#8217;t get around with React is when you have to do DOM methods like focusing or blurring. That stuff you do actually end up needing to touch the DOM nodes. That&#8217;s handled fairly easily through the use of refs.
+One of the things that you do have to deal with that you really can't get around with React is when you have to do DOM methods like focusing or blurring. That stuff you do actually end up needing to touch the DOM nodes. That's handled fairly easily through the use of refs.
 
-I&#8217;ve been surprised by how little we&#8217;ve needed to do any kind of DOM manipulation directly actually, outside of stuff like animations, for the most part don&#8217;t really even need to.
+I've been surprised by how little we've needed to do any kind of DOM manipulation directly actually, outside of stuff like animations, for the most part don't really even need to.
 
 **Andrew Cholakian**
 
@@ -414,41 +414,41 @@ We use ES6 classes in the worst way because we like their syntax. What do you gu
 
 **Ian Obermiller**
 
-We use them for everything also, well for a lot of things anyway. It would be nice to use that for React. I know they&#8217;re exploring it. If you look at the React feature, it&#8217;s a branch of ReactJS on github, they have some examples of what that might look like. I know they&#8217;re making progress towards making that possible, changes in React&#8217;s core to make that possible.
+We use them for everything also, well for a lot of things anyway. It would be nice to use that for React. I know they're exploring it. If you look at the React feature, it's a branch of ReactJS on github, they have some examples of what that might look like. I know they're making progress towards making that possible, changes in React's core to make that possible.
 
-That will be a reality some time in the future. We&#8217;re pretty aggressive at Facebook about using the latest and greatest of JavaScript, especially all of the stuff that can be transpiled to every browser, so absolutely anything like that is definitely something we&#8217;re already thinking about.
+That will be a reality some time in the future. We're pretty aggressive at Facebook about using the latest and greatest of JavaScript, especially all of the stuff that can be transpiled to every browser, so absolutely anything like that is definitely something we're already thinking about.
 
 **Ian Obermiller**
 
-: Yeah, it&#8217;s good to get a survey of what other people are doing and actually what even Facebook is doing in terms of React and Flux. I did just a small side project using Flux that I&#8217;ve been working on, just a simple Gmail client, and using the Gmail API. I tried the different Flux libraries and for the most part it just felt more natural to just roll [inaudible 00:37:10] where I needed to. I&#8217;m sure a lot of people find that as they move past the simple examples it becomes easier sometimes to have full control over all of those pieces.
+: Yeah, it's good to get a survey of what other people are doing and actually what even Facebook is doing in terms of React and Flux. I did just a small side project using Flux that I've been working on, just a simple Gmail client, and using the Gmail API. I tried the different Flux libraries and for the most part it just felt more natural to just roll [inaudible 00:37:10] where I needed to. I'm sure a lot of people find that as they move past the simple examples it becomes easier sometimes to have full control over all of those pieces.
 
 **Andrew Cholakian**
 
-Are there any other topics you&#8217;d like to cover?
+Are there any other topics you'd like to cover?
 
 **Ian Obermiller**
 
-Okay, so there&#8217;s two. First we talked a little bit about what stores look like when you&#8217;re doing a lot of complex filtering and sorting that happens on the server, and what the caching looks like there. I have to say one of the things we&#8217;ve done is we have a fairly hierarchical data set that we&#8217;re working with.
+Okay, so there's two. First we talked a little bit about what stores look like when you're doing a lot of complex filtering and sorting that happens on the server, and what the caching looks like there. I have to say one of the things we've done is we have a fairly hierarchical data set that we're working with.
 
 We found that for responsiveness and making things feel better and be a lot easier we actually end up downloading a significant subset of information like all of the objects of some type under some other section basically. For instance, we download all the user objects and do sorting and filtering all on the client.
 
 **Andrew Cholakian**
 
-For your whole friend list if you have a &#8230;
+For your whole friend list if you have a ...
 
 **Ian Obermiller**
 
-&#8230; Yes, that&#8217;s a great example. Something that&#8217;s bounded by stuff that the user would create.
+... Yes, that's a great example. Something that's bounded by stuff that the user would create.
 
-It&#8217;s a lot harder when you&#8217;re looking at global objects, all messages in the system or all user, but wherever possible it&#8217;s nice if you can do that.
+It's a lot harder when you're looking at global objects, all messages in the system or all user, but wherever possible it's nice if you can do that.
 
 **Andrew Cholakian**
 
-You could have a mix of those things that are top users on Facebook completely and let&#8217;s say users you message frequently. One might be a local cached generated list and one might be the external API call, but they&#8217;re all in the same store.
+You could have a mix of those things that are top users on Facebook completely and let's say users you message frequently. One might be a local cached generated list and one might be the external API call, but they're all in the same store.
 
 **Ian Obermiller**
 
-Yeah. We do that actually in some cases so we have stuff that we download all the stuff and do filtering and sorting locally, but then say you&#8217;re accessing at a different level we basically have another abstraction for that. The calls into the store that fetch data would use one or the other depending on what you&#8217;re asking for.
+Yeah. We do that actually in some cases so we have stuff that we download all the stuff and do filtering and sorting locally, but then say you're accessing at a different level we basically have another abstraction for that. The calls into the store that fetch data would use one or the other depending on what you're asking for.
 
 **Andrew Cholakian**
 
@@ -456,17 +456,17 @@ Now how does the code structure for that, you want to have a reusable way of cac
 
 **Ian Obermiller**
 
-Yeah, we have something that&#8217;s called a &#8216;ClientItemsStore&#8217; and a &#8216;ServerItemStore&#8217; and they do exactly what you&#8217;d expect. One of them fetches all the data and then does the filtering and does the call back. One of them actually does the specific API call and one of them does the call back. ClientItemStore and ServerItemStore are not singletons; they are classes you can configure and compose inside of your item specific stores. We use ClientItemStore when we know that all the items in a particular context (a high level parent ID) can be downloaded and worked with on the client. So it knows how to sort and filter all without the server. ServerItemStore is for those items which we cannot download the entire list at once, and it knows how to tell the server to do the paging and sorting and filtering, and cache the results.
+Yeah, we have something that's called a 'ClientItemsStore' and a 'ServerItemStore' and they do exactly what you'd expect. One of them fetches all the data and then does the filtering and does the call back. One of them actually does the specific API call and one of them does the call back. ClientItemStore and ServerItemStore are not singletons; they are classes you can configure and compose inside of your item specific stores. We use ClientItemStore when we know that all the items in a particular context (a high level parent ID) can be downloaded and worked with on the client. So it knows how to sort and filter all without the server. ServerItemStore is for those items which we cannot download the entire list at once, and it knows how to tell the server to do the paging and sorting and filtering, and cache the results.
 
-That&#8217;s another thing that we&#8217;re working on to make them more seamless. We&#8217;d like to have everything be on the client and fetch transparently when you need it and not have to do sorting and filtering on the server. It may be possible for our app, but it&#8217;s certainly not possible for every case.
+That's another thing that we're working on to make them more seamless. We'd like to have everything be on the client and fetch transparently when you need it and not have to do sorting and filtering on the server. It may be possible for our app, but it's certainly not possible for every case.
 
-Oh yeah, another question you had was about stores, about when a view needs a specific subset of data say maybe some specific complex query that might involve fetching from multiple stores or from fetching a more complex thing that might require logic with the API that&#8217;s a little bit different.
+Oh yeah, another question you had was about stores, about when a view needs a specific subset of data say maybe some specific complex query that might involve fetching from multiple stores or from fetching a more complex thing that might require logic with the API that's a little bit different.
 
 For the most part our DAO layers, which we talked about earlier, which are item-type specific API layers we try to keep those relatively simple and basically the same across all items. You have get item by ID, query item, get multiple items, things like that.
 
-You might have something specific like things where you might have more complex queries like users who have sent a message in the last whatever &#8230; give me a list of message IDs, give me something more complex. We found that in the majority of cases that we only used [INAUDIBLE] and so we pushed that logic into the components itself when it does the fetching.
+You might have something specific like things where you might have more complex queries like users who have sent a message in the last whatever ... give me a list of message IDs, give me something more complex. We found that in the majority of cases that we only used [INAUDIBLE] and so we pushed that logic into the components itself when it does the fetching.
 
-If it&#8217;s used across multiple components the next step is usually to try to push it up into a higher level component that can share it with both of it&#8217;s children. If it&#8217;s really used in disparate parts of the app parts of the app then we can push it down into the Store or the DAO layer.
+If it's used across multiple components the next step is usually to try to push it up into a higher level component that can share it with both of it's children. If it's really used in disparate parts of the app parts of the app then we can push it down into the Store or the DAO layer.
 
 We try to avoid custom stuff.
 
@@ -478,7 +478,7 @@ Do you have any examples of that kind of scenario?
 
 Something like querying all of the messages by a user for instance. Particularly if you had all of your favorite users on the client already. This is one of the cases where we have most of the data on the client, so say we had all the users and all the messages on the client we might have a method which can basically iterate over all the messages and give only those for a specific user.
 
-If there was say a group chat and then users and you had maybe some kind of many to many relationship there and you had all of those &#8230; it&#8217;s hard to describe, but it&#8217;s basically a complex query that you don&#8217;t want to have to write out in every component that has to make it.
+If there was say a group chat and then users and you had maybe some kind of many to many relationship there and you had all of those ... it's hard to describe, but it's basically a complex query that you don't want to have to write out in every component that has to make it.
 
  [1]: http://www.andrewvc.com/
  [2]: http://facebook.github.io/flux/
