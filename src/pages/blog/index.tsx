@@ -1,9 +1,10 @@
-import React, {ReactElement} from 'react';
-import {graphql, Link} from 'gatsby';
-import Layout from '../../templates/Layout';
+import styled from '@emotion/styled';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
-import styled from '@emotion/styled';
+import {graphql, Link} from 'gatsby';
+import React, {ReactElement} from 'react';
+import DateText from '../../templates/DateText';
+import Layout from '../../templates/Layout';
 
 // Please note that you can use https://github.com/dotansimha/graphql-code-generator
 // to generate all types from graphQL schema
@@ -46,7 +47,7 @@ export default function BlogIndex({data}: Props): ReactElement {
           return (
             <Post key={node.id}>
               <PostLink to={url}>
-                <Date>{dateString}</Date>
+                <PostDate>{dateString}</PostDate>
                 <Title>{title}</Title>
               </PostLink>
             </Post>
@@ -74,9 +75,7 @@ const PostLink = styled(Link)`
     text-decoration: none;
   }
 `;
-const Date = styled.div`
-  color: #999;
-  font-size: 75%;
+const PostDate = styled(DateText)`
   width: 90px;
 `;
 const Title = styled.span`

@@ -6,6 +6,7 @@ import React, {ReactElement, ReactNodeArray} from 'react';
 import Helmet from 'react-helmet';
 import './reset.css';
 import './layout.css';
+import DateText from './DateText';
 
 interface Props {
   children: ReactNodeArray;
@@ -65,7 +66,7 @@ export default function Layout(props: Props): ReactElement {
 
       <section className="content">
         {title && <h1>{title}</h1>}
-        {isPost && dateString && <Date>Posted {dateString}</Date>}
+        {isPost && dateString && <DateText>Posted {dateString}</DateText>}
         {props.children}
       </section>
 
@@ -85,11 +86,6 @@ const Root = styled.main`
   min-height: 100vh;
   padding: 20px;
   position: relative;
-`;
-
-const Date = styled.p`
-  color: #999;
-  font-size: 75%;
 `;
 
 const Header = styled.header`
