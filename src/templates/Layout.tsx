@@ -18,7 +18,12 @@ export default function Layout(props: Props): ReactElement {
   const title = props.pageContext && props.pageContext.frontmatter.title;
   return (
     <main className="root">
-      <Helmet title="Ian Obermiller" />
+      <Helmet title={(title ? title + ' \u00AB ' : '') + 'Ian Obermiller'}>
+        <link
+          href="https://fonts.googleapis.com/css?family=Dosis|Lato&display=swap"
+          rel="stylesheet"
+        />
+      </Helmet>
 
       <div className="header left">
         <h1>
@@ -30,7 +35,7 @@ export default function Layout(props: Props): ReactElement {
       <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">About</Link>
           </li>
           <li>
             <Link to="/blog">Blog</Link>
