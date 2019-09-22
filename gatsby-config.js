@@ -33,9 +33,13 @@ module.exports = {
               sizeByPixelDensity: true,
             },
           },
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {},
+          },
         ],
         // https://github.com/gatsbyjs/gatsby/issues/15486#issuecomment-510153237
-        plugins: [`gatsby-remark-images`],
+        plugins: [`gatsby-remark-images`, `gatsby-remark-prismjs`],
       },
     },
   ],

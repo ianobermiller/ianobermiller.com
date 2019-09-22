@@ -289,17 +289,37 @@ footer {
 }
 
 code,
-pre {
+pre,
+.gatsby-highlight,
+pre[class*='language-'] {
+  background: transparent;
   line-height: 1.2em;
   font-family: Menlo, Monaco, Consolas, 'Bitstream Vera Sans Mono',
     'Courier New', Courier, monospace;
   font-size: 13px;
   white-space: pre-wrap;
+  padding: 0;
+  margin: 0;
 }
 
-pre > code {
+.gatsby-highlight {
   border: dotted 1px #ccc;
-  margin-left: -1em;
   display: block;
+  margin-left: -1em;
   padding: 1em;
+  position: relative;
+}
+
+.gatsby-highlight:after {
+  position: absolute;
+  content: 'CODE';
+  font-size: 80%;
+  font-weight: 300;
+  color: #e2e2e2;
+  top: 14px;
+  left: -28px;
+  letter-spacing: 0.2ex;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  transform: rotate(-90deg);
 }
