@@ -277,16 +277,29 @@ h6 a:hover {
 
 p,
 ol,
-ul {
-  margin: 15px 0 15px 0;
-}
-
+ul,
 pre {
-  margin: 1em 0px;
+  margin: 15px 0 15px 0;
 }
 
 footer {
   padding: 30px 0 0 0;
   font-size: 12px;
   margin-bottom: 10px;
+}
+
+code,
+pre {
+  line-height: 1.2em;
+  font-family: Menlo, Monaco, Consolas, 'Bitstream Vera Sans Mono',
+    'Courier New', Courier, monospace;
+  font-size: 13px;
+  white-space: pre-wrap;
+}
+
+pre > code {
+  border: dotted 1px #ccc;
+  margin-left: -1em;
+  display: block;
+  padding: 1em;
 }
