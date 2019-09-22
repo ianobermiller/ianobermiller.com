@@ -111,7 +111,7 @@ export default function WrapTextExample(props: Props): ReactElement {
       </p>
 
       <h2>Formatted text</h2>
-      <WrapText lineLength={lineLength} text={text} />
+      <WrapText lineLength={lineLength} text={text || ''} />
     </>
   );
 }
