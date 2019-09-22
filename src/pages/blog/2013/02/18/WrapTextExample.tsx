@@ -66,20 +66,7 @@ interface Props {
   text: string;
 }
 
-const letterWidth = (function() {
-  const pre = document.createElement('pre');
-  const span = document.createElement('span');
-  span.innerText = 'a';
-  pre.appendChild(span);
-  pre.style.visibility = 'none';
-  pre.style.position = 'fixed';
-  pre.style.top = '0';
-  document.body.appendChild(pre);
-  const width = span.offsetWidth;
-  document.body.removeChild(pre);
-
-  return width;
-})();
+const letterWidth = 8;
 
 function WrapText(props: Props): ReactElement {
   const text = prettyPrint(props.text, props.lineLength);
