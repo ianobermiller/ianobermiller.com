@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const DateText = styled.p`
+const DateText = styled.div`
   color: #999;
   font-size: 75%;
 `;

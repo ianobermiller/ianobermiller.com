@@ -5,6 +5,7 @@ import {graphql, Link} from 'gatsby';
 import React, {ReactElement} from 'react';
 import DateText from '../../templates/DateText';
 import Layout from '../../templates/Layout';
+import {max as maxDate, differenceInYears, min as minDate} from 'date-fns';
 
 // Please note that you can use https://github.com/dotansimha/graphql-code-generator
 // to generate all types from graphQL schema
@@ -28,24 +29,41 @@ interface Props {
 }
 
 export default function BlogIndex({data}: Props): ReactElement {
-  const {edges: posts} = data.allMdx;
+  const {edges} = data.allMdx;
+  const posts = edges.map(({node}) => {
+    let date;
+    let dateString;
+    try {
+      date = parseISO(node.frontmatter.date);
+      dateString = format(date, 'yyyy-MM-dd');
+    } catch {
+      dateString = date;
+    }
+
+    return {
+      id: node.id,
+      url: node.fileAbsolutePath
+        .replace(/.*\/blog\//, '/blog/')
+        .replace('.mdx', ''),
+      title: node.frontmatter.title,
+      date,
+      dateString,
+    };
+  });
+
+  const dates = posts.map(({date}) => date).filter(Boolean);
+  const years = differenceInYears(new Date(), minDate(dates));
+
   return (
     <Layout>
       <h1>Blog</h1>
+      <Subtitle>
+        {posts.length} posts over {years} years
+      </Subtitle>
       <Posts>
-        {posts.map(({node}) => {
-          const {date, title} = node.frontmatter;
-          const url = node.fileAbsolutePath
-            .replace(/.*\/blog\//, '/blog/')
-            .replace('.mdx', '');
-          let dateString;
-          try {
-            dateString = format(parseISO(date), 'yyyy-MM-dd');
-          } catch {
-            dateString = date;
-          }
+        {posts.map(({dateString, id, title, url}) => {
           return (
-            <Post key={node.id}>
+            <Post key={id}>
               <PostLink to={url}>
                 <PostDate>{dateString}</PostDate>
                 <Title>{title}</Title>
@@ -58,6 +76,11 @@ export default function BlogIndex({data}: Props): ReactElement {
   );
 }
 
+const Subtitle = styled.p`
+  color: #ccc;
+  font-size: 75%;
+`;
+
 const Posts = styled.ul`
   list-style-type: none;
   padding: 0;
@@ -69,7 +92,7 @@ const Post = styled.li`
 const PostLink = styled(Link)`
   align-items: baseline;
   display: flex;
-  padding: 0.5em 0;
+  padding: 8px 0;
 
   :hover {
     text-decoration: none;
