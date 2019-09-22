@@ -288,6 +288,10 @@ footer {
   margin-bottom: 10px;
 }
 
+small {
+  font-size: 75%;
+}
+
 code,
 pre,
 .gatsby-highlight,
@@ -305,21 +309,20 @@ pre[class*='language-'] {
 .gatsby-highlight {
   border: dotted 1px #ccc;
   display: block;
-  margin-left: -1em;
+  margin: 1em 0 1em -1em;
   padding: 1em;
   position: relative;
 }
 
-.gatsby-highlight:after {
-  position: absolute;
-  content: 'CODE';
+.gatsby-highlight::before {
+  color: #e2e2e2;
+  content: attr(data-language);
   font-size: 80%;
   font-weight: 300;
-  color: #e2e2e2;
-  top: 14px;
-  left: -28px;
   letter-spacing: 0.2ex;
-  -webkit-transform: rotate(-90deg);
-  -moz-transform: rotate(-90deg);
-  transform: rotate(-90deg);
+  position: absolute;
+  text-transform: uppercase;
+  top: 0;
+  transform-origin: right top 0;
+  transform: translate(calc(-100% - 32px), 0) rotate(-90deg);
 }
