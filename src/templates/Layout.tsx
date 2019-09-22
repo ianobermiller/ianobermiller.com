@@ -100,6 +100,7 @@ const Header = styled.header`
 
   & > h1 {
     font-size: 48px;
+    margin: 0;
   }
 
   & > h2 {
@@ -125,7 +126,7 @@ const Nav = styled.nav`
   font-family: 'Dosis', helvetica, arial, sans-serif;
   font-size: 28px;
   text-transform: lowercase;
-  margin: 20px 0 0 0;
+  margin: 8px 0 0 0;
   padding: 0;
 
   & ul {

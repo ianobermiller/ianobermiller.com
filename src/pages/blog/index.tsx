@@ -3,6 +3,7 @@ import {graphql, Link} from 'gatsby';
 import Layout from '../../templates/Layout';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
+import styled from '@emotion/styled';
 
 // Please note that you can use https://github.com/dotansimha/graphql-code-generator
 // to generate all types from graphQL schema
@@ -29,8 +30,8 @@ export default function BlogIndex({data}: Props): ReactElement {
   const {edges: posts} = data.allMdx;
   return (
     <Layout>
-      <h1>Posts</h1>
-      <ul>
+      <h1>Blog</h1>
+      <Posts>
         {posts.map(({node}) => {
           const {date, title} = node.frontmatter;
           const url = node.fileAbsolutePath
@@ -43,17 +44,46 @@ export default function BlogIndex({data}: Props): ReactElement {
             dateString = date;
           }
           return (
-            <li key={node.id}>
-              <Link to={url}>
-                {dateString} {title}
-              </Link>
-            </li>
+            <Post key={node.id}>
+              <PostLink to={url}>
+                <Date>{dateString}</Date>
+                <Title>{title}</Title>
+              </PostLink>
+            </Post>
           );
         })}
-      </ul>
+      </Posts>
     </Layout>
   );
 }
+
+const Posts = styled.ul`
+  list-style-type: none;
+  padding: 0;
+`;
+
+const Post = styled.li`
+  margin: 0;
+`;
+const PostLink = styled(Link)`
+  align-items: baseline;
+  display: flex;
+  padding: 0.5em 0;
+
+  :hover {
+    text-decoration: none;
+  }
+`;
+const Date = styled.div`
+  color: #999;
+  font-size: 75%;
+  width: 90px;
+`;
+const Title = styled.span`
+  a:hover & {
+    text-decoration: underline;
+  }
+`;
 
 export const pageQuery = graphql`
   query blogIndex {
