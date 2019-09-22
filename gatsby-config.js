@@ -18,12 +18,24 @@ module.exports = {
         path: `${__dirname}/src/pages`,
       },
     },
+    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
         defaultLayouts: {
           default: require.resolve('./src/templates/Layout.tsx'),
         },
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 680,
+              sizeByPixelDensity: true,
+            },
+          },
+        ],
+        // https://github.com/gatsbyjs/gatsby/issues/15486#issuecomment-510153237
+        plugins: [`gatsby-remark-images`],
       },
     },
   ],
