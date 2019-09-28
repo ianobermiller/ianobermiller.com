@@ -3,7 +3,7 @@ const {getBlogPostUrl} = require('./src/utils');
 module.exports = {
   siteMetadata: {
     title: 'Ian Obermiller',
-    siteUrl: `https://ianobermiller.com`,
+    siteUrl: 'https://ianobermiller.com',
   },
   plugins: [
     'gatsby-plugin-react-helmet',
@@ -81,19 +81,19 @@ module.exports = {
         },
         gatsbyRemarkPlugins: [
           {
-            resolve: `gatsby-remark-images`,
+            resolve: 'gatsby-remark-images',
             options: {
               maxWidth: 680,
               sizeByPixelDensity: true,
             },
           },
           {
-            resolve: `gatsby-remark-prismjs`,
+            resolve: 'gatsby-remark-prismjs',
             options: {},
           },
         ],
         // https://github.com/gatsbyjs/gatsby/issues/15486#issuecomment-510153237
-        plugins: [`gatsby-remark-images`, `gatsby-remark-prismjs`],
+        plugins: ['gatsby-remark-images', 'gatsby-remark-prismjs'],
       },
     },
     {
