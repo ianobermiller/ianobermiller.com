@@ -72,9 +72,9 @@ module.exports = {
         path: `${__dirname}/src/pages`,
       },
     },
-    `gatsby-plugin-sharp`,
+    'gatsby-plugin-sharp',
     {
-      resolve: `gatsby-plugin-mdx`,
+      resolve: 'gatsby-plugin-mdx',
       options: {
         defaultLayouts: {
           default: require.resolve('./src/templates/Layout.tsx'),
@@ -94,6 +94,12 @@ module.exports = {
         ],
         // https://github.com/gatsbyjs/gatsby/issues/15486#issuecomment-510153237
         plugins: [`gatsby-remark-images`, `gatsby-remark-prismjs`],
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-google-analytics',
+      options: {
+        trackingId: 'UA-703860-1',
       },
     },
   ],
