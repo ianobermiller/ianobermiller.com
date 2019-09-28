@@ -1,36 +1,54 @@
 import styled from '@emotion/styled';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
-import {graphql, Link} from 'gatsby';
+import {graphql, Link, useStaticQuery} from 'gatsby';
 import React, {ReactElement} from 'react';
 import DateText from '../../templates/DateText';
 import Layout from '../../templates/Layout';
 import {max as maxDate, differenceInYears, min as minDate} from 'date-fns';
 import {getBlogPostUrl} from '../../utils';
 
-// Please note that you can use https://github.com/dotansimha/graphql-code-generator
-// to generate all types from graphQL schema
-interface Props {
-  data: {
-    allMdx: {
-      edges: [
-        {
-          node: {
-            id: string;
-            fileAbsolutePath: string;
-            frontmatter: {
-              date: string;
-              title: string;
-            };
+interface Data {
+  allMdx: {
+    edges: [
+      {
+        node: {
+          id: string;
+          fileAbsolutePath: string;
+          frontmatter: {
+            date: string;
+            title: string;
           };
-        },
-      ];
-    };
+        };
+      },
+    ];
   };
 }
 
-export default function BlogIndex({data}: Props): ReactElement {
-  const {edges} = data.allMdx;
+export default function BlogIndex(): ReactElement {
+  const {
+    allMdx: {edges},
+  } = useStaticQuery<Data>(graphql`
+    query blogIndex {
+      allMdx(
+        sort: {order: DESC, fields: [frontmatter___date]}
+        limit: 1000
+        filter: {frontmatter: {type: {eq: "post"}}}
+      ) {
+        edges {
+          node {
+            id
+            fileAbsolutePath
+            frontmatter {
+              title
+              date
+            }
+          }
+        }
+      }
+    }
+  `);
+
   const posts = edges.map(({node}) => {
     let date;
     let dateString;
@@ -88,6 +106,7 @@ const Posts = styled.ul`
 const Post = styled.li`
   margin: 0;
 `;
+
 const PostLink = styled(Link)`
   align-items: baseline;
   display: flex;
@@ -97,32 +116,13 @@ const PostLink = styled(Link)`
     text-decoration: none;
   }
 `;
+
 const PostDate = styled(DateText)`
   width: 90px;
 `;
+
 const Title = styled.span`
   a:hover & {
     text-decoration: underline;
-  }
-`;
-
-export const pageQuery = graphql`
-  query blogIndex {
-    allMdx(
-      sort: {order: DESC, fields: [frontmatter___date]}
-      limit: 1000
-      filter: {frontmatter: {type: {eq: "post"}}}
-    ) {
-      edges {
-        node {
-          id
-          fileAbsolutePath
-          frontmatter {
-            title
-            date
-          }
-        }
-      }
-    }
   }
 `;
