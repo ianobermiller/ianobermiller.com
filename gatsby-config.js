@@ -1,11 +1,66 @@
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Typescript Starter',
+    title: 'Ian Obermiller',
+    siteUrl: `https://ianobermiller.com`,
   },
   plugins: [
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-emotion',
     'gatsby-plugin-typescript',
+    {
+      resolve: 'gatsby-plugin-feed',
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                title
+                siteUrl
+              }
+            }
+          }
+        `,
+        feeds: [
+          {
+            serialize: ({query: {site, allMdx}}) => {
+              return allMdx.edges.map(edge => {
+                return Object.assign({}, edge.node.frontmatter, {
+                  description: edge.node.frontmatter.title,
+                  date: edge.node.frontmatter.date,
+                  url:
+                    site.siteMetadata.siteUrl +
+                    edge.node.fileAbsolutePath
+                      .replace(/.*\/blog\//, '/blog/')
+                      .replace('.mdx', ''),
+                });
+              });
+            },
+            query: `
+              {
+                allMdx(
+                  sort: {order: DESC, fields: [frontmatter___date]}
+                  limit: 1000
+                  filter: {frontmatter: {type: {eq: "post"}}}
+                ) {
+                  edges {
+                    node {
+                      id
+                      fileAbsolutePath
+                      frontmatter {
+                        title
+                        date
+                      }
+                    }
+                  }
+                }
+              }
+            `,
+            output: '/rss.xml',
+            title: "Ian Obermiller's RSS Feed",
+          },
+        ],
+      },
+    },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
