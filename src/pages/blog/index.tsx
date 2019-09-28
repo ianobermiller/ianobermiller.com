@@ -6,6 +6,7 @@ import React, {ReactElement} from 'react';
 import DateText from '../../templates/DateText';
 import Layout from '../../templates/Layout';
 import {max as maxDate, differenceInYears, min as minDate} from 'date-fns';
+import {getBlogPostUrl} from '../../utils';
 
 // Please note that you can use https://github.com/dotansimha/graphql-code-generator
 // to generate all types from graphQL schema
@@ -42,9 +43,7 @@ export default function BlogIndex({data}: Props): ReactElement {
 
     return {
       id: node.id,
-      url: node.fileAbsolutePath
-        .replace(/.*\/blog\//, '/blog/')
-        .replace('.mdx', ''),
+      url: getBlogPostUrl(node),
       title: node.frontmatter.title,
       date,
       dateString,

@@ -1,3 +1,5 @@
+const {getBlogPostUrl} = require('./src/utils');
+
 module.exports = {
   siteMetadata: {
     title: 'Ian Obermiller',
@@ -27,11 +29,7 @@ module.exports = {
                 return Object.assign({}, edge.node.frontmatter, {
                   description: edge.node.frontmatter.title,
                   date: edge.node.frontmatter.date,
-                  url:
-                    site.siteMetadata.siteUrl +
-                    edge.node.fileAbsolutePath
-                      .replace(/.*\/blog\//, '/blog/')
-                      .replace('.mdx', ''),
+                  url: site.siteMetadata.siteUrl + getBlogPostUrl(edge.node),
                 });
               });
             },
