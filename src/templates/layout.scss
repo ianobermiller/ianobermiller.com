@@ -131,17 +131,11 @@ pre,
 .gatsby-highlight,
 code[class*='language-'],
 pre[class*='language-'] {
-  background: transparent;
-  border: none;
-  box-shadow: none;
   font-family: Menlo, Monaco, Consolas, 'Bitstream Vera Sans Mono',
     'Courier New', Courier, monospace;
   font-size: 16px;
-  line-height: 1.2em;
   margin: 0;
   overflow: visible;
-  padding: 0;
-  white-space: pre-wrap;
 }
 
 .gatsby-highlight {
