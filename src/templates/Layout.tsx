@@ -36,12 +36,7 @@ export default function Layout(props: Props): ReactElement {
 
   return (
     <Root>
-      <Helmet title={(title ? title + ' \u00AB ' : '') + 'Ian Obermiller'}>
-        <link
-          href="https://fonts.googleapis.com/css?family=Dosis|Lato&display=swap"
-          rel="stylesheet"
-        />
-      </Helmet>
+      <Helmet title={(title ? title + ' \u00AB ' : '') + 'Ian Obermiller'} />
 
       <Header>
         <h1>
