@@ -111,10 +111,19 @@ const PostLink = styled(Link)`
   display: flex;
   padding: 8px 0;
   text-decoration: none;
+
+  @media screen and (max-device-width: 480px) {
+    flex-direction: column;
+  }
 `;
 
 const PostDate = styled(DateText)`
+  flex-shrink: 0;
   width: 90px;
+
+  @media screen and (max-device-width: 480px) {
+    margin-bottom: 4px;
+  }
 `;
 
 const Title = styled.span`
