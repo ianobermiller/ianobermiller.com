@@ -23,10 +23,12 @@ export default function Layout(props: Props): ReactElement {
   let title = '';
   let isPost;
   let dateString;
+  let isMarkdown = false;
   if (props.pageContext) {
     const {date, title: pageTitle, type} = props.pageContext.frontmatter;
     title = pageTitle;
     isPost = type === 'post';
+    isMarkdown = !!type;
     try {
       dateString = format(parseISO(date), 'yyyy-MM-dd');
     } catch {
@@ -36,31 +38,44 @@ export default function Layout(props: Props): ReactElement {
 
   return (
     <Root>
-      <Helmet title={(title ? title + ' \u00AB ' : '') + 'Ian Obermiller'} />
+      <Helmet
+        htmlAttributes={{lang: 'en'}}
+        title={(title ? title + ' \u00AB ' : '') + 'Ian Obermiller'}
+      />
 
       <Header>
         <h1>
           <a href="/">Ian Obermiller</a>
         </h1>
-        <h2 className="description">Part time hacker, full time dad.</h2>
+        <h2>Part time hacker, full time dad.</h2>
       </Header>
 
       <Nav>
         <ul>
           <li>
-            <Link to="/">About</Link>
+            <Link activeClassName="active" to="/">
+              About
+            </Link>
           </li>
           <li>
-            <Link to="/blog">Blog</Link>
+            <Link activeClassName="active" partiallyActive={true} to="/blog">
+              Blog
+            </Link>
           </li>
           <li>
-            <Link to="/projects">Projects</Link>
+            <Link
+              activeClassName="active"
+              partiallyActive={true}
+              to="/projects"
+            >
+              Projects
+            </Link>
           </li>
         </ul>
       </Nav>
 
-      <section className="content">
-        {title && <h1>{title}</h1>}
+      <section className={`content ${isMarkdown ? 'markdown' : ''}`}>
+        {isPost && title && <h1>{title}</h1>}
         {isPost && dateString && <DateText>Posted {dateString}</DateText>}
         {props.children}
       </section>
@@ -114,7 +129,6 @@ const Header = styled.header`
 
 const Nav = styled.nav`
   float: right;
-  font-family: 'Dosis', helvetica, arial, sans-serif;
   font-size: 28px;
   text-transform: lowercase;
   margin: 8px 0 0 0;
@@ -134,11 +148,17 @@ const Nav = styled.nav`
   }
 
   & a {
-    color: #f0b250;
+    color: #ba5712;
+    text-decoration: none;
+  }
+
+  & a.active {
+    color: #ba5712;
+    text-decoration: underline;
   }
 
   & a:hover {
-    color: #f09609;
+    color: #8b410e;
   }
 
   @media screen and (max-device-width: 480px) {

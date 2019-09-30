@@ -72,7 +72,7 @@ export default function BlogIndex(): ReactElement {
   const years = differenceInYears(new Date(), minDate(dates));
 
   return (
-    <Layout pageContext={{frontmatter: {title: 'Blog'}}}>
+    <Layout>
       <Subtitle>
         {posts.length} posts over {years} years
       </Subtitle>
@@ -110,10 +110,7 @@ const PostLink = styled(Link)`
   align-items: baseline;
   display: flex;
   padding: 8px 0;
-
-  :hover {
-    text-decoration: none;
-  }
+  text-decoration: none;
 `;
 
 const PostDate = styled(DateText)`

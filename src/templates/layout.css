@@ -4,6 +4,8 @@ html {
 }
 
 body {
+  background: #fff;
+  color: #000;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol';
@@ -13,13 +15,11 @@ body {
 }
 
 a {
-  color: #0099ff;
-  text-decoration: none;
+  color: #0e6257;
 }
 
 a:hover {
-  color: #0077c7;
-  text-decoration: underline;
+  color: #0b5149;
 }
 
 img {
@@ -41,12 +41,12 @@ h3 {
   font-size: 20px;
 }
 
-.content ul {
+.markdown ul {
   list-style: disc;
   padding-left: 2em;
 }
 
-.content ul,
+.markdown ul,
 p {
   line-height: 160%;
 }
@@ -63,8 +63,8 @@ ol ol {
 blockquote {
   font-size: 90%;
   padding-left: 20px;
-  border-left: solid 1px #f09609;
-  background: #f5f5f5;
+  border-left: solid 1px #ba5712;
+  background: #f1ac7d;
 }
 
 h1,
@@ -72,18 +72,16 @@ h2,
 h3,
 h4,
 h5,
-h6 {
-  color: #f0b250;
-  font-weight: normal;
-}
-
+h6,
 h1 a,
 h2 a,
 h3 a,
 h4 a,
 h5 a,
 h6 a {
-  color: #f09609;
+  color: #ba5712;
+  font-weight: normal;
+  text-decoration: none;
 }
 
 h1 a:hover,
@@ -92,7 +90,7 @@ h3 a:hover,
 h4 a:hover,
 h5 a:hover,
 h6 a:hover {
-  color: #c77d0a;
+  color: #8b410e;
 }
 
 p,
@@ -120,14 +118,14 @@ pre[class*='language-'] {
   line-height: 1.2em;
   font-family: Menlo, Monaco, Consolas, 'Bitstream Vera Sans Mono',
     'Courier New', Courier, monospace;
-  font-size: 13px;
+  font-size: 16px;
   white-space: pre-wrap;
   padding: 0;
   margin: 0;
 }
 
 .gatsby-highlight {
-  border: dotted 1px #ccc;
+  border: dotted 1px #f1ac7d;
   display: block;
   margin: 1em 0 1em -1em;
   padding: 1em;
@@ -135,7 +133,7 @@ pre[class*='language-'] {
 }
 
 .gatsby-highlight::before {
-  color: #e2e2e2;
+  color: #f1ac7d;
   content: attr(data-language);
   font-size: 80%;
   font-weight: 300;
@@ -144,5 +142,5 @@ pre[class*='language-'] {
   text-transform: uppercase;
   top: 0;
   transform-origin: right top 0;
-  transform: translate(calc(-100% - 32px), 0) rotate(-90deg);
+  transform: translate(calc(-100% - 48px), 0) rotate(-90deg);
 }
