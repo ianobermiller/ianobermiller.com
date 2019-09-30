@@ -12,6 +12,11 @@ body {
   font-size: 18px;
   margin: 0;
   padding: 0;
+
+  @media (prefers-color-scheme: dark) {
+    background: #222;
+    color: #fff;
+  }
 }
 
 a {
@@ -20,6 +25,16 @@ a {
 
 a:hover {
   color: #0b5149;
+}
+
+@media (prefers-color-scheme: dark) {
+  a {
+    color: #7ee7d8;
+  }
+
+  a:hover {
+    color: #a7f1e2;
+  }
 }
 
 img {
@@ -73,24 +88,25 @@ h3,
 h4,
 h5,
 h6,
-h1 a,
-h2 a,
-h3 a,
-h4 a,
-h5 a,
-h6 a {
-  color: #ba5712;
-  font-weight: normal;
-  text-decoration: none;
-}
+nav {
+  &,
+  & a {
+    color: #ba5712;
+    font-weight: 300;
+    text-decoration: none;
 
-h1 a:hover,
-h2 a:hover,
-h3 a:hover,
-h4 a:hover,
-h5 a:hover,
-h6 a:hover {
-  color: #8b410e;
+    @media (prefers-color-scheme: dark) {
+      color: #ef995d;
+    }
+  }
+
+  & a:hover {
+    color: #8b410e;
+
+    @media (prefers-color-scheme: dark) {
+      color: #f5c6a3;
+    }
+  }
 }
 
 p,
@@ -113,15 +129,19 @@ small {
 code,
 pre,
 .gatsby-highlight,
+code[class*='language-'],
 pre[class*='language-'] {
   background: transparent;
-  line-height: 1.2em;
+  border: none;
+  box-shadow: none;
   font-family: Menlo, Monaco, Consolas, 'Bitstream Vera Sans Mono',
     'Courier New', Courier, monospace;
   font-size: 16px;
-  white-space: pre-wrap;
-  padding: 0;
+  line-height: 1.2em;
   margin: 0;
+  overflow: visible;
+  padding: 0;
+  white-space: pre-wrap;
 }
 
 .gatsby-highlight {
@@ -130,17 +150,17 @@ pre[class*='language-'] {
   margin: 1em 0 1em -1em;
   padding: 1em;
   position: relative;
-}
 
-.gatsby-highlight::before {
-  color: #f1ac7d;
-  content: attr(data-language);
-  font-size: 80%;
-  font-weight: 300;
-  letter-spacing: 0.2ex;
-  position: absolute;
-  text-transform: uppercase;
-  top: 0;
-  transform-origin: right top 0;
-  transform: translate(calc(-100% - 48px), 0) rotate(-90deg);
+  &::before {
+    color: #f1ac7d;
+    content: attr(data-language);
+    font-size: 80%;
+    font-weight: 300;
+    letter-spacing: 0.2ex;
+    position: absolute;
+    text-transform: uppercase;
+    top: 0;
+    transform-origin: right top 0;
+    transform: translate(calc(-100% - 48px), 0) rotate(-90deg);
+  }
 }

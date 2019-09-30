@@ -4,6 +4,12 @@ function getBlogPostUrl(node) {
     .replace('.mdx', '');
 }
 
+function isDarkMode() {
+  // @ts-ignore
+  return !!window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
 module.exports = {
   getBlogPostUrl,
+  isDarkMode,
 };

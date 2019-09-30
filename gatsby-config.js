@@ -102,5 +102,6 @@ module.exports = {
         trackingId: 'UA-703860-1',
       },
     },
+    'gatsby-plugin-sass',
   ],
 };

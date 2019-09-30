@@ -5,7 +5,7 @@ import Link from 'gatsby-link';
 import React, {ReactElement, ReactNodeArray} from 'react';
 import Helmet from 'react-helmet';
 import './reset.css';
-import './layout.css';
+import './layout.scss';
 import DateText from './DateText';
 
 interface Props {
@@ -45,7 +45,7 @@ export default function Layout(props: Props): ReactElement {
 
       <Header>
         <h1>
-          <a href="/">Ian Obermiller</a>
+          <Link to="/">Ian Obermiller</Link>
         </h1>
         <h2>Part time hacker, full time dad.</h2>
       </Header>
@@ -114,6 +114,12 @@ const Header = styled.header`
     font-size: 24px;
   }
 
+  @media (prefers-color-scheme: dark) {
+    & > h2 {
+      color: #ddd;
+    }
+  }
+
   @media screen and (max-device-width: 480px) {
     float: none;
     margin: 0 0 10px 0;
@@ -148,17 +154,11 @@ const Nav = styled.nav`
   }
 
   & a {
-    color: #ba5712;
     text-decoration: none;
   }
 
   & a.active {
-    color: #ba5712;
     text-decoration: underline;
-  }
-
-  & a:hover {
-    color: #8b410e;
   }
 
   @media screen and (max-device-width: 480px) {
