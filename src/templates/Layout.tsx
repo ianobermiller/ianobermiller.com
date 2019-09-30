@@ -38,10 +38,13 @@ export default function Layout(props: Props): ReactElement {
 
   return (
     <Root>
-      <Helmet
-        htmlAttributes={{lang: 'en'}}
-        title={(title ? title + ' \u00AB ' : '') + 'Ian Obermiller'}
-      />
+      <Helmet htmlAttributes={{lang: 'en'}}>
+        <title>{(title ? title + ' \u00AB ' : '') + 'Ian Obermiller'}</title>
+        <meta
+          name="Description"
+          content="Personal site of Christian and software engineer Ian Obermiller."
+        ></meta>
+      </Helmet>
 
       <Header>
         <h1>
