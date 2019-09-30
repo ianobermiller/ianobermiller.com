@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import {Global} from '@emotion/core';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 import Link from 'gatsby-link';
@@ -7,6 +8,9 @@ import Helmet from 'react-helmet';
 import './reset.css';
 import './layout.scss';
 import DateText from './DateText';
+import prismDark from './prism-dark.ts';
+import prismLight from './prism-light.ts';
+import {isDarkMode} from '../utils';
 
 interface Props {
   children: ReactNodeArray;
@@ -76,6 +80,8 @@ export default function Layout(props: Props): ReactElement {
           </li>
         </ul>
       </Nav>
+
+      {isPost && <Global styles={isDarkMode() ? prismDark : prismLight} />}
 
       <section className={`content ${isMarkdown ? 'markdown' : ''}`}>
         {isPost && title && <h1>{title}</h1>}
