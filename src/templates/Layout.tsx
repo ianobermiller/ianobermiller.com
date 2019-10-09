@@ -8,8 +8,6 @@ import DateText from './DateText';
 
 import './reset.css';
 import './layout.scss';
-import './prism-light.scss';
-import './prism-dark.scss';
 
 interface Props {
   children: ReactNodeArray;
