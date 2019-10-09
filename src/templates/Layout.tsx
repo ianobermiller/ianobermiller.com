@@ -94,11 +94,13 @@ export default function Layout(props: Props): ReactElement {
   );
 }
 
+const WIDTH = '720px';
+
 const Root = styled.main`
   box-sizing: border-box;
   clear: both;
   margin: 0 auto;
-  max-width: 720px;
+  max-width: ${WIDTH};
   min-height: 100vh;
   padding: 20px;
   position: relative;
@@ -107,7 +109,6 @@ const Root = styled.main`
 const Header = styled.header`
   float: left;
   display: block;
-  margin: 0 0 25px 0;
   text-transform: lowercase;
 
   & > h1 {
@@ -118,6 +119,7 @@ const Header = styled.header`
   & > h2 {
     color: #333;
     font-size: 24px;
+    margin-top: 8px;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -126,7 +128,7 @@ const Header = styled.header`
     }
   }
 
-  @media screen and (max-device-width: 480px) {
+  @media screen and (max-device-width: ${WIDTH}) {
     float: none;
     margin: 0 0 10px 0;
 
@@ -152,11 +154,10 @@ const Nav = styled.nav`
 
   & li {
     display: inline-block;
-    margin-left: 50px;
-  }
 
-  & li:first-child {
-    margin-left: 0;
+    & :not(:last-child) {
+      margin-right: 48px;
+    }
   }
 
   & a {
@@ -167,18 +168,16 @@ const Nav = styled.nav`
     text-decoration: underline;
   }
 
-  @media screen and (max-device-width: 480px) {
+  @media screen and (max-device-width: ${WIDTH}) {
     float: none;
 
     font-size: 24px;
     margin: 10px 0;
 
     & li {
-      margin-left: 25px;
-    }
-
-    & li:first-child {
-      margin-left: 0;
+      & :not(:last-child) {
+        margin-right: 24px;
+      }
     }
   }
 `;

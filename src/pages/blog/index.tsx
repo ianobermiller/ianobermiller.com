@@ -81,8 +81,8 @@ export default function BlogIndex(): ReactElement {
           return (
             <Post key={id}>
               <PostLink to={url}>
+                <PostTitle>{title}</PostTitle>
                 <PostDate>{dateString}</PostDate>
-                <Title>{title}</Title>
               </PostLink>
             </Post>
           );
@@ -107,9 +107,8 @@ const Post = styled.li`
 `;
 
 const PostLink = styled(Link)`
-  align-items: baseline;
-  display: flex;
-  padding: 8px 0;
+  display: block;
+  margin: 24px 0;
   text-decoration: none;
 
   @media screen and (max-device-width: 480px) {
@@ -117,17 +116,14 @@ const PostLink = styled(Link)`
   }
 `;
 
-const PostDate = styled(DateText)`
-  flex-shrink: 0;
-  width: 90px;
+const PostTitle = styled.span`
+  font-size: 120%;
 
-  @media screen and (max-device-width: 480px) {
-    margin-bottom: 4px;
-  }
-`;
-
-const Title = styled.span`
   a:hover & {
     text-decoration: underline;
   }
+`;
+
+const PostDate = styled(DateText)`
+  margin-top: 8px;
 `;

@@ -1,3 +1,12 @@
+$accent: #5b2b82;
+$dark-accent: lighten($accent, 45%);
+
+@mixin dark-mode {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
 html {
   height: 100%;
   overflow: auto;
@@ -13,27 +22,27 @@ body {
   margin: 0;
   padding: 0;
 
-  @media (prefers-color-scheme: dark) {
+  @include dark-mode {
     background: #222;
     color: #fff;
   }
 }
 
 a {
-  color: #0e6257;
+  color: $accent;
 }
 
 a:hover {
-  color: #0b5149;
+  color: darken($accent, 20%);
 }
 
-@media (prefers-color-scheme: dark) {
+@include dark-mode {
   a {
-    color: #7ee7d8;
+    color: $dark-accent;
   }
 
   a:hover {
-    color: #a7f1e2;
+    color: lighten($dark-accent, 20%);
   }
 }
 
@@ -47,13 +56,15 @@ img {
 
 h1 {
   font-size: 36px;
-  margin-bottom: 15px;
+  margin: 24px 0;
 }
 h2 {
   font-size: 24px;
+  margin: 24px 0;
 }
 h3 {
   font-size: 20px;
+  margin: 24px 0;
 }
 
 .markdown ul {
@@ -76,10 +87,19 @@ ol ol {
 }
 
 blockquote {
-  font-size: 90%;
-  padding-left: 20px;
-  border-left: solid 1px #ba5712;
-  background: #f1ac7d;
+  background: lighten($accent, 62%);
+  border-left: solid 4px $accent;
+  margin-left: -16px;
+  padding: 4px 12px;
+
+  @include dark-mode {
+    background: darken($dark-accent, 60%);
+    border-color: $dark-accent;
+  }
+}
+
+blockquote p {
+  margin: 8px 0;
 }
 
 h1,
@@ -91,20 +111,20 @@ h6,
 nav {
   &,
   & a {
-    color: #ba5712;
+    color: $accent;
     font-weight: 300;
     text-decoration: none;
 
-    @media (prefers-color-scheme: dark) {
-      color: #ef995d;
+    @include dark-mode {
+      color: $dark-accent;
     }
   }
 
   & a:hover {
-    color: #8b410e;
+    color: darken($accent, 20%);
 
-    @media (prefers-color-scheme: dark) {
-      color: #f5c6a3;
+    @include dark-mode {
+      color: lighten($dark-accent, 20%);
     }
   }
 }
@@ -113,7 +133,7 @@ p,
 ol,
 ul,
 pre {
-  margin: 15px 0 15px 0;
+  margin: 24px 0 24px 0;
 }
 
 footer {
@@ -139,14 +159,18 @@ pre[class*='language-'] {
 }
 
 .gatsby-highlight {
-  border: dotted 1px #f1ac7d;
+  background: lighten($accent, 64%);
   display: block;
-  margin: 1em 0 1em -1em;
-  padding: 1em;
+  margin: 12px 0 12px -12px;
+  padding: 12px;
   position: relative;
 
+  @include dark-mode {
+    background: #282828;
+  }
+
   &::before {
-    color: #f1ac7d;
+    color: $accent;
     content: attr(data-language);
     font-size: 80%;
     font-weight: 300;
@@ -155,6 +179,22 @@ pre[class*='language-'] {
     text-transform: uppercase;
     top: 0;
     transform-origin: right top 0;
-    transform: translate(calc(-100% - 48px), 0) rotate(-90deg);
+    transform: translate(calc(-100% - 36px), 0) rotate(-90deg);
+
+    @include dark-mode {
+      color: $dark-accent;
+    }
+  }
+}
+
+/* Inline code */
+:not(pre) > code[class*='language-'] {
+  background: lighten($accent, 60%);
+  border-radius: 4px;
+  padding: 0.15em 0.2em 0.05em;
+  white-space: normal;
+
+  @include dark-mode {
+    background: darken($accent, 15%);
   }
 }
