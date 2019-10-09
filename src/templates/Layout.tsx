@@ -60,21 +60,12 @@ export default function Layout(props: Props): ReactElement {
         <ul>
           <li>
             <Link activeClassName="active" to="/">
-              About
+              About Me
             </Link>
           </li>
           <li>
             <Link activeClassName="active" partiallyActive={true} to="/blog">
-              Blog
-            </Link>
-          </li>
-          <li>
-            <Link
-              activeClassName="active"
-              partiallyActive={true}
-              to="/projects"
-            >
-              Projects
+              posts
             </Link>
           </li>
         </ul>
