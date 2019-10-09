@@ -66,13 +66,11 @@ interface Props {
   text: string;
 }
 
-const letterWidth = 8;
-
 function WrapText(props: Props): ReactElement {
   const text = prettyPrint(props.text, props.lineLength);
   return (
-    <div style={{position: 'relative'}}>
-      <pre>{text}</pre>
+    <pre style={{position: 'relative'}}>
+      {text}
       <div
         style={{
           borderLeft: 'solid 1px red',
@@ -80,10 +78,10 @@ function WrapText(props: Props): ReactElement {
           position: 'absolute',
           top: 0,
           bottom: 0,
-          left: letterWidth * props.lineLength,
+          left: `calc(1ch * ${props.lineLength})`,
         }}
       />
-    </div>
+    </pre>
   );
 }
 
