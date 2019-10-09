@@ -8,21 +8,9 @@
   code[class*='language-'],
   pre[class*='language-'] {
     color: black;
-    text-shadow: 0 1px white;
-    white-space: pre-wrap;
-    line-height: 1.5;
-
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
     hyphens: none;
-  }
-
-  @media print {
-    code[class*='language-'],
-    pre[class*='language-'] {
-      text-shadow: none;
-    }
+    line-height: 1.5;
+    white-space: pre-wrap;
   }
 
   .token.comment,
