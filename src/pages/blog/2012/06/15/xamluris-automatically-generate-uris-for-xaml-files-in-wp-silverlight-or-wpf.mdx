@@ -21,14 +21,12 @@ This is the way you typically navigate to a new page (examples are from Windows 
 
 ```csharp
 NavigationService.Navigate(@"/PhoneApp1;component/Page1.xaml");
-
 ```
 
 With a simple [T4 Text Template][1], you can do the following instead:
 
 ```csharp
 NavigationService.Navigate(XamlUris.Page1());
-
 ```
 
 Instead of magic strings, you have strongly typed goodness that will fail to compile if the specified page no longer exists.
@@ -41,7 +39,6 @@ NavigationService.Navigate(XamlUris.Page1(new { Id = 42, Foo = "bar" }));
 
 // Strongly typed object
 NavigationService.Navigate(XamlUris.Page1(new Baz() { Id = 42, Foo = "bar" }));
-
 ```
 
 If using strongly typed objects, XamlUrls provides an extension method (ToObject) to easily get a strongly typed object on the other end (eg. OnNavigatedTo):
@@ -59,7 +56,6 @@ protected override void OnNavigatedTo(NavigationEventArgs e)
 
     base.OnNavigatedTo(e);
 }
-
 ```
 
 Here is the code for XamlUris.tt:
@@ -225,7 +221,6 @@ namespace <# WriteLine(defaultNamespace); #>;
         }
     }
 #>;
-
 ```
 
 And here is an example of the generated XamlUris.cs (note that it is StyleCop and Code Analysis compliant with the default rules):
@@ -389,7 +384,6 @@ namespace PhoneApp1
         }
     }
 }
-
 ```
 
 [1]: http://msdn.microsoft.com/en-us/library/bb126445.aspx

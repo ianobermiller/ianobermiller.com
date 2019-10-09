@@ -26,14 +26,12 @@ public string PrecompileHandlebarsTemplate(string name, string template)
     return string.Format("var {0} = Handlebars.template({1});", 
         name, engine.CallGlobalFunction("precompile", template).ToString());
 }
-
 ```
 
 The function can be used as follows:
 
 ```csharp
 PrecompileHandlebarsTemplate("greet", "<div>{{hello}} world!</div>");
-
 ```
 
 And will output a javascript function as a string, something like this:
@@ -51,14 +49,12 @@ var greet = Handlebars.template(function (Handlebars,depth0,helpers,partials,dat
   else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "hello", { hash: {} }); }
   buffer += escapeExpression(stack1) + " world!</div>";
   return buffer;});
-
 ```
 
 Which you can then use easily in the rest of your javascript (after including `handlebars.runtime.js`):
 
 ```javascript
 $('body').append(greet({ hello: 'Bonjour' }));
-
 ```
 
 You can find a [working example at JS Bin][5].

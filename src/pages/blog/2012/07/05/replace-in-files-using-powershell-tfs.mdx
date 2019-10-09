@@ -58,7 +58,6 @@ function global:far(
 
     "Replaced in {0} of {1} file{2}." -f $found, ($index - 1), (?: {$index -gt 2} {"s"} {""})
 }
-
 ```
 
 The script also depends on the following helper functions.
@@ -72,7 +71,6 @@ function global:Test-TfsWorkspace()
     tf dir . 1>$null 2>$null
     $?
 }
-
 ```
 
 Invoke-Ternary is a handy helper for emulating the ternary ? : operator in powershell.
@@ -98,7 +96,6 @@ filter global:Invoke-Ternary([scriptblock]$decider, [scriptblock]$ifTrue, [scrip
         &$ifFalse
     }
 }
-
 ```
 
 References:

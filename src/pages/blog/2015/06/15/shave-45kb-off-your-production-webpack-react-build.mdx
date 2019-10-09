@@ -16,7 +16,6 @@ If you're building a React app for production using webpack, don't forget this s
 new webpack.DefinePlugin({
   'process.env': {NODE_ENV: '"production"'}
 })
-
 ```
 
 It will replace all instances of `process.env.NODE_ENV` with the string `"production"`. When used in conjunction with the uglify plugin, all the code in React that is inside a dev only conditional like `if ("production" !== process.env.NODE_ENV) { ... }` will be stripped.

@@ -51,7 +51,6 @@ module.exports = function decorateWithKeyBinding(ComposedComponent) {
 
   return KeybinderEnhancer;
 };
-
 ```
 
 Notice how we ignore bindings fired when an input or textarea has focus is the target, so we don't trigger "archive" while you are searching for something with the letter "y".
@@ -67,7 +66,6 @@ class MessageView extends Component {
 
   _archive = () => { ... };
 }
-
 ```
 
 Notice that `_archive` uses [class properties syntax][2] to avoid using `bind`. You could also make this into a mixin for easier use with `createClass` style components, or just use the function call syntax instead, `MessageView = KeyBinder(MessageView)`.

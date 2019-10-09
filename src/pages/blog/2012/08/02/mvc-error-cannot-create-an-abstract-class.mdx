@@ -8,8 +8,8 @@ categories:
   - ASP.NET
   - MVC
   - T4
-
 ---
+
 While debugging an MVC4 app, I ran into the following error: `System.MissingMethodException: Cannot create an abstract class`. It was only happening for a single Action, and I wasn't able to set a breakpoint in that action. After some trial and error, I was able to find the issue in the code:
 
 ```csharp
@@ -17,7 +17,6 @@ public virtual ActionResult Login(ActionResult redirectAction = null)
 {
     ...
 }
-
 ```
 
 The goal was to have an T4MVC style helper for passing in an ActionResult instead of an untyped path. This was a bad idea, as ActionResult is an abstract class. When I hit `http://localhost:2995/Account/Login`, the MVC framework tried to instantiate `ActionResult` to fill in the default value for `redirectAction`. I simply reverted the parameter back to a string, and all was well.
@@ -28,5 +27,4 @@ public virtual ActionResult Login(string redirectPath = null)
     redirectPath = redirectPath ?? Url.Action(MVC.Home.Index());
     ...
 }
-
 ```
