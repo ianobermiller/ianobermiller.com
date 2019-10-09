@@ -71,16 +71,16 @@ export default function Layout(props: Props): ReactElement {
         </ul>
       </Nav>
 
-      <section className={`content ${isMarkdown ? 'markdown' : ''}`}>
+      <Content className={`${isMarkdown ? 'markdown' : ''}`}>
         {isPost && title && <h1>{title}</h1>}
         {isPost && dateString && <DateText>Posted {dateString}</DateText>}
         {props.children}
-      </section>
+      </Content>
 
-      <footer>
+      <Footer>
         Unless otherwise noted, source code on this blog is Licensed under the
         MIT License.
-      </footer>
+      </Footer>
     </Root>
   );
 }
@@ -171,4 +171,15 @@ const Nav = styled.nav`
       }
     }
   }
+`;
+
+const Content = styled.section`
+  clear: both;
+`;
+
+const Footer = styled.footer`
+  font-size: 12px;
+  margin-bottom: 10px;
+  opacity: 0.8;
+  padding: 30px 0 0 0;
 `;

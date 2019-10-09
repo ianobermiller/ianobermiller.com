@@ -8,9 +8,6 @@
   code[class*='language-'],
   pre[class*='language-'] {
     color: white;
-    hyphens: none;
-    line-height: 1.5;
-    white-space: pre-wrap;
   }
 
   .token.comment,
@@ -64,18 +61,6 @@
   .token.regex,
   .token.important {
     color: #e90;
-  }
-
-  .token.important,
-  .token.bold {
-    font-weight: bold;
-  }
-  .token.italic {
-    font-style: italic;
-  }
-
-  .token.entity {
-    cursor: help;
   }
 
   .token.deleted {
