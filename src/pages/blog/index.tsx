@@ -82,7 +82,7 @@ export default function BlogIndex(): ReactElement {
             <Post key={id}>
               <PostLink to={url}>
                 <PostTitle>{title}</PostTitle>
-                <PostDate>{dateString}</PostDate>
+                <DateText>{dateString}</DateText>
               </PostLink>
             </Post>
           );
@@ -122,8 +122,4 @@ const PostTitle = styled.span`
   a:hover & {
     text-decoration: underline;
   }
-`;
-
-const PostDate = styled(DateText)`
-  margin-top: 8px;
 `;
