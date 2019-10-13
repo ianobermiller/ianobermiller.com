@@ -185,21 +185,22 @@ pre {
   @include dark-mode {
     background: #282828;
   }
+  @media screen and (min-device-width: 720px) {
+    &::before {
+      color: $accent;
+      content: attr(data-language);
+      font-size: 80%;
+      font-weight: 300;
+      letter-spacing: 0.2ex;
+      position: absolute;
+      text-transform: uppercase;
+      top: 0;
+      transform-origin: right top 0;
+      transform: translate(calc(-100% - 48px), 0) rotate(-90deg);
 
-  &::before {
-    color: $accent;
-    content: attr(data-language);
-    font-size: 80%;
-    font-weight: 300;
-    letter-spacing: 0.2ex;
-    position: absolute;
-    text-transform: uppercase;
-    top: 0;
-    transform-origin: right top 0;
-    transform: translate(calc(-100% - 48px), 0) rotate(-90deg);
-
-    @include dark-mode {
-      color: $dark-accent;
+      @include dark-mode {
+        color: $dark-accent;
+      }
     }
   }
 }

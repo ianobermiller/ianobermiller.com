@@ -9,8 +9,6 @@ import DateText from './DateText';
 import './reset.css';
 import './layout.scss';
 
-const GRID_SIZE = 32;
-
 interface Props {
   children: ReactNodeArray;
   pageContext?: {
@@ -86,6 +84,7 @@ export default function Layout(props: Props): ReactElement {
 }
 
 const WIDTH = '720px';
+const GRID_SIZE = 32;
 
 const Root = styled.main`
   box-sizing: border-box;
