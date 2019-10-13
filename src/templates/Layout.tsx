@@ -76,8 +76,19 @@ export default function Layout(props: Props): ReactElement {
       </Content>
 
       <Footer>
-        Unless otherwise noted, source code on this blog is Licensed under the
-        MIT License.
+        <p>
+          <a href="mailto:ian@obermillers.com" target="_blank">
+            ian@obermillers.com
+          </a>
+          {' \u00B7 '}
+          <a href="https://github.com/ianobermiller" target="_blank">
+            github.com/ianobermiller
+          </a>
+        </p>
+        <Disclaimer>
+          Unless otherwise noted, source code on this blog is Licensed under the
+          MIT License.
+        </Disclaimer>
       </Footer>
     </Root>
   );
@@ -177,7 +188,9 @@ const Content = styled.section`
 `;
 
 const Footer = styled.footer`
+  margin-top: ${GRID_SIZE * 3}px;
+`;
+const Disclaimer = styled.p`
   font-size: 12px;
-  margin-top: ${GRID_SIZE * 2}px;
   opacity: 0.8;
 `;
