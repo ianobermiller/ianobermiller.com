@@ -103,7 +103,12 @@ export default function WrapTextExample(props: Props): ReactElement {
       <p>
         <textarea
           onChange={e => setText((e.target as HTMLTextAreaElement).value)}
-          style={{width: '100%'}}
+          style={{
+            boxSizing: 'border-box',
+            display: 'block',
+            height: '96px',
+            width: '100%',
+          }}
           value={text}
         />
       </p>

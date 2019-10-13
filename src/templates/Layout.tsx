@@ -9,6 +9,8 @@ import DateText from './DateText';
 import './reset.css';
 import './layout.scss';
 
+const GRID_SIZE = 32;
+
 interface Props {
   children: ReactNodeArray;
   pageContext?: {
@@ -91,7 +93,7 @@ const Root = styled.main`
   margin: 0 auto;
   max-width: ${WIDTH};
   min-height: 100vh;
-  padding: 20px;
+  padding: ${GRID_SIZE}px;
   position: relative;
 `;
 
@@ -108,7 +110,7 @@ const Header = styled.header`
   & > h2 {
     color: #333;
     font-size: 24px;
-    margin-top: 8px;
+    margin-top: 0;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -134,7 +136,7 @@ const Nav = styled.nav`
   float: right;
   font-size: 28px;
   text-transform: lowercase;
-  margin: 8px 0 0 0;
+  margin: 0 0 0 0;
   padding: 0;
 
   & ul {
@@ -177,7 +179,6 @@ const Content = styled.section`
 
 const Footer = styled.footer`
   font-size: 12px;
-  margin-bottom: 10px;
+  margin-top: ${GRID_SIZE * 2}px;
   opacity: 0.8;
-  padding: 30px 0 0 0;
 `;

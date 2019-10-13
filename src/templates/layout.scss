@@ -1,5 +1,6 @@
 $accent: #5b2b82;
 $dark-accent: lighten($accent, 45%);
+$grid-size: 32px;
 
 @mixin dark-mode {
   @media (prefers-color-scheme: dark) {
@@ -12,19 +13,26 @@ html {
   overflow: auto;
 }
 
-body {
+body,
+textarea {
   background: #fff;
   color: #000;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol';
   font-size: 18px;
-  line-height: 175%;
+  line-height: $grid-size;
   margin: 0;
   padding: 0;
 
   @include dark-mode {
     background: #222;
+    // background-image: repeating-linear-gradient(
+    //   transparent,
+    //   transparent $grid-size - 1,
+    //   #fff9 $grid-size - 1,
+    //   #fff9 $grid-size
+    // );
     color: #fff;
   }
 }
@@ -76,17 +84,20 @@ nav {
 
 h1 {
   font-size: 36px;
-  margin: 24px 0;
+  line-height: $grid-size * 2;
+  margin: $grid-size 0;
 }
 
 h2 {
   font-size: 24px;
-  margin: 24px 0;
+  line-height: $grid-size;
+  margin: $grid-size 0;
 }
 
 h3 {
   font-size: 20px;
-  margin: 24px 0;
+  line-height: $grid-size;
+  margin: $grid-size 0;
 }
 
 img {
@@ -111,8 +122,10 @@ img {
   blockquote {
     background: lighten($accent, 62%);
     border-left: solid 4px $accent;
-    margin-left: -16px;
-    padding: 4px 12px;
+    margin-top: -$grid-size / 2;
+    margin-bottom: -$grid-size / 2;
+    margin-left: -$grid-size / 2;
+    padding: $grid-size / 2 12px;
 
     @include dark-mode {
       background: darken($dark-accent, 60%);
@@ -120,8 +133,12 @@ img {
     }
   }
 
-  blockquote p {
-    margin: 8px 0;
+  blockquote > :first-child {
+    margin-top: 0;
+  }
+
+  blockquote > :last-child {
+    margin-bottom: 0;
   }
 
   small {
@@ -133,7 +150,7 @@ p,
 ol,
 ul,
 pre {
-  margin: 24px 0;
+  margin: $grid-size 0;
 }
 
 ol,
@@ -149,7 +166,7 @@ pre {
     'Courier New', Courier, monospace;
   font-size: 15px;
   hyphens: none;
-  line-height: 1.5;
+  line-height: $grid-size;
   margin: 0;
   overflow: visible;
   white-space: pre-wrap;
@@ -158,8 +175,10 @@ pre {
 .gatsby-highlight {
   background: lighten($accent, 64%);
   display: block;
-  margin: 12px 0 12px -12px;
-  padding: 12px;
+  margin-top: -$grid-size / 2;
+  margin-bottom: -$grid-size / 2;
+  margin-left: -$grid-size / 2;
+  padding: $grid-size / 2;
   position: relative;
 
   @include dark-mode {
