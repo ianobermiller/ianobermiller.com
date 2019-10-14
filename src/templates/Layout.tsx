@@ -146,7 +146,7 @@ const Nav = styled.nav`
   float: right;
   font-size: 28px;
   text-transform: lowercase;
-  margin: 0 0 0 0;
+  margin-top: ${GRID_SIZE * 2}px;
   padding: 0;
 
   & ul {
@@ -157,7 +157,7 @@ const Nav = styled.nav`
     display: inline-block;
 
     & :not(:last-child) {
-      margin-right: 48px;
+      margin-right: ${GRID_SIZE}px;
     }
   }
 
