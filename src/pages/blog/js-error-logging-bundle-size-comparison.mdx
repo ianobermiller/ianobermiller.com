@@ -15,6 +15,16 @@ now you need to add error logging so that you are aware of errors that users
 experience in production. How do the major JavaScript error logging services
 stack up in terms of bundle size?
 
+This is of course a naïve comparison, as many services provide other
+functionality as well, like session replay. But if you are just looking for
+basic error reporting while keeping bundle size small, knowing how much these
+libraries will increase your payload matters.
+
+The methodology can be found in the Source column of the table. For most
+providers, I checked the docs for a client-side NPM bundle and popped that into
+[Bundlephobia](https://bundlephobia.com). If the provider does not have an NPM
+module, I `curl`ed the JS directly.
+
 <JSErrorLoggingBundleSizeTable />
 
 If you'd like to contribute to this data, please [send a
