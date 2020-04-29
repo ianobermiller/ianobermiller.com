@@ -1,12 +1,14 @@
 {
     "compilerOptions": {
-        "outDir": "./dist/",
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "module": "commonjs",
-        "target": "esnext",
+        "esModuleInterop": true,
         "jsx": "react",
-        "lib": ["dom", "es2015", "es2017"]
+        "lib": ["dom", "es2015", "es2017"],
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "outDir": "./dist/",
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "target": "esnext"
     },
     "include": [
         "./src/**/*"
