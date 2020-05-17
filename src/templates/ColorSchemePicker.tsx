@@ -17,7 +17,7 @@ function doesPreferDark(): boolean {
  */
 export default function ColorSchemePicker(): ReactElement {
   // Don't render during SSR
-  if (!window) {
+  if (typeof window === 'undefined') {
     return null;
   }
 
