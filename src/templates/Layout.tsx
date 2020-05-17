@@ -4,9 +4,9 @@ import parseISO from 'date-fns/parseISO';
 import Link from 'gatsby-link';
 import React, {ReactElement, ReactNodeArray} from 'react';
 import Helmet from 'react-helmet';
+import './areset.css';
 import DateText from './DateText';
 import './layout.scss';
-import './reset.css';
 
 interface Props {
   children: ReactNodeArray;
