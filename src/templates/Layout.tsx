@@ -3,7 +3,7 @@ import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 import Link from 'gatsby-link';
 import React, {ReactElement, ReactNodeArray} from 'react';
-import Helmet from 'react-helmet';
+import {Helmet} from 'react-helmet';
 import './areset.css';
 import ColorSchemePicker from './ColorSchemePicker';
 import DateText from './DateText';
