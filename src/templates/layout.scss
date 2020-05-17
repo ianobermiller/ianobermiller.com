@@ -1,12 +1,31 @@
 $accent: #5b2b82;
 $dark-accent: lighten($accent, 45%);
-$grid-size: 32px;
 
-@mixin dark-mode {
-  @media (prefers-color-scheme: dark) {
-    @content;
+:root {
+  --accent-color: #{$accent};
+  --accent-color-hover: #{darken($accent, 20%)};
+  --accent-color-quote: #{lighten($accent, 62%)};
+  --background-color: #fff;
+  --background-color-inline-code: #{lighten($accent, 60%)};
+  --background-color-code: #{lighten($accent, 64%)};
+  --text-color: #000;
+  --text-color-secondary: #333;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent-color: #{$dark-accent};
+    --accent-color-hover: #{lighten($dark-accent, 20%)};
+    --accent-color-quote: #{darken($dark-accent, 60%)};
+    --background-color: #222;
+    --background-color-code: #282828;
+    --background-color-inline-code: #{darken($accent, 15%)};
+    --text-color: #fff;
+    --text-color-secondary: #ddd;
   }
 }
+
+$grid-size: 32px;
 
 html {
   height: 100%;
@@ -15,8 +34,8 @@ html {
 
 body,
 textarea {
-  background: #fff;
-  color: #000;
+  background: var(--background-color);
+  color: var(--text-color);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol';
@@ -24,35 +43,14 @@ textarea {
   line-height: $grid-size;
   margin: 0;
   padding: 0;
-
-  @include dark-mode {
-    background: #222;
-    // background-image: repeating-linear-gradient(
-    //   transparent,
-    //   transparent $grid-size - 1,
-    //   #fff9 $grid-size - 1,
-    //   #fff9 $grid-size
-    // );
-    color: #fff;
-  }
 }
 
 a {
-  color: $accent;
+  color: var(--accent-color);
 }
 
 a:hover {
-  color: darken($accent, 20%);
-}
-
-@include dark-mode {
-  a {
-    color: $dark-accent;
-  }
-
-  a:hover {
-    color: lighten($dark-accent, 20%);
-  }
+  color: var(--accent-color-hover);
 }
 
 h1,
@@ -64,21 +62,13 @@ h6,
 nav {
   &,
   & a {
-    color: $accent;
+    color: var(--accent-color);
     font-weight: 300;
     text-decoration: none;
-
-    @include dark-mode {
-      color: $dark-accent;
-    }
   }
 
   & a:hover {
-    color: darken($accent, 20%);
-
-    @include dark-mode {
-      color: lighten($dark-accent, 20%);
-    }
+    color: var(--accent-color-hover);
   }
 }
 
@@ -120,17 +110,12 @@ img {
   }
 
   blockquote {
-    background: lighten($accent, 62%);
-    border-left: solid 4px $accent;
+    background: var(--accent-color-quote);
+    border-left: solid 4px var(--accent-color);
     margin-top: -$grid-size / 2;
     margin-bottom: -$grid-size / 2;
     margin-left: -$grid-size / 2;
     padding: $grid-size / 2 12px;
-
-    @include dark-mode {
-      background: darken($dark-accent, 60%);
-      border-color: $dark-accent;
-    }
   }
 
   blockquote > :first-child {
@@ -174,7 +159,7 @@ pre {
 }
 
 .gatsby-highlight {
-  background: lighten($accent, 64%);
+  background: var(--background-color-code);
   display: block;
   margin-top: -$grid-size / 2;
   margin-bottom: -$grid-size / 2;
@@ -182,12 +167,9 @@ pre {
   padding: $grid-size / 2;
   position: relative;
 
-  @include dark-mode {
-    background: #282828;
-  }
   @media screen and (min-device-width: 720px) {
     &::before {
-      color: $accent;
+      color: var(--accent-color);
       content: attr(data-language);
       font-size: 80%;
       font-weight: 300;
@@ -197,24 +179,16 @@ pre {
       top: 0;
       transform-origin: right top 0;
       transform: translate(calc(-100% - 48px), 0) rotate(-90deg);
-
-      @include dark-mode {
-        color: $dark-accent;
-      }
     }
   }
 }
 
 // Inline code
 :not(pre) > code[class*='language-'] {
-  background: lighten($accent, 60%);
+  background: var(--background-color-inline-code);
   border-radius: 4px;
   padding: 0.15em 0.2em 0.05em;
   white-space: normal;
-
-  @include dark-mode {
-    background: darken($accent, 15%);
-  }
 }
 
 // Prism Code Highlighting

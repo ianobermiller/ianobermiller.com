@@ -5,9 +5,8 @@ import Link from 'gatsby-link';
 import React, {ReactElement, ReactNodeArray} from 'react';
 import Helmet from 'react-helmet';
 import DateText from './DateText';
-
-import './reset.css';
 import './layout.scss';
+import './reset.css';
 
 interface Props {
   children: ReactNodeArray;
@@ -43,8 +42,7 @@ export default function Layout(props: Props): ReactElement {
         <title>{(title ? title + ' \u00AB ' : '') + 'Ian Obermiller'}</title>
         <meta
           name="Description"
-          content="Personal site of Christian and software engineer Ian Obermiller."
-        ></meta>
+          content="Personal site of Christian and software engineer Ian Obermiller."></meta>
       </Helmet>
 
       <Header>
@@ -118,15 +116,9 @@ const Header = styled.header`
   }
 
   & > h2 {
-    color: #333;
+    color: var(--footer-text-color);
     font-size: 24px;
     margin-top: 0;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    & > h2 {
-      color: #ddd;
-    }
   }
 
   @media screen and (max-device-width: ${WIDTH}) {

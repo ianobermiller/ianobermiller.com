@@ -1,12 +1,8 @@
 import styled from '@emotion/styled';
 
 const DateText = styled.div`
-  color: #999;
+  color: var(--text-color-secondary);
   font-size: 75%;
-
-  @media (prefers-color-scheme: dark) {
-    color: #bbb;
-  }
 `;
 
 export default DateText;
