@@ -82,7 +82,10 @@ export default function Layout(props: Props): ReactElement {
             ian@obermillers.com
           </a>
           {' \u00B7 '}
-          <a href="https://github.com/ianobermiller" target="_blank">
+          <a
+            href="https://github.com/ianobermiller"
+            rel="noopener"
+            target="_blank">
             github.com/ianobermiller
           </a>
         </p>
