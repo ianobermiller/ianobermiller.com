@@ -14,8 +14,8 @@ export default function JSErrorLoggingBundleSizeTable() {
         </tr>
       </thead>
       <tbody>
-        {data.map(entry => (
-          <tr>
+        {data.map((entry, index) => (
+          <tr key={index}>
             <td>
               <a href={entry.url}>{entry.name}</a>
             </td>
