@@ -93,7 +93,6 @@ export default function Layout(props: Props): ReactElement {
 }
 
 const WIDTH = '720px';
-const GRID_SIZE = 32;
 
 const Root = styled.main`
   box-sizing: border-box;
@@ -101,13 +100,13 @@ const Root = styled.main`
   margin: 0 auto;
   max-width: ${WIDTH};
   min-height: 100vh;
-  padding: ${GRID_SIZE}px;
+  padding: var(--grid-size);
   position: relative;
 `;
 
 const Header = styled.header`
-  float: left;
   display: block;
+  float: left;
   text-transform: lowercase;
 
   & > h1 {
@@ -138,7 +137,7 @@ const Nav = styled.nav`
   float: right;
   font-size: 28px;
   text-transform: lowercase;
-  margin-top: ${GRID_SIZE * 2}px;
+  margin-top: calc(var(--grid-size) * 2);
   padding: 0;
 
   & ul {
@@ -149,7 +148,7 @@ const Nav = styled.nav`
     display: inline-block;
 
     & :not(:last-child) {
-      margin-right: ${GRID_SIZE}px;
+      margin-right: var(--grid-size);
     }
   }
 
@@ -180,7 +179,7 @@ const Content = styled.section`
 `;
 
 const Footer = styled.footer`
-  margin-top: ${GRID_SIZE * 3}px;
+  margin-top: calc(var(--grid-size) * 3);
 `;
 const Disclaimer = styled.p`
   font-size: 12px;

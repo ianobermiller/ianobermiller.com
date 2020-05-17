@@ -2,6 +2,8 @@ $accent: #5b2b82;
 $dark-accent: lighten($accent, 45%);
 
 :root {
+  --grid-size: 32px;
+
   --accent-color: #{$accent};
   --accent-color-hover: #{darken($accent, 20%)};
   --accent-color-quote: #{lighten($accent, 62%)};
@@ -25,8 +27,6 @@ $dark-accent: lighten($accent, 45%);
   }
 }
 
-$grid-size: 32px;
-
 html {
   height: 100%;
   overflow: auto;
@@ -40,7 +40,7 @@ textarea {
     Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol';
   font-size: 18px;
-  line-height: $grid-size;
+  line-height: var(--grid-size);
   margin: 0;
   padding: 0;
 }
@@ -74,20 +74,20 @@ nav {
 
 h1 {
   font-size: 36px;
-  line-height: $grid-size * 2;
-  margin: $grid-size 0;
+  line-height: calc(var(--grid-size) * 2);
+  margin: var(--grid-size) 0;
 }
 
 h2 {
   font-size: 24px;
-  line-height: $grid-size;
-  margin: $grid-size 0;
+  line-height: var(--grid-size);
+  margin: var(--grid-size) 0;
 }
 
 h3 {
   font-size: 20px;
-  line-height: $grid-size;
-  margin: $grid-size 0;
+  line-height: var(--grid-size);
+  margin: var(--grid-size) 0;
 }
 
 img {
@@ -112,10 +112,10 @@ img {
   blockquote {
     background: var(--accent-color-quote);
     border-left: solid 4px var(--accent-color);
-    margin-top: -$grid-size / 2;
-    margin-bottom: -$grid-size / 2;
-    margin-left: -$grid-size / 2;
-    padding: $grid-size / 2 12px;
+    margin-top: calc(var(--grid-size) / -2);
+    margin-bottom: calc(var(--grid-size) / -2);
+    margin-left: calc(var(--grid-size) / -2);
+    padding: calc(var(--grid-size) / 2) 12px;
   }
 
   blockquote > :first-child {
@@ -135,7 +135,7 @@ p,
 ol,
 ul,
 pre {
-  margin: $grid-size 0;
+  margin: var(--grid-size) 0;
 }
 
 ol,
@@ -151,7 +151,7 @@ pre {
     'Courier New', Courier, monospace;
   font-size: 15px;
   hyphens: none;
-  line-height: $grid-size;
+  line-height: var(--grid-size);
   margin: 0;
   overflow: visible;
   white-space: pre-wrap;
@@ -161,10 +161,10 @@ pre {
 .gatsby-highlight {
   background: var(--background-color-code);
   display: block;
-  margin-top: -$grid-size / 2;
-  margin-bottom: -$grid-size / 2;
-  margin-left: -$grid-size / 2;
-  padding: $grid-size / 2;
+  margin-top: calc(var(--grid-size) / -2);
+  margin-bottom: calc(var(--grid-size) / -2);
+  margin-left: calc(var(--grid-size) / -2);
+  padding: calc(var(--grid-size) / 2);
   position: relative;
 
   @media screen and (min-device-width: 720px) {
