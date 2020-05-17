@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
+import {differenceInYears, min as minDate} from 'date-fns';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 import {graphql, Link, useStaticQuery} from 'gatsby';
 import React, {ReactElement} from 'react';
 import DateText from '../../templates/DateText';
 import Layout from '../../templates/Layout';
-import {max as maxDate, differenceInYears, min as minDate} from 'date-fns';
 import {getBlogPostUrl} from '../../utils';
 
 interface Data {
@@ -93,7 +93,7 @@ export default function BlogIndex(): ReactElement {
 }
 
 const Subtitle = styled.p`
-  color: #ccc;
+  color: var(--text-color-secondary);
   font-size: 75%;
 `;
 
