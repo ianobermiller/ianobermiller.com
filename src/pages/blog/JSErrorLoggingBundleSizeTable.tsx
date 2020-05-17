@@ -1,6 +1,6 @@
-import styled from "@emotion/styled";
-import React from "react";
-import data from "./js-error-logging-bundle-size.json";
+import styled from '@emotion/styled';
+import React from 'react';
+import data from './js-error-logging-bundle-size.json';
 
 export default function JSErrorLoggingBundleSizeTable() {
   return (
@@ -20,7 +20,7 @@ export default function JSErrorLoggingBundleSizeTable() {
               <a href={entry.url}>{entry.name}</a>
             </td>
             <td>
-              {entry.source.startsWith("http") ? (
+              {entry.source.startsWith('http') ? (
                 <a href={entry.source}>{entry.source}</a>
               ) : (
                 <pre>{entry.source}</pre>

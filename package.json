@@ -48,5 +48,12 @@
   },
   "devDependencies": {
     "prettier": "^1.8.2"
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "bracketSpacing": false,
+    "jsxBracketSameLine": true,
+    "singleQuote": true,
+    "trailingComma": "all"
   }
 }
