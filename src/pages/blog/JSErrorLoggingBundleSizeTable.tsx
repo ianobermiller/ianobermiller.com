@@ -8,8 +8,8 @@ export default function JSErrorLoggingBundleSizeTable() {
       <thead>
         <tr>
           <th>Name</th>
-          <th>Source</th>
           <th>Min+Gzip kB</th>
+          <th>Source</th>
           <th>Updated</th>
         </tr>
       </thead>
@@ -19,6 +19,7 @@ export default function JSErrorLoggingBundleSizeTable() {
             <td>
               <a href={entry.url}>{entry.name}</a>
             </td>
+            <td align="center">{entry.minzipSizeInKB}</td>
             <td>
               {entry.source.startsWith('http') ? (
                 <a href={entry.source}>{entry.source}</a>
@@ -26,7 +27,6 @@ export default function JSErrorLoggingBundleSizeTable() {
                 <pre>{entry.source}</pre>
               )}
             </td>
-            <td>{entry.minzipSizeInKB}</td>
             <td>{new Date(entry.lastUpdated * 1000).toLocaleDateString()}</td>
           </tr>
         ))}
