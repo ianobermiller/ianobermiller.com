@@ -1,4 +1,7 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "typescript.format.enable": false
+  "typescript.format.enable": false,
+  "files.associations": {
+    "*.js": "javascriptreact"
+  }
 }
