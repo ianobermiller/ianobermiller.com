@@ -5,6 +5,7 @@ import Link from 'gatsby-link';
 import React, {ReactElement, ReactNodeArray} from 'react';
 import Helmet from 'react-helmet';
 import './areset.css';
+import ColorSchemePicker from './ColorSchemePicker';
 import DateText from './DateText';
 import './layout.scss';
 
@@ -51,6 +52,8 @@ export default function Layout(props: Props): ReactElement {
         </h1>
         <h2>Part time hacker, full time dad.</h2>
       </Header>
+
+      <ColorSchemePicker />
 
       <Nav>
         <ul>
