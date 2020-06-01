@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 import Link from 'gatsby-link';
-import React, {ReactElement, ReactNodeArray} from 'react';
+import React, {ReactElement, ReactNode} from 'react';
 import {Helmet} from 'react-helmet';
 import './areset.css';
 import ColorSchemePicker from './ColorSchemePicker';
@@ -10,7 +10,7 @@ import DateText from './DateText';
 import './layout.scss';
 
 interface Props {
-  children: ReactNodeArray;
+  children: ReactNode;
   pageContext?: {
     frontmatter: {
       date?: string;

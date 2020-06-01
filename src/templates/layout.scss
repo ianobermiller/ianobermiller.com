@@ -56,6 +56,13 @@ textarea {
   padding: 0;
 }
 
+// Uncomment to show a grid
+// body {
+//   background-position-y: -1px;
+//   background-size: var(--grid-size) var(--grid-size);
+//   background-image: linear-gradient(to bottom, pink 1px, transparent 1px);
+// }
+
 #gatsby-noscript {
   display: none;
 }
