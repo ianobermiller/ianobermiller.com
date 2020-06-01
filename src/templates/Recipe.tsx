@@ -57,11 +57,13 @@ export default function Recipe(props: Props): ReactElement {
 
 const Ingredient = styled.li`
   list-style-type: disc;
+  margin-left: var(--space-l);
 `;
 
 const Direction = styled.li`
   list-style-type: decimal;
   margin-bottom: var(--space-m);
+  margin-left: var(--space-l);
 `;
 
 export const pageQuery = graphql`
