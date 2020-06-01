@@ -44,7 +44,7 @@ export default function RecipesIndex(): ReactElement {
     .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
-    <Layout pageContext={{frontmatter: {title: 'Recipes'}}}>
+    <Layout title="Recipes">
       <ul>
         {recipes.map(({name, url}, index) => {
           return (

@@ -27,8 +27,7 @@ type Props = {
 export default function Recipe(props: Props): ReactElement {
   const recipe = props.data.file.childRecipesJson;
   return (
-    <Layout pageContext={{frontmatter: {title: 'Recipe NAME'}}}>
-      <h1>{recipe.name}</h1>
+    <Layout title={recipe.name}>
       {recipe.description && (
         <p>
           <i>{recipe.description}</i>

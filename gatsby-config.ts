@@ -98,7 +98,7 @@ export const plugins = [
     resolve: 'gatsby-plugin-mdx',
     options: {
       defaultLayouts: {
-        default: require.resolve('./src/templates/Layout.tsx'),
+        default: require.resolve('./src/templates/Post.tsx'),
       },
       gatsbyRemarkPlugins: [
         {

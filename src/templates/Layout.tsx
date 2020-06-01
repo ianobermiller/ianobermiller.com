@@ -1,42 +1,17 @@
 import styled from '@emotion/styled';
-import format from 'date-fns/format';
-import parseISO from 'date-fns/parseISO';
 import Link from 'gatsby-link';
 import React, {ReactElement, ReactNode} from 'react';
 import {Helmet} from 'react-helmet';
 import './areset.css';
 import ColorSchemePicker from './ColorSchemePicker';
-import DateText from './DateText';
 import './layout.scss';
 
 interface Props {
   children: ReactNode;
-  pageContext?: {
-    frontmatter: {
-      date?: string;
-      title?: string;
-      type?: string;
-    };
-  };
+  title?: string;
 }
 
-export default function Layout(props: Props): ReactElement {
-  let title = '';
-  let isPost;
-  let dateString;
-  let isMarkdown = false;
-  if (props.pageContext) {
-    const {date, title: pageTitle, type} = props.pageContext.frontmatter;
-    title = pageTitle;
-    isPost = type === 'post';
-    isMarkdown = !!type;
-    try {
-      dateString = format(parseISO(date), 'yyyy-MM-dd');
-    } catch {
-      dateString = date;
-    }
-  }
-
+export default function Layout({children, title}: Props): ReactElement {
   return (
     <Root>
       <Helmet htmlAttributes={{lang: 'en'}}>
@@ -70,10 +45,9 @@ export default function Layout(props: Props): ReactElement {
         </ul>
       </Nav>
 
-      <Content className={`${isMarkdown ? 'markdown' : ''}`}>
-        {isPost && title && <h1>{title}</h1>}
-        {isPost && dateString && <DateText>Posted {dateString}</DateText>}
-        {props.children}
+      <Content>
+        {title && <h1>{title}</h1>}
+        {children}
       </Content>
 
       <Footer>
