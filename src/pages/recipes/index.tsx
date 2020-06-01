@@ -61,7 +61,7 @@ export default function RecipesIndex(): ReactElement {
 
 const Subtitle = styled.p`
   color: var(--text-color-secondary);
-  font-size: 75%;
+  font-size: var(--font-size-s);
 `;
 
 const Recipe = styled.li`

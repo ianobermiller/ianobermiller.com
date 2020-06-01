@@ -6,6 +6,14 @@ $dark-accent: lighten($accent, 45%);
   --space-l: 32px;
   --space-xl: 48px;
 
+  --font-size-s: 14px;
+  --font-size-m: 18px;
+  --font-size-code: 15px;
+  --font-size-h1: 36px;
+  --font-size-h2: 24px;
+  --font-size-h3: 20px;
+  --font-size-title: 48px;
+
   --accent-color: #{$accent};
   --accent-color-hover: #{darken($accent, 20%)};
   --accent-color-quote: #{lighten($accent, 62%)};
@@ -52,7 +60,7 @@ textarea {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol';
-  font-size: 18px;
+  font-size: var(--font-size-m);
   line-height: var(--space-l);
   margin: 0;
   padding: 0;
@@ -90,19 +98,19 @@ nav {
 }
 
 h1 {
-  font-size: 36px;
+  font-size: var(--font-size-h1);
   line-height: var(--space-xl);
   margin: var(--space-l) 0;
 }
 
 h2 {
-  font-size: 24px;
+  font-size: var(--font-size-h2);
   line-height: var(--space-l);
   margin: var(--space-m) 0;
 }
 
 h3 {
-  font-size: 20px;
+  font-size: var(--font-size-h3);
   line-height: var(--space-l);
   margin: var(--space-m) 0;
 }
@@ -144,7 +152,7 @@ img {
   }
 
   small {
-    font-size: 75%;
+    font-size: var(--font-size-s);
   }
 }
 
@@ -166,7 +174,7 @@ code,
 pre {
   font-family: Menlo, Monaco, Consolas, 'Bitstream Vera Sans Mono',
     'Courier New', Courier, monospace;
-  font-size: 15px;
+  font-size: var(--font-size-code);
   hyphens: none;
   line-height: var(--space-l);
   margin: 0;
@@ -194,7 +202,7 @@ code {
     &::before {
       color: var(--accent-color);
       content: attr(data-language);
-      font-size: 80%;
+      font-size: var(--font-size-s);
       font-weight: 300;
       letter-spacing: 0.2ex;
       position: absolute;

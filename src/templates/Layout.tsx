@@ -95,34 +95,20 @@ const Header = styled.header`
   text-transform: lowercase;
 
   & > h1 {
-    font-size: 48px;
+    font-size: var(--font-size-title);
     margin: 0;
   }
 
   & > h2 {
     color: var(--footer-text-color);
-    font-size: 24px;
     margin: 0;
-  }
-
-  @media screen and (max-device-width: ${WIDTH}) {
-    float: none;
-    margin: 0 0 10px 0;
-
-    & > h1 {
-      font-size: 36px;
-    }
-    & > h2 {
-      font-size: 20px;
-    }
   }
 `;
 
 const Nav = styled.nav`
-  /* float: right; */
-  font-size: 28px;
+  font-size: var(--font-size-h2);
   text-transform: lowercase;
-  margin-top: var(--space-l);
+  margin: var(--space-m) 0 var(--space-l) 0;
   padding: 0;
 
   & ul {
@@ -144,19 +130,6 @@ const Nav = styled.nav`
   & a.active {
     text-decoration: underline;
   }
-
-  @media screen and (max-device-width: ${WIDTH}) {
-    float: none;
-
-    font-size: 24px;
-    margin: var(--space-m) 0;
-
-    & li {
-      & :not(:last-child) {
-        margin-right: 24px;
-      }
-    }
-  }
 `;
 
 const Content = styled.section`
@@ -164,9 +137,9 @@ const Content = styled.section`
 `;
 
 const Footer = styled.footer`
-  margin-top: calc(var(--space-l) * 3);
+  margin-top: var(--space-xl);
 `;
 const Disclaimer = styled.p`
-  font-size: 12px;
+  font-size: var(--font-size-s);
   opacity: 0.8;
 `;
