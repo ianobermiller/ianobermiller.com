@@ -180,6 +180,12 @@ pre {
   word-break: break-all;
 }
 
+code {
+  // Prevent mixed prose and code in paragraphs from messing up the line-height
+  // and throwing off the grid.
+  vertical-align: top;
+}
+
 .gatsby-highlight {
   background: var(--background-color-code);
   display: block;
