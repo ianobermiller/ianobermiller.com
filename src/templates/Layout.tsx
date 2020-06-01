@@ -39,7 +39,12 @@ export default function Layout({children, title}: Props): ReactElement {
           </li>
           <li>
             <Link activeClassName="active" partiallyActive={true} to="/blog">
-              posts
+              Posts
+            </Link>
+          </li>
+          <li>
+            <Link activeClassName="active" partiallyActive={true} to="/recipes">
+              Recipes
             </Link>
           </li>
         </ul>
@@ -86,8 +91,7 @@ const Root = styled.main`
 
 const Header = styled.header`
   display: block;
-  float: left;
-  margin-bottom: var(--space-xl);
+  margin-bottom: var(--space-l);
   text-transform: lowercase;
 
   & > h1 {
@@ -115,10 +119,10 @@ const Header = styled.header`
 `;
 
 const Nav = styled.nav`
-  float: right;
+  /* float: right; */
   font-size: 28px;
   text-transform: lowercase;
-  margin-top: var(--space-xl);
+  margin-top: var(--space-l);
   padding: 0;
 
   & ul {
@@ -145,7 +149,7 @@ const Nav = styled.nav`
     float: none;
 
     font-size: 24px;
-    margin: 10px 0;
+    margin: var(--space-m) 0;
 
     & li {
       & :not(:last-child) {
