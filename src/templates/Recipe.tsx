@@ -61,7 +61,7 @@ const Ingredient = styled.li`
 
 const Direction = styled.li`
   list-style-type: decimal;
-  margin-bottom: var(--space-l);
+  margin-bottom: var(--space-m);
 `;
 
 export const pageQuery = graphql`

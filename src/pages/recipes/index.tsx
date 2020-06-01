@@ -45,6 +45,7 @@ export default function RecipesIndex(): ReactElement {
 
   return (
     <Layout>
+      <Subtitle>{recipes.length} recipes</Subtitle>
       <ul>
         {recipes.map(({name, url}, index) => {
           return (
@@ -58,12 +59,17 @@ export default function RecipesIndex(): ReactElement {
   );
 }
 
+const Subtitle = styled.p`
+  color: var(--text-color-secondary);
+  font-size: 75%;
+`;
+
 const Recipe = styled.li`
-  margin: 32px 0;
+  margin: var(--space-m) 0;
 `;
 
 const RecipeLink = styled(Link)`
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 300;
   text-decoration: none;
 

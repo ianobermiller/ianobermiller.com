@@ -108,7 +108,7 @@ const Post = styled.li`
 
 const PostLink = styled(Link)`
   display: block;
-  margin: 32px 0;
+  margin: var(--space-m) 0;
   text-decoration: none;
 
   @media screen and (max-device-width: 480px) {
@@ -117,7 +117,7 @@ const PostLink = styled(Link)`
 `;
 
 const PostTitle = styled.div`
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 300;
 
   a:hover & {
