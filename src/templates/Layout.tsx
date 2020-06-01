@@ -80,13 +80,14 @@ const Root = styled.main`
   margin: 0 auto;
   max-width: ${WIDTH};
   min-height: 100vh;
-  padding: var(--grid-size);
+  padding: var(--space-l);
   position: relative;
 `;
 
 const Header = styled.header`
   display: block;
   float: left;
+  margin-bottom: var(--space-xl);
   text-transform: lowercase;
 
   & > h1 {
@@ -97,7 +98,7 @@ const Header = styled.header`
   & > h2 {
     color: var(--footer-text-color);
     font-size: 24px;
-    margin-top: 0;
+    margin: 0;
   }
 
   @media screen and (max-device-width: ${WIDTH}) {
@@ -117,7 +118,7 @@ const Nav = styled.nav`
   float: right;
   font-size: 28px;
   text-transform: lowercase;
-  margin-top: calc(var(--grid-size) * 2);
+  margin-top: var(--space-xl);
   padding: 0;
 
   & ul {
@@ -128,7 +129,7 @@ const Nav = styled.nav`
     display: inline-block;
 
     & :not(:last-child) {
-      margin-right: var(--grid-size);
+      margin-right: var(--space-l);
     }
   }
 
@@ -159,7 +160,7 @@ const Content = styled.section`
 `;
 
 const Footer = styled.footer`
-  margin-top: calc(var(--grid-size) * 3);
+  margin-top: calc(var(--space-l) * 3);
 `;
 const Disclaimer = styled.p`
   font-size: 12px;

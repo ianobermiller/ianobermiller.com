@@ -2,7 +2,9 @@ $accent: #5b2b82;
 $dark-accent: lighten($accent, 45%);
 
 :root {
-  --grid-size: 32px;
+  --space-m: 16px;
+  --space-l: 32px;
+  --space-xl: 48px;
 
   --accent-color: #{$accent};
   --accent-color-hover: #{darken($accent, 20%)};
@@ -51,17 +53,10 @@ textarea {
     Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol';
   font-size: 18px;
-  line-height: var(--grid-size);
+  line-height: var(--space-l);
   margin: 0;
   padding: 0;
 }
-
-// Uncomment to show a grid
-// body {
-//   background-position-y: -1px;
-//   background-size: var(--grid-size) var(--grid-size);
-//   background-image: linear-gradient(to bottom, pink 1px, transparent 1px);
-// }
 
 #gatsby-noscript {
   display: none;
@@ -96,20 +91,20 @@ nav {
 
 h1 {
   font-size: 36px;
-  line-height: calc(var(--grid-size) * 2);
-  margin: var(--grid-size) 0;
+  line-height: var(--space-xl);
+  margin: var(--space-l) 0;
 }
 
 h2 {
   font-size: 24px;
-  line-height: var(--grid-size);
-  margin: var(--grid-size) 0;
+  line-height: var(--space-l);
+  margin: var(--space-l) 0;
 }
 
 h3 {
   font-size: 20px;
-  line-height: var(--grid-size);
-  margin: var(--grid-size) 0;
+  line-height: var(--space-l);
+  margin: var(--space-l) 0;
 }
 
 img {
@@ -134,10 +129,10 @@ img {
   blockquote {
     background: var(--accent-color-quote);
     border-left: solid 4px var(--accent-color);
-    margin-top: calc(var(--grid-size) / -2);
-    margin-bottom: calc(var(--grid-size) / -2);
-    margin-left: calc(var(--grid-size) / -2);
-    padding: calc(var(--grid-size) / 2) 12px;
+    margin-top: -var(--space-m);
+    margin-bottom: -var(--space-m);
+    margin-left: -var(--space-m);
+    padding: var(--space-m) 12px;
   }
 
   blockquote > :first-child {
@@ -157,7 +152,7 @@ p,
 ol,
 ul,
 pre {
-  margin: var(--grid-size) 0;
+  margin: var(--space-l) 0;
 }
 
 ol,
@@ -173,7 +168,7 @@ pre {
     'Courier New', Courier, monospace;
   font-size: 15px;
   hyphens: none;
-  line-height: var(--grid-size);
+  line-height: var(--space-l);
   margin: 0;
   overflow: visible;
   white-space: pre-wrap;
@@ -189,10 +184,10 @@ code {
 .gatsby-highlight {
   background: var(--background-color-code);
   display: block;
-  margin-top: calc(var(--grid-size) / -2);
-  margin-bottom: calc(var(--grid-size) / -2);
-  margin-left: calc(var(--grid-size) / -2);
-  padding: calc(var(--grid-size) / 2);
+  margin-top: -var(--space-m);
+  margin-bottom: -var(--space-m);
+  margin-left: -var(--space-m);
+  padding: var(--space-m);
   position: relative;
 
   @media screen and (min-device-width: 720px) {

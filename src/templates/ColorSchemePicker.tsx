@@ -66,13 +66,13 @@ const Button = styled.button`
   color: inherit;
   cursor: pointer;
   display: flex;
-  height: var(--grid-size);
+  height: var(--space-l);
   justify-content: center;
   outline: none;
   position: absolute;
-  right: var(--grid-size);
-  top: var(--grid-size);
-  width: var(--grid-size);
+  right: var(--space-l);
+  top: var(--space-l);
+  width: var(--space-l);
 
   &:focus {
     box-shadow: 0 0 6px 0 var(--accent-color);

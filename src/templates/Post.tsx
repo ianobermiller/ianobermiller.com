@@ -43,5 +43,5 @@ const Ingredient = styled.li`
 
 const Direction = styled.li`
   list-style-type: decimal;
-  margin-bottom: var(--grid-size);
+  margin-bottom: var(--space-l);
 `;

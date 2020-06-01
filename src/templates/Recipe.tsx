@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import {graphql} from 'gatsby';
 import React, {ReactElement} from 'react';
 import Layout from './Layout';
 
@@ -60,7 +61,7 @@ const Ingredient = styled.li`
 
 const Direction = styled.li`
   list-style-type: decimal;
-  margin-bottom: var(--grid-size);
+  margin-bottom: var(--space-l);
 `;
 
 export const pageQuery = graphql`
