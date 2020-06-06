@@ -1,4 +1,4 @@
-import {GatsbyNode} from 'gatsby';
+import {Actions, CreatePagesArgs, GatsbyNode} from 'gatsby';
 import {createFilePath} from 'gatsby-source-filesystem';
 import {resolve} from 'path';
 
@@ -7,7 +7,13 @@ export const createPages: GatsbyNode['createPages'] = async ({
   graphql,
 }) => {
   const {createPage} = actions;
+  await createRecipePages(graphql, createPage);
+};
 
+async function createRecipePages(
+  graphql: CreatePagesArgs['graphql'],
+  createPage: Actions['createPage'],
+) {
   const allRecipes: {
     data?: {allFile: {nodes: {id: string; name: string}[]}};
   } = await graphql(`
@@ -32,7 +38,7 @@ export const createPages: GatsbyNode['createPages'] = async ({
       },
     });
   });
-};
+}
 
 // https://www.gatsbyjs.org/docs/mdx/programmatically-creating-pages/
 export const onCreateNode: GatsbyNode['onCreateNode'] = ({
