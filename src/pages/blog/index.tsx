@@ -6,19 +6,19 @@ import {graphql, Link, useStaticQuery} from 'gatsby';
 import React, {ReactElement} from 'react';
 import DateText from '../../templates/DateText';
 import Layout from '../../templates/Layout';
-import {getBlogPostUrl} from '../../utils';
 
 interface Data {
   allMdx: {
-    edges: [
+    nodes: [
       {
-        node: {
-          id: string;
-          fileAbsolutePath: string;
-          frontmatter: {
-            date: string;
-            title: string;
-          };
+        id: string;
+        fields: {
+          slug: string;
+        };
+        fileAbsolutePath: string;
+        frontmatter: {
+          date: string;
+          title: string;
         };
       },
     ];
@@ -27,7 +27,7 @@ interface Data {
 
 export default function BlogIndex(): ReactElement {
   const {
-    allMdx: {edges},
+    allMdx: {nodes},
   } = useStaticQuery<Data>(graphql`
     query blogIndex {
       allMdx(
@@ -35,21 +35,22 @@ export default function BlogIndex(): ReactElement {
         limit: 1000
         filter: {frontmatter: {type: {eq: "post"}}}
       ) {
-        edges {
-          node {
-            id
-            fileAbsolutePath
-            frontmatter {
-              title
-              date
-            }
+        nodes {
+          id
+          fields {
+            slug
+          }
+          fileAbsolutePath
+          frontmatter {
+            title
+            date
           }
         }
       }
     }
   `);
 
-  const posts = edges.map(({node}) => {
+  const posts = nodes.map(node => {
     let date;
     let dateString;
     try {
@@ -61,7 +62,7 @@ export default function BlogIndex(): ReactElement {
 
     return {
       id: node.id,
-      url: getBlogPostUrl(node),
+      url: node.fields.slug,
       title: node.frontmatter.title,
       date,
       dateString,

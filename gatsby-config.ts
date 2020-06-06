@@ -1,5 +1,4 @@
 import {GatsbyConfig} from 'gatsby';
-import {getBlogPostUrl} from './src/utils';
 
 export const siteMetadata = {
   title: 'Ian Obermiller',
@@ -10,14 +9,15 @@ type SerializeArgs = {
   query: {
     site: GatsbyConfig;
     allMdx: {
-      edges: [
+      nodes: [
         {
-          node: {
-            fileAbsolutePath: string;
-            frontmatter: {
-              date: string;
-              title: string;
-            };
+          fields: {
+            slug: string;
+          };
+          fileAbsolutePath: string;
+          frontmatter: {
+            date: string;
+            title: string;
           };
         },
       ];
@@ -45,11 +45,11 @@ export const plugins = [
       feeds: [
         {
           serialize: ({query: {site, allMdx}}: SerializeArgs) => {
-            return allMdx.edges.map(edge => {
-              return Object.assign({}, edge.node.frontmatter, {
-                description: edge.node.frontmatter.title,
-                date: edge.node.frontmatter.date,
-                url: site.siteMetadata.siteUrl + getBlogPostUrl(edge.node),
+            return allMdx.nodes.map(node => {
+              return Object.assign({}, node.frontmatter, {
+                description: node.frontmatter.title,
+                date: node.frontmatter.date,
+                url: site.siteMetadata.siteUrl + node.fields.slug,
               });
             });
           },
@@ -63,6 +63,9 @@ export const plugins = [
                   edges {
                     node {
                       id
+                      fields {
+                        slug
+                      }
                       fileAbsolutePath
                       frontmatter {
                         title
