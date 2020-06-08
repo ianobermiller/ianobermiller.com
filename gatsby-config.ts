@@ -14,7 +14,6 @@ type SerializeArgs = {
           fields: {
             slug: string;
           };
-          fileAbsolutePath: string;
           frontmatter: {
             date: string;
             title: string;
@@ -54,28 +53,25 @@ export const plugins = [
             });
           },
           query: `
-              {
-                allMdx(
-                  sort: {order: DESC, fields: [frontmatter___date]}
-                  limit: 1000
-                  filter: {frontmatter: {type: {eq: "post"}}}
-                ) {
-                  edges {
-                    node {
-                      id
-                      fields {
-                        slug
-                      }
-                      fileAbsolutePath
-                      frontmatter {
-                        title
-                        date
-                      }
-                    }
+            {
+              allMdx(
+                sort: {order: DESC, fields: [frontmatter___date]}
+                limit: 1000
+                filter: {frontmatter: {type: {eq: "post"}}}
+              ) {
+                nodes {
+                  id
+                  fields {
+                    slug
+                  }
+                  frontmatter {
+                    title
+                    date
                   }
                 }
               }
-            `,
+            }
+          `,
           output: '/rss.xml',
           title: "Ian Obermiller's RSS Feed",
         },
