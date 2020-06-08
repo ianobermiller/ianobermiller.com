@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 import React, {ReactElement, ReactNode} from 'react';
@@ -20,7 +19,7 @@ export default function Post(props: Props): ReactElement {
   let title = '';
   let dateString;
   if (props.pageContext) {
-    const {date, title: pageTitle, type} = props.pageContext.frontmatter;
+    const {date, title: pageTitle} = props.pageContext.frontmatter;
     title = pageTitle;
     try {
       dateString = format(parseISO(date), 'yyyy-MM-dd');
@@ -36,12 +35,3 @@ export default function Post(props: Props): ReactElement {
     </Layout>
   );
 }
-
-const Ingredient = styled.li`
-  list-style-type: disc;
-`;
-
-const Direction = styled.li`
-  list-style-type: decimal;
-  margin-bottom: var(--space-l);
-`;
