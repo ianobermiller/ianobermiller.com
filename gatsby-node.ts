@@ -1,6 +1,6 @@
 import {Actions, CreatePagesArgs, GatsbyNode} from 'gatsby';
 import {createFilePath} from 'gatsby-source-filesystem';
-import {resolve} from 'path';
+import path from 'path';
 
 export const createPages: GatsbyNode['createPages'] = async ({
   actions,
@@ -32,10 +32,8 @@ async function createRecipePages(
 
     createPage({
       path: `recipes/${name}`,
-      component: resolve(__dirname, 'src/templates/Recipe.tsx'),
-      context: {
-        id,
-      },
+      component: path.resolve('src/templates/Recipe.tsx'),
+      context: {id},
     });
   });
 }
