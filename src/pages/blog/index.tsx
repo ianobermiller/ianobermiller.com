@@ -15,7 +15,6 @@ interface Data {
         fields: {
           slug: string;
         };
-        fileAbsolutePath: string;
         frontmatter: {
           date: string;
           title: string;
@@ -40,7 +39,6 @@ export default function BlogIndex(): ReactElement {
           fields {
             slug
           }
-          fileAbsolutePath
           frontmatter {
             title
             date
