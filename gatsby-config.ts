@@ -86,12 +86,6 @@ export const plugins = [
       path: `${__dirname}/src/pages`,
     },
   },
-  {
-    resolve: 'gatsby-plugin-page-creator',
-    options: {
-      path: `${__dirname}/src/pages`,
-    },
-  },
   'gatsby-plugin-sharp',
   {
     resolve: 'gatsby-plugin-mdx',
