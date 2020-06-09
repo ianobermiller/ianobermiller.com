@@ -3,24 +3,10 @@ import {graphql, Link, useStaticQuery} from 'gatsby';
 import React, {ReactElement} from 'react';
 import Layout from '../../templates/Layout';
 
-interface Data {
-  allFile: {
-    nodes: [
-      {
-        name: string;
-        childRecipesJson: {
-          description: string;
-          name: string;
-        };
-      },
-    ];
-  };
-}
-
 export default function RecipesIndex(): ReactElement {
   const {
     allFile: {nodes},
-  } = useStaticQuery<Data>(graphql`
+  } = useStaticQuery<GatsbyTypes.recipesIndexQuery>(graphql`
     query recipesIndex {
       allFile(filter: {relativeDirectory: {eq: "recipes"}}) {
         nodes {

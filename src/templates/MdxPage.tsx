@@ -4,14 +4,7 @@ import React, {ReactElement} from 'react';
 import Layout from './Layout';
 
 type Props = {
-  data: {
-    mdx: {
-      body: string;
-      frontmatter: {
-        title: string;
-      };
-    };
-  };
+  data: GatsbyTypes.MdxPageQuery;
 };
 
 export default function MdxPage(props: Props): ReactElement {
@@ -25,7 +18,7 @@ export default function MdxPage(props: Props): ReactElement {
 }
 
 export const pageQuery = graphql`
-  query MdxPageQuery($id: String) {
+  query MdxPage($id: String) {
     mdx(id: {eq: $id}) {
       id
       body

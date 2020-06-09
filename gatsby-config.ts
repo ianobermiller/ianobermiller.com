@@ -1,4 +1,10 @@
 import {GatsbyConfig} from 'gatsby';
+import type {PluginOptions as TypegenPluginOptions} from 'gatsby-plugin-typegen/types';
+
+type Plugin =
+  | string
+  | {resolve: string; options: object}
+  | {resolve: `gatsby-plugin-typegen`; options: TypegenPluginOptions};
 
 export const siteMetadata = {
   title: 'Ian Obermiller',
@@ -24,7 +30,7 @@ type SerializeArgs = {
   };
 };
 
-export const plugins = [
+export const plugins: Array<Plugin> = [
   'gatsby-plugin-react-helmet',
   'gatsby-plugin-emotion',
   'gatsby-plugin-typescript',
@@ -114,4 +120,15 @@ export const plugins = [
   },
   'gatsby-plugin-sass',
   'gatsby-plugin-sitemap',
+  {
+    resolve: 'gatsby-plugin-typegen',
+    options: {
+      emitSchema: {
+        'src/__generated__/gatsby-introspection.json': true,
+      },
+      emitPluginDocuments: {
+        'src/__generated__/gatsby-plugin-documents.graphql': true,
+      },
+    },
+  },
 ];

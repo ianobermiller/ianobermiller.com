@@ -7,27 +7,10 @@ import React, {ReactElement} from 'react';
 import DateText from '../../templates/DateText';
 import Layout from '../../templates/Layout';
 
-interface Data {
-  allMdx: {
-    nodes: [
-      {
-        id: string;
-        fields: {
-          slug: string;
-        };
-        frontmatter: {
-          date: string;
-          title: string;
-        };
-      },
-    ];
-  };
-}
-
 export default function BlogIndex(): ReactElement {
   const {
     allMdx: {nodes},
-  } = useStaticQuery<Data>(graphql`
+  } = useStaticQuery<GatsbyTypes.blogIndexQuery>(graphql`
     query blogIndex {
       allMdx(
         sort: {order: DESC, fields: [frontmatter___date]}

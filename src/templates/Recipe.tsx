@@ -4,25 +4,7 @@ import React, {ReactElement} from 'react';
 import Layout from './Layout';
 
 type Props = {
-  data: {
-    file: {
-      childRecipesJson: {
-        description: string | null;
-        directions: string[];
-        id: string;
-        ingredientGroups: Array<{
-          name: string;
-          ingredients: string[];
-        }>;
-        name: string;
-        servings: string;
-        time: {
-          prep: string;
-          total: string;
-        };
-      };
-    };
-  };
+  data: GatsbyTypes.RecipeQuery;
 };
 
 export default function Recipe(props: Props): ReactElement {
@@ -67,7 +49,7 @@ const Direction = styled.li`
 `;
 
 export const pageQuery = graphql`
-  query RecipeQuery($id: String) {
+  query Recipe($id: String) {
     file(id: {eq: $id}) {
       childRecipesJson {
         description

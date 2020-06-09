@@ -3,11 +3,7 @@ import * as React from 'react';
 import Layout from '../templates/Layout';
 
 type Props = {
-  data: {
-    allSitePage: {
-      nodes: Array<{path: string}>;
-    };
-  };
+  data: GatsbyTypes.NotFoundPageQuery;
 };
 
 export default function NotFoundPage(props: Props) {
@@ -32,7 +28,7 @@ export default function NotFoundPage(props: Props) {
 }
 
 export const pageQuery = graphql`
-  query NotFoundQuery {
+  query NotFoundPage {
     allSitePage(sort: {fields: path}) {
       nodes {
         path

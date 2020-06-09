@@ -8,15 +8,7 @@ import DateText from './DateText';
 import Layout from './Layout';
 
 type Props = {
-  data: {
-    mdx: {
-      body: string;
-      frontmatter: {
-        date: string;
-        title: string;
-      };
-    };
-  };
+  data: GatsbyTypes.BlogPostQuery;
   pageContext: {
     relatedPosts: Array<{
       name: string;
@@ -58,7 +50,7 @@ const RelatedPosts = styled.ul`
 `;
 
 export const pageQuery = graphql`
-  query BlogPostQuery($id: String) {
+  query BlogPost($id: String) {
     mdx(id: {eq: $id}) {
       id
       body
