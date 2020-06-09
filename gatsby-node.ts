@@ -102,11 +102,18 @@ async function createBlogPosts(
     };
   } = await graphql(`
     query BlogPostsQuery {
-      allMdx(filter: {fields: {type: {eq: "post"}}}) {
+      allMdx(
+        sort: {order: DESC, fields: [frontmatter___date]}
+        limit: 1000
+        filter: {fields: {type: {eq: "post"}}}
+      ) {
         nodes {
           id
           fields {
             slug
+          }
+          frontmatter {
+            title
           }
         }
       }
@@ -115,10 +122,28 @@ async function createBlogPosts(
 
   const posts = result.data.allMdx.nodes;
   posts.forEach(({fields: {slug}, id}, index) => {
+    // Sorted in reverse order
+    const next = posts[index - 1];
+    const prev = posts[index + 1];
+
     createPage({
       path: slug,
       component: path.resolve('./src/templates/Post.tsx'),
-      context: {id},
+      context: {
+        id,
+        relatedPosts: [
+          prev && {
+            name: 'Previous',
+            title: prev.frontmatter.title,
+            slug: prev.fields.slug,
+          },
+          next && {
+            name: 'Next',
+            title: next.frontmatter.title,
+            slug: next.fields.slug,
+          },
+        ].filter(Boolean),
+      },
     });
   });
 }

@@ -1,6 +1,7 @@
+import styled from '@emotion/styled';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
-import {graphql} from 'gatsby';
+import {graphql, Link} from 'gatsby';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 import React, {ReactElement} from 'react';
 import DateText from './DateText';
@@ -15,6 +16,13 @@ type Props = {
         title: string;
       };
     };
+  };
+  pageContext: {
+    relatedPosts: {
+      name: string;
+      title: string;
+      slug: string;
+    }[];
   };
 };
 
@@ -33,9 +41,20 @@ export default function Post(props: Props): ReactElement {
       <div className="markdown">
         <MDXRenderer>{props.data.mdx.body}</MDXRenderer>
       </div>
+      <RelatedPosts>
+        {props.pageContext.relatedPosts.map(({name, title, slug}) => (
+          <li>
+            {name}: <Link to={slug}>{title}</Link>
+          </li>
+        ))}
+      </RelatedPosts>
     </Layout>
   );
 }
+
+const RelatedPosts = styled.ul`
+  margin-top: var(--space-xl);
+`;
 
 export const pageQuery = graphql`
   query BlogPostQuery($id: String) {
