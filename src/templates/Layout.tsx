@@ -18,7 +18,8 @@ export default function Layout({children, title}: Props): ReactElement {
         <title>{(title ? title + ' \u00AB ' : '') + 'Ian Obermiller'}</title>
         <meta
           name="Description"
-          content="Personal site of Christian and software engineer Ian Obermiller."></meta>
+          content="Personal site of Christian and software engineer Ian Obermiller."
+        />
       </Helmet>
 
       <Header>
