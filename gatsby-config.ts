@@ -113,4 +113,5 @@ export const plugins = [
     },
   },
   'gatsby-plugin-sass',
+  'gatsby-plugin-sitemap',
 ];
