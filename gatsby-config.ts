@@ -82,17 +82,14 @@ export const plugins = [
   {
     resolve: 'gatsby-source-filesystem',
     options: {
-      name: 'pages',
-      path: `${__dirname}/src/pages`,
+      name: 'content',
+      path: `${__dirname}/src/content`,
     },
   },
   'gatsby-plugin-sharp',
   {
     resolve: 'gatsby-plugin-mdx',
     options: {
-      defaultLayouts: {
-        default: require.resolve('./src/templates/Post.tsx'),
-      },
       gatsbyRemarkPlugins: [
         {
           resolve: 'gatsby-remark-images',
