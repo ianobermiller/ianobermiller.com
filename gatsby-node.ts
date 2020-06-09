@@ -20,11 +20,11 @@ async function createComponentPages(
   const result: {
     data?: {
       allFile: {
-        nodes: {
+        nodes: Array<{
           absolutePath: string;
           id: string;
           relativeDirectory: string;
-        }[];
+        }>;
       };
     };
   } = await graphql(`
@@ -56,11 +56,11 @@ async function createMdxPages(
   const result: {
     data?: {
       allMdx: {
-        nodes: {
+        nodes: Array<{
           id: string;
           fields: {slug: string};
           frontmatter: {title: string; date: string};
-        }[];
+        }>;
       };
     };
   } = await graphql(`
@@ -93,11 +93,11 @@ async function createBlogPosts(
   const result: {
     data?: {
       allMdx: {
-        nodes: {
+        nodes: Array<{
           id: string;
           fields: {slug: string};
           frontmatter: {title: string; date: string};
-        }[];
+        }>;
       };
     };
   } = await graphql(`
@@ -153,7 +153,7 @@ async function createRecipePages(
   createPage: Actions['createPage'],
 ) {
   const allRecipes: {
-    data?: {allFile: {nodes: {id: string; name: string}[]}};
+    data?: {allFile: {nodes: Array<{id: string; name: string}>}};
   } = await graphql(`
     query AllRecipesQuery {
       allFile(filter: {relativeDirectory: {eq: "recipes"}}) {

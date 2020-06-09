@@ -10,10 +10,10 @@ type Props = {
         description: string | null;
         directions: string[];
         id: string;
-        ingredientGroups: {
+        ingredientGroups: Array<{
           name: string;
           ingredients: string[];
-        }[];
+        }>;
         name: string;
         servings: string;
         time: {

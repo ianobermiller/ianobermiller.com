@@ -18,11 +18,11 @@ type Props = {
     };
   };
   pageContext: {
-    relatedPosts: {
+    relatedPosts: Array<{
       name: string;
       title: string;
       slug: string;
-    }[];
+    }>;
   };
 };
 
