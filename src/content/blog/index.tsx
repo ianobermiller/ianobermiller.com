@@ -32,7 +32,7 @@ export default function BlogIndex(): ReactElement {
       allMdx(
         sort: {order: DESC, fields: [frontmatter___date]}
         limit: 1000
-        filter: {frontmatter: {type: {eq: "post"}}}
+        filter: {fields: {type: {eq: "post"}}}
       ) {
         nodes {
           id

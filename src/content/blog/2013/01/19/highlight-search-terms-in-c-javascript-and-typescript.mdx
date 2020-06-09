@@ -1,7 +1,6 @@
 ---
 title: 'Highlight search terms in C#, Javascript and TypeScript'
 author: iano
-type: post
 date: 2013-01-20T06:32:07+00:00
 url: /blog/2013/01/19/highlight-search-terms-in-c-javascript-and-typescript/
 categories:
@@ -23,8 +22,12 @@ rendered = The **theory** of the **big** **bang** was proposed in....
 
 ## C# Version
 
-<p><small>(note: you may want to return an HtmlString instead to make it easier to call
-from a view.)</small></p>
+<p>
+  <small>
+    (note: you may want to return an HtmlString instead to make it easier to
+    call from a view.)
+  </small>
+</p>
 
 ```csharp
 string HighlightSearchTerms(string text, string query)
@@ -39,7 +42,7 @@ string HighlightSearchTerms(string text, string query)
 
 ```javascript
 function highlightSearchTerms(text, query) {
-  var terms = query.split(' ').map(function(s) {
+  var terms = query.split(' ').map(function (s) {
     return s.replace('|', '\\|');
   });
   var regex = new RegExp('(' + terms.join('|') + ')', 'gi');
@@ -49,11 +52,13 @@ function highlightSearchTerms(text, query) {
 
 ## TypeScript
 
-<p><small>(just the JS version with type annotations)</small></p>
+<p>
+  <small>(just the JS version with type annotations)</small>
+</p>
 
 ```typescript
 function highlightSearchTerms(text: string, query: string): string {
-  var terms = query.split(' ').map(function(s) {
+  var terms = query.split(' ').map(function (s) {
     return s.replace('|', '\\|');
   });
   var regex = new RegExp('(' + terms.join('|') + ')', 'gi');

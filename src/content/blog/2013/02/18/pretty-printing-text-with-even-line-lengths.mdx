@@ -1,7 +1,6 @@
 ---
 title: Pretty printing text with even line lengths
 author: iano
-type: post
 date: 2013-02-19T07:31:15+00:00
 url: /blog/2013/02/18/pretty-printing-text-with-even-line-lengths/
 categories:
@@ -30,7 +29,7 @@ The javascript source, should work in any ES5 compatible browser:
 ```javascript
 function prettyPrint(text, lineLength) {
   var words = text.split(' ');
-  var lengths = words.map(function(w) {
+  var lengths = words.map(function (w) {
     return w.length;
   });
   var opt = [];
@@ -43,7 +42,7 @@ function prettyPrint(text, lineLength) {
       // Sum the lengths of words from i to j
       var len =
         sum(
-          lengths.slice(i, j + 1).map(function(n) {
+          lengths.slice(i, j + 1).map(function (n) {
             return n + 1;
           }),
         ) - 1;
@@ -88,12 +87,12 @@ function sum(numbers) {
   return s;
 }
 
-window.onload = function() {
+window.onload = function () {
   var pre = document.getElementById('formatted'),
     text = document.getElementById('raw-text'),
     length = document.getElementById('line-length');
 
-  var ts = function() {
+  var ts = function () {
     text.setAttribute('cols', length.value);
     pre.innerText = prettyPrint(text.value, Number(length.value));
   };
