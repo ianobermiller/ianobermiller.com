@@ -53,6 +53,11 @@ html {
   overflow: auto;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 body,
 textarea {
   background: var(--background-color);
@@ -62,8 +67,6 @@ textarea {
     'Segoe UI Symbol';
   font-size: var(--font-size-m);
   line-height: var(--space-l);
-  margin: 0;
-  padding: 0;
 }
 
 #gatsby-noscript {
