@@ -7,13 +7,16 @@ type Props = {
   data: {
     mdx: {
       body: string;
+      frontmatter: {
+        title: string;
+      };
     };
   };
 };
 
 export default function MdxPage(props: Props): ReactElement {
   return (
-    <Layout>
+    <Layout title={props.data.mdx.frontmatter.title}>
       <div className="markdown">
         <MDXRenderer>{props.data.mdx.body}</MDXRenderer>
       </div>
@@ -26,6 +29,9 @@ export const pageQuery = graphql`
     mdx(id: {eq: $id}) {
       id
       body
+      frontmatter {
+        title
+      }
     }
   }
 `;

@@ -37,6 +37,7 @@ export default function Post(props: Props): ReactElement {
 
   return (
     <Layout title={title}>
+      <h1>{title}</h1>
       {dateString && <DateText>Posted {dateString}</DateText>}
       <div className="markdown">
         <MDXRenderer>{props.data.mdx.body}</MDXRenderer>

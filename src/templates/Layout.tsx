@@ -8,7 +8,7 @@ import './layout.scss';
 
 interface Props {
   children: ReactNode;
-  title?: string;
+  title: string;
 }
 
 export default function Layout({children, title}: Props): ReactElement {
@@ -50,10 +50,7 @@ export default function Layout({children, title}: Props): ReactElement {
         </ul>
       </Nav>
 
-      <Content>
-        {title && <h1>{title}</h1>}
-        {children}
-      </Content>
+      <Content>{children}</Content>
 
       <Footer>
         <p>

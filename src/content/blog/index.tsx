@@ -71,7 +71,7 @@ export default function BlogIndex(): ReactElement {
   const years = differenceInYears(new Date(), minDate(dates));
 
   return (
-    <Layout>
+    <Layout title="Posts">
       <Subtitle>
         {posts.length} posts over {years} years
       </Subtitle>
