@@ -2611,14 +2611,6 @@ type StringQueryOperatorInput = {
   readonly glob: Maybe<Scalars['String']>;
 };
 
-type blogIndexQueryVariables = {};
-
-
-type blogIndexQuery = { readonly allMdx: { readonly nodes: ReadonlyArray<(
-      Pick<Mdx, 'id'>
-      & { readonly fields: Maybe<Pick<MdxFields, 'slug'>>, readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'title' | 'date'>> }
-    )> } };
-
 type recipesIndexQueryVariables = {};
 
 
@@ -2632,15 +2624,23 @@ type NotFoundPageQueryVariables = {};
 
 type NotFoundPageQuery = { readonly allSitePage: { readonly nodes: ReadonlyArray<Pick<SitePage, 'path'>> } };
 
-type RecipeQueryVariables = {
+type blogIndexQueryVariables = {};
+
+
+type blogIndexQuery = { readonly allMdx: { readonly nodes: ReadonlyArray<(
+      Pick<Mdx, 'id'>
+      & { readonly fields: Maybe<Pick<MdxFields, 'slug'>>, readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'title' | 'date'>> }
+    )> } };
+
+type MdxPageQueryVariables = {
   id: Maybe<Scalars['String']>;
 };
 
 
-type RecipeQuery = { readonly file: Maybe<{ readonly childRecipesJson: Maybe<(
-      Pick<RecipesJson, 'description' | 'directions' | 'id' | 'name' | 'servings'>
-      & { readonly ingredientGroups: Maybe<ReadonlyArray<Maybe<Pick<RecipesJsonIngredientGroups, 'ingredients' | 'name'>>>>, readonly time: Maybe<Pick<RecipesJsonTime, 'prep' | 'total'>> }
-    )> }> };
+type MdxPageQuery = { readonly mdx: Maybe<(
+    Pick<Mdx, 'id' | 'body'>
+    & { readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'title'>> }
+  )> };
 
 type BlogPostQueryVariables = {
   id: Maybe<Scalars['String']>;
@@ -2652,15 +2652,15 @@ type BlogPostQuery = { readonly mdx: Maybe<(
     & { readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'title' | 'date'>> }
   )> };
 
-type MdxPageQueryVariables = {
+type RecipeQueryVariables = {
   id: Maybe<Scalars['String']>;
 };
 
 
-type MdxPageQuery = { readonly mdx: Maybe<(
-    Pick<Mdx, 'id' | 'body'>
-    & { readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'title'>> }
-  )> };
+type RecipeQuery = { readonly file: Maybe<{ readonly childRecipesJson: Maybe<(
+      Pick<RecipesJson, 'description' | 'directions' | 'id' | 'name' | 'servings'>
+      & { readonly ingredientGroups: Maybe<ReadonlyArray<Maybe<Pick<RecipesJsonIngredientGroups, 'ingredients' | 'name'>>>>, readonly time: Maybe<Pick<RecipesJsonTime, 'prep' | 'total'>> }
+    )> }> };
 
 type PagesQueryQueryVariables = {};
 
