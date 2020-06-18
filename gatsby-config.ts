@@ -112,12 +112,6 @@ export const plugins: Array<Plugin> = [
       plugins: ['gatsby-remark-images', 'gatsby-remark-prismjs'],
     },
   },
-  {
-    resolve: 'gatsby-plugin-google-analytics',
-    options: {
-      trackingId: 'UA-703860-1',
-    },
-  },
   'gatsby-plugin-sass',
   'gatsby-plugin-sitemap',
   {
