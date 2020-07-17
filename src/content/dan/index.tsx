@@ -91,7 +91,10 @@ function Agro(): ReactElement {
             <tr>
               <Name>{name.replace(' Futures', '')}</Name>
               <td>
-                {last} {change}
+                {last}{' '}
+                <span style={{color: change.startsWith('-') ? 'red' : 'green'}}>
+                  {change}
+                </span>
               </td>
             </tr>
           ))}
