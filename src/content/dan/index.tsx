@@ -1,50 +1,90 @@
 import styled from '@emotion/styled';
 import React, {ReactElement, useEffect, useState} from 'react';
+import '../../templates/areset.css';
+import '../../templates/layout.scss';
+
+export default function DansQuotes(): ReactElement {
+  return (
+    <Root>
+      <Stockyards />
+      <Agro />
+    </Root>
+  );
+}
 
 type StockyardsData = {
   date: string;
   quotes: {[name: string]: {low: number; high: number}};
 };
 
-export default function DansQuotes(): ReactElement {
-  const [stockyardsData, setStockyardsData] = useState<StockyardsData | null>(
-    null,
-  );
-  useEffect(() => {
-    fetch('https://wrapapi.com/use/ianobermiller/dan/cattle/0.0.4', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        wrapAPIKey: 'BbtXPB9mD1UIvkkZ6npxlwVfpnFoNmaL',
-      }),
-    })
-      .then(res => res.json())
-      .then(json => setStockyardsData(json.data));
-  }, []);
+function Stockyards(): ReactElement {
+  const data = useWrapAPI<StockyardsData>('dan/cattle/0.0.4');
 
-  if (!stockyardsData) {
+  if (!data) {
     return null;
   }
 
-  const {date, quotes} = stockyardsData;
+  const {date, quotes} = data;
 
   return (
-    <Root>
+    <>
       <Heading>Milwaukee Stockyards</Heading>
       <i>{date}</i>
       <table>
         {Object.entries(quotes).map(([name, prices]) => (
           <tr>
-            <td style={{width: 200}}>{name}</td>
+            <Name>{name}</Name>
             <td>
               {prices.low} to {prices.high}
             </td>
           </tr>
         ))}
       </table>
-    </Root>
+    </>
+  );
+}
+
+const INCLUDE_AGRO: {[name: string]: boolean} = {
+  'Corn Futures': true,
+  'Chicago SRW Wheat Futures': true,
+  'Soybean Futures': true,
+};
+
+type AgroData = {
+  quotes: [
+    {
+      last: string;
+      change: string;
+      name: string;
+      updated: string;
+    },
+  ];
+};
+
+function Agro(): ReactElement {
+  const data = useWrapAPI<AgroData>('dan/agro/0.0.2');
+
+  if (!data) {
+    return null;
+  }
+
+  return (
+    <>
+      <Heading>CME Futures</Heading>
+      <i>{data.quotes[0].updated.replace('<br />', '')}</i>
+      <table>
+        {data.quotes
+          .filter(({name}) => INCLUDE_AGRO[name])
+          .map(({name, last, change}) => (
+            <tr>
+              <Name>{name.replace(' Futures', '')}</Name>
+              <td>
+                {last} {change}
+              </td>
+            </tr>
+          ))}
+      </table>
+    </>
   );
 }
 
@@ -55,3 +95,25 @@ const Root = styled.main`
 const Heading = styled.h1`
   margin: 8px 0;
 `;
+
+const Name = styled.td`
+  width: 200px;
+`;
+
+function useWrapAPI<T>(path: string): T | null {
+  const [data, setData] = useState<T | null>(null);
+  useEffect(() => {
+    fetch('https://wrapapi.com/use/ianobermiller/' + path, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        wrapAPIKey: 'BbtXPB9mD1UIvkkZ6npxlwVfpnFoNmaL',
+      }),
+    })
+      .then(res => res.json())
+      .then(json => setData(json.data));
+  }, []);
+  return data;
+}
