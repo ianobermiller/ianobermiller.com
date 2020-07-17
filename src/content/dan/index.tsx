@@ -32,7 +32,11 @@ function Stockyards(): ReactElement {
 
   return (
     <>
-      <Heading>Milwaukee Stockyards</Heading>
+      <Heading>
+        <a href="http://milwaukeestockyards.com/index.cfm?show=10&mid=15">
+          Milwaukee Stockyards
+        </a>
+      </Heading>
       <i>{date}</i>
       <table>
         {Object.entries(quotes).map(([name, prices]) => (
@@ -74,7 +78,11 @@ function Agro(): ReactElement {
 
   return (
     <>
-      <Heading>CME Futures</Heading>
+      <Heading>
+        <a href="https://www.cmegroup.com/trading/agricultural/#grainsAndOilseeds">
+          CME Futures
+        </a>
+      </Heading>
       <i>{data.quotes[0].updated.replace('<br />', '')}</i>
       <table>
         {data.quotes
