@@ -1,11 +1,15 @@
 import styled from '@emotion/styled';
 import React, {ReactElement, useEffect, useState} from 'react';
+import {Helmet} from 'react-helmet';
 import '../../templates/areset.css';
 import '../../templates/layout.scss';
 
 export default function DansQuotes(): ReactElement {
   return (
     <Root>
+      <Helmet htmlAttributes={{lang: 'en'}}>
+        <title>Dan's Quotes</title>
+      </Helmet>
       <Stockyards />
       <Agro />
     </Root>
