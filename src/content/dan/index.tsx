@@ -67,6 +67,7 @@ const INCLUDE_AGRO: {[name: string]: boolean} = {
 type AgroData = {
   quotes: [
     {
+      expirationMonth: string;
       last: string;
       change: string;
       name: string;
@@ -76,7 +77,7 @@ type AgroData = {
 };
 
 function Agro(): ReactElement {
-  const data = useWrapAPI<AgroData>('dan/agro/0.0.2')?.data;
+  const data = useWrapAPI<AgroData>('cme/grain-and-oilseed/0.0.3');
 
   if (!data) {
     return null;
