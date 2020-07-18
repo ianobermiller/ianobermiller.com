@@ -16,13 +16,15 @@ export default function DansQuotes(): ReactElement {
   );
 }
 
+const INCLUDE_CATTLE = ['Prime Holstein Steers', 'Premium Bulls'];
+
 type StockyardsData = {
   date: string;
-  quotes: {[name: string]: {low: number; high: number}};
+  quotes: [{name: string; low: string; high: string}];
 };
 
 function Stockyards(): ReactElement {
-  const data = useWrapAPI<StockyardsData>('dan/cattle/0.0.5');
+  const data = useWrapAPI<StockyardsData>('milwaukeestockyards/quotes/0.0.9');
 
   if (!data) {
     return null;
@@ -39,14 +41,18 @@ function Stockyards(): ReactElement {
       </Heading>
       <i>{date}</i>
       <table>
-        {Object.entries(quotes).map(([name, prices]) => (
-          <tr>
-            <Name>{name}</Name>
-            <td>
-              {prices.low} to {prices.high}
-            </td>
-          </tr>
-        ))}
+        <tbody>
+          {quotes
+            .filter(({name}) => INCLUDE_CATTLE.some(n => name.includes(n)))
+            .map(({name, low, high}) => (
+              <tr key={name}>
+                <Name>{INCLUDE_CATTLE.find(n => name.includes(n))}</Name>
+                <td>
+                  {low} to {high}
+                </td>
+              </tr>
+            ))}
+        </tbody>
       </table>
     </>
   );
@@ -70,7 +76,7 @@ type AgroData = {
 };
 
 function Agro(): ReactElement {
-  const data = useWrapAPI<AgroData>('dan/agro/0.0.2');
+  const data = useWrapAPI<AgroData>('dan/agro/0.0.2')?.data;
 
   if (!data) {
     return null;
@@ -85,19 +91,22 @@ function Agro(): ReactElement {
       </Heading>
       <i>{data.quotes[0].updated.replace('<br />', '')}</i>
       <table>
-        {data.quotes
-          .filter(({name}) => INCLUDE_AGRO[name])
-          .map(({name, last, change}) => (
-            <tr>
-              <Name>{name.replace(' Futures', '')}</Name>
-              <td>
-                {last}{' '}
-                <span style={{color: change.startsWith('-') ? 'red' : 'green'}}>
-                  {change}
-                </span>
-              </td>
-            </tr>
-          ))}
+        <tbody>
+          {data.quotes
+            .filter(({name}) => INCLUDE_AGRO[name])
+            .map(({name, last, change}) => (
+              <tr key={name}>
+                <Name>{name.replace(' Futures', '')}</Name>
+                <td>
+                  {last}{' '}
+                  <span
+                    style={{color: change.startsWith('-') ? 'red' : 'green'}}>
+                    {change}
+                  </span>
+                </td>
+              </tr>
+            ))}
+        </tbody>
       </table>
     </>
   );
@@ -128,7 +137,7 @@ function useWrapAPI<T>(path: string): T | null {
       }),
     })
       .then(res => res.json())
-      .then(json => setData(json.data));
+      .then(setData);
   }, []);
   return data;
 }
