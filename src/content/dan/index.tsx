@@ -22,7 +22,7 @@ type StockyardsData = {
 };
 
 function Stockyards(): ReactElement {
-  const data = useWrapAPI<StockyardsData>('dan/cattle/0.0.4');
+  const data = useWrapAPI<StockyardsData>('dan/cattle/0.0.5');
 
   if (!data) {
     return null;
