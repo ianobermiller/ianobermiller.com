@@ -10,8 +10,12 @@ export default function DansQuotes(): ReactElement {
       <Helmet htmlAttributes={{lang: 'en'}}>
         <title>Dan's Quotes</title>
       </Helmet>
-      <Stockyards />
-      <Agro />
+      <Table>
+        <tbody>
+          <Stockyards />
+          <Agro />
+        </tbody>
+      </Table>
     </Root>
   );
 }
@@ -34,26 +38,26 @@ function Stockyards(): ReactElement {
 
   return (
     <>
-      <Heading>
-        <a href="http://milwaukeestockyards.com/index.cfm?show=10&mid=15">
-          Milwaukee Stockyards
-        </a>
-      </Heading>
-      <i>{date}</i>
-      <table>
-        <tbody>
-          {quotes
-            .filter(({name}) => INCLUDE_CATTLE.some(n => name.includes(n)))
-            .map(({name, low, high}) => (
-              <tr key={name}>
-                <Name>{INCLUDE_CATTLE.find(n => name.includes(n))}</Name>
-                <td>
-                  {low} to {high}
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <tr>
+        <td colSpan={2}>
+          <Heading>
+            <a href="http://milwaukeestockyards.com/index.cfm?show=10&mid=15">
+              Milwaukee Stockyards
+            </a>
+          </Heading>
+        </td>
+      </tr>
+      <DateRow>{date}</DateRow>
+      {quotes
+        .filter(({name}) => INCLUDE_CATTLE.some(n => name.includes(n)))
+        .map(({name, low, high}) => (
+          <tr key={name}>
+            <td>{INCLUDE_CATTLE.find(n => name.includes(n))}</td>
+            <td>
+              {low} to {high}
+            </td>
+          </tr>
+        ))}
     </>
   );
 }
@@ -85,44 +89,64 @@ function Agro(): ReactElement {
 
   return (
     <>
-      <Heading>
-        <a href="https://www.cmegroup.com/trading/agricultural/#grainsAndOilseeds">
-          CME Futures
-        </a>
-      </Heading>
-      <i>{data.quotes[0].updated.replace('<br />', '')}</i>
-      <table>
-        <tbody>
-          {data.quotes
-            .filter(({name}) => INCLUDE_AGRO[name])
-            .map(({name, last, change}) => (
-              <tr key={name}>
-                <Name>{name.replace(' Futures', '')}</Name>
-                <td>
-                  {last}{' '}
-                  <span
-                    style={{color: change.startsWith('-') ? 'red' : 'green'}}>
-                    {change}
-                  </span>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <tr>
+        <td colSpan={2}>
+          <Heading>
+            <a href="https://www.cmegroup.com/trading/agricultural/#grainsAndOilseeds">
+              CME Futures
+            </a>
+          </Heading>
+        </td>
+      </tr>
+      <DateRow>{data.quotes[0].updated.replace('<br />', '')}</DateRow>
+      {data.quotes
+        .filter(({name}) => INCLUDE_AGRO[name])
+        .map(({name, last, change}) => (
+          <tr key={name}>
+            <td>{name.replace(' Futures', '')}</td>
+            <td>
+              {last}{' '}
+              <span style={{color: change.startsWith('-') ? 'red' : 'green'}}>
+                {change}
+              </span>
+            </td>
+          </tr>
+        ))}
     </>
   );
 }
 
+function DateRow({children}: {children: string}) {
+  return (
+    <tr>
+      <DateCell colSpan={2}>{children}</DateCell>
+    </tr>
+  );
+}
+
 const Root = styled.main`
+  font-size: 24px;
+  font-size: 6vw;
+  line-height: 1.2;
   padding: 0 8px;
 `;
 
 const Heading = styled.h1`
+  font-size: 32px;
+  font-size: 10vw;
+  line-height: 1.2;
   margin: 8px 0;
 `;
 
-const Name = styled.td`
-  width: 200px;
+const Table = styled.table`
+  width: 100%;
+`;
+
+const DateCell = styled.td`
+  font-size: 20px;
+  font-size: 4vw;
+  font-style: italic;
+  padding-bottom: 8px;
 `;
 
 function useWrapAPI<T>(path: string): T | null {
