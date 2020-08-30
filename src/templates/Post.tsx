@@ -36,7 +36,7 @@ export default function Post(props: Props): ReactElement {
       </div>
       <RelatedPosts>
         {props.pageContext.relatedPosts.map(({name, title, slug}) => (
-          <li>
+          <li key={slug}>
             {name}: <Link to={slug}>{title}</Link>
           </li>
         ))}
