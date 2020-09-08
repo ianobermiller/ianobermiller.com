@@ -661,6 +661,11 @@ enum FileFieldsEnum {
   childMdx___wordCount___paragraphs = 'childMdx.wordCount.paragraphs',
   childMdx___wordCount___sentences = 'childMdx.wordCount.sentences',
   childMdx___wordCount___words = 'childMdx.wordCount.words',
+  childMdx___exports___timing___state = 'childMdx.exports.timing.state',
+  childMdx___exports___timing___context = 'childMdx.exports.timing.context',
+  childMdx___exports___timing___recoil = 'childMdx.exports.timing.recoil',
+  childMdx___exports___timing___eventEmitterWithState = 'childMdx.exports.timing.eventEmitterWithState',
+  childMdx___exports___timing___eventEmitterWithRef = 'childMdx.exports.timing.eventEmitterWithRef',
   childMdx___fields___slug = 'childMdx.fields.slug',
   childMdx___fields___type = 'childMdx.fields.type',
   childMdx___id = 'childMdx.id',
@@ -835,6 +840,7 @@ type Mdx = Node & {
   readonly tableOfContents: Maybe<Scalars['JSON']>;
   readonly timeToRead: Maybe<Scalars['Int']>;
   readonly wordCount: Maybe<MdxWordCount>;
+  readonly exports: Maybe<MdxExports>;
   readonly fields: Maybe<MdxFields>;
   readonly id: Scalars['ID'];
   readonly parent: Maybe<Node>;
@@ -885,6 +891,30 @@ type MdxEdge = {
   readonly previous: Maybe<Mdx>;
 };
 
+type MdxExports = {
+  readonly timing: Maybe<MdxExportsTiming>;
+};
+
+type MdxExportsFilterInput = {
+  readonly timing: Maybe<MdxExportsTimingFilterInput>;
+};
+
+type MdxExportsTiming = {
+  readonly state: Maybe<Scalars['String']>;
+  readonly context: Maybe<Scalars['String']>;
+  readonly recoil: Maybe<Scalars['String']>;
+  readonly eventEmitterWithState: Maybe<Scalars['String']>;
+  readonly eventEmitterWithRef: Maybe<Scalars['String']>;
+};
+
+type MdxExportsTimingFilterInput = {
+  readonly state: Maybe<StringQueryOperatorInput>;
+  readonly context: Maybe<StringQueryOperatorInput>;
+  readonly recoil: Maybe<StringQueryOperatorInput>;
+  readonly eventEmitterWithState: Maybe<StringQueryOperatorInput>;
+  readonly eventEmitterWithRef: Maybe<StringQueryOperatorInput>;
+};
+
 type MdxFields = {
   readonly slug: Maybe<Scalars['String']>;
   readonly type: Maybe<Scalars['String']>;
@@ -912,6 +942,11 @@ enum MdxFieldsEnum {
   wordCount___paragraphs = 'wordCount.paragraphs',
   wordCount___sentences = 'wordCount.sentences',
   wordCount___words = 'wordCount.words',
+  exports___timing___state = 'exports.timing.state',
+  exports___timing___context = 'exports.timing.context',
+  exports___timing___recoil = 'exports.timing.recoil',
+  exports___timing___eventEmitterWithState = 'exports.timing.eventEmitterWithState',
+  exports___timing___eventEmitterWithRef = 'exports.timing.eventEmitterWithRef',
   fields___slug = 'fields.slug',
   fields___type = 'fields.type',
   id = 'id',
@@ -1019,6 +1054,7 @@ type MdxFilterInput = {
   readonly tableOfContents: Maybe<JSONQueryOperatorInput>;
   readonly timeToRead: Maybe<IntQueryOperatorInput>;
   readonly wordCount: Maybe<MdxWordCountFilterInput>;
+  readonly exports: Maybe<MdxExportsFilterInput>;
   readonly fields: Maybe<MdxFieldsFilterInput>;
   readonly id: Maybe<StringQueryOperatorInput>;
   readonly parent: Maybe<NodeFilterInput>;
@@ -1304,6 +1340,7 @@ type Query_mdxArgs = {
   tableOfContents: Maybe<JSONQueryOperatorInput>;
   timeToRead: Maybe<IntQueryOperatorInput>;
   wordCount: Maybe<MdxWordCountFilterInput>;
+  exports: Maybe<MdxExportsFilterInput>;
   fields: Maybe<MdxFieldsFilterInput>;
   id: Maybe<StringQueryOperatorInput>;
   parent: Maybe<NodeFilterInput>;
@@ -2615,6 +2652,11 @@ type blogIndexQuery = { readonly allMdx: { readonly nodes: ReadonlyArray<(
       & { readonly fields: Maybe<Pick<MdxFields, 'slug'>>, readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'title' | 'date'>> }
     )> } };
 
+type NotFoundPageQueryVariables = {};
+
+
+type NotFoundPageQuery = { readonly allSitePage: { readonly nodes: ReadonlyArray<Pick<SitePage, 'path'>> } };
+
 type recipesIndexQueryVariables = {};
 
 
@@ -2622,11 +2664,6 @@ type recipesIndexQuery = { readonly allFile: { readonly nodes: ReadonlyArray<(
       Pick<File, 'name'>
       & { readonly childRecipesJson: Maybe<Pick<RecipesJson, 'name'>> }
     )> } };
-
-type NotFoundPageQueryVariables = {};
-
-
-type NotFoundPageQuery = { readonly allSitePage: { readonly nodes: ReadonlyArray<Pick<SitePage, 'path'>> } };
 
 type BlogPostQueryVariables = {
   id: Maybe<Scalars['String']>;
