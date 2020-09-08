@@ -62,9 +62,9 @@ body,
 textarea {
   background: var(--background-color);
   color: var(--text-color);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-    'Segoe UI Symbol';
+  font-family: system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   font-size: var(--font-size-m);
   line-height: var(--space-l);
 }
@@ -175,8 +175,9 @@ ul {
 
 code,
 pre {
-  font-family: Menlo, Monaco, Consolas, 'Bitstream Vera Sans Mono',
-    'Courier New', Courier, monospace;
+  font-family: Menlo, Monaco, Consolas,
+    'Bitstream Vera Sans Mono', 'Courier New', Courier,
+    monospace;
   font-size: var(--font-size-code);
   hyphens: none;
   line-height: var(--space-l);
@@ -212,7 +213,8 @@ code {
       text-transform: uppercase;
       top: 0;
       transform-origin: right top 0;
-      transform: translate(calc(-100% - 48px), 0) rotate(-90deg);
+      transform: translate(calc(-100% - 48px), 0)
+        rotate(-90deg);
     }
   }
 }
@@ -295,4 +297,39 @@ code {
 
 .token.entity {
   cursor: help;
+}
+
+// Markdown heading anchors
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  .anchor {
+    opacity: 0;
+  }
+
+  &:hover {
+    .anchor {
+      opacity: 1;
+    }
+  }
+}
+
+.anchor {
+  fill: var(--accent-color);
+  position: absolute;
+  left: -20px;
+
+  &:hover {
+    fill: var(--accent-color-hover);
+  }
+}
+
+// Backreference for markdown footnotes
+.footnote-backref {
+  font-family: 'Courier New';
+  margin-left: 1ch;
+  font-size: 24px;
 }

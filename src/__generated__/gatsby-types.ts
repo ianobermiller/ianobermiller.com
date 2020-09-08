@@ -385,8 +385,8 @@ type File = Node & {
   readonly parent: Maybe<Node>;
   readonly children: ReadonlyArray<Node>;
   readonly internal: Internal;
-  readonly childRecipesJson: Maybe<RecipesJson>;
   readonly childMdx: Maybe<Mdx>;
+  readonly childRecipesJson: Maybe<RecipesJson>;
 };
 
 
@@ -593,53 +593,6 @@ enum FileFieldsEnum {
   internal___mediaType = 'internal.mediaType',
   internal___owner = 'internal.owner',
   internal___type = 'internal.type',
-  childRecipesJson___id = 'childRecipesJson.id',
-  childRecipesJson___parent___id = 'childRecipesJson.parent.id',
-  childRecipesJson___parent___parent___id = 'childRecipesJson.parent.parent.id',
-  childRecipesJson___parent___parent___children = 'childRecipesJson.parent.parent.children',
-  childRecipesJson___parent___children = 'childRecipesJson.parent.children',
-  childRecipesJson___parent___children___id = 'childRecipesJson.parent.children.id',
-  childRecipesJson___parent___children___children = 'childRecipesJson.parent.children.children',
-  childRecipesJson___parent___internal___content = 'childRecipesJson.parent.internal.content',
-  childRecipesJson___parent___internal___contentDigest = 'childRecipesJson.parent.internal.contentDigest',
-  childRecipesJson___parent___internal___description = 'childRecipesJson.parent.internal.description',
-  childRecipesJson___parent___internal___fieldOwners = 'childRecipesJson.parent.internal.fieldOwners',
-  childRecipesJson___parent___internal___ignoreType = 'childRecipesJson.parent.internal.ignoreType',
-  childRecipesJson___parent___internal___mediaType = 'childRecipesJson.parent.internal.mediaType',
-  childRecipesJson___parent___internal___owner = 'childRecipesJson.parent.internal.owner',
-  childRecipesJson___parent___internal___type = 'childRecipesJson.parent.internal.type',
-  childRecipesJson___children = 'childRecipesJson.children',
-  childRecipesJson___children___id = 'childRecipesJson.children.id',
-  childRecipesJson___children___parent___id = 'childRecipesJson.children.parent.id',
-  childRecipesJson___children___parent___children = 'childRecipesJson.children.parent.children',
-  childRecipesJson___children___children = 'childRecipesJson.children.children',
-  childRecipesJson___children___children___id = 'childRecipesJson.children.children.id',
-  childRecipesJson___children___children___children = 'childRecipesJson.children.children.children',
-  childRecipesJson___children___internal___content = 'childRecipesJson.children.internal.content',
-  childRecipesJson___children___internal___contentDigest = 'childRecipesJson.children.internal.contentDigest',
-  childRecipesJson___children___internal___description = 'childRecipesJson.children.internal.description',
-  childRecipesJson___children___internal___fieldOwners = 'childRecipesJson.children.internal.fieldOwners',
-  childRecipesJson___children___internal___ignoreType = 'childRecipesJson.children.internal.ignoreType',
-  childRecipesJson___children___internal___mediaType = 'childRecipesJson.children.internal.mediaType',
-  childRecipesJson___children___internal___owner = 'childRecipesJson.children.internal.owner',
-  childRecipesJson___children___internal___type = 'childRecipesJson.children.internal.type',
-  childRecipesJson___internal___content = 'childRecipesJson.internal.content',
-  childRecipesJson___internal___contentDigest = 'childRecipesJson.internal.contentDigest',
-  childRecipesJson___internal___description = 'childRecipesJson.internal.description',
-  childRecipesJson___internal___fieldOwners = 'childRecipesJson.internal.fieldOwners',
-  childRecipesJson___internal___ignoreType = 'childRecipesJson.internal.ignoreType',
-  childRecipesJson___internal___mediaType = 'childRecipesJson.internal.mediaType',
-  childRecipesJson___internal___owner = 'childRecipesJson.internal.owner',
-  childRecipesJson___internal___type = 'childRecipesJson.internal.type',
-  childRecipesJson___name = 'childRecipesJson.name',
-  childRecipesJson___description = 'childRecipesJson.description',
-  childRecipesJson___time___total = 'childRecipesJson.time.total',
-  childRecipesJson___time___prep = 'childRecipesJson.time.prep',
-  childRecipesJson___ingredientGroups = 'childRecipesJson.ingredientGroups',
-  childRecipesJson___ingredientGroups___ingredients = 'childRecipesJson.ingredientGroups.ingredients',
-  childRecipesJson___ingredientGroups___name = 'childRecipesJson.ingredientGroups.name',
-  childRecipesJson___directions = 'childRecipesJson.directions',
-  childRecipesJson___servings = 'childRecipesJson.servings',
   childMdx___rawBody = 'childMdx.rawBody',
   childMdx___fileAbsolutePath = 'childMdx.fileAbsolutePath',
   childMdx___frontmatter___title = 'childMdx.frontmatter.title',
@@ -705,7 +658,54 @@ enum FileFieldsEnum {
   childMdx___internal___ignoreType = 'childMdx.internal.ignoreType',
   childMdx___internal___mediaType = 'childMdx.internal.mediaType',
   childMdx___internal___owner = 'childMdx.internal.owner',
-  childMdx___internal___type = 'childMdx.internal.type'
+  childMdx___internal___type = 'childMdx.internal.type',
+  childRecipesJson___id = 'childRecipesJson.id',
+  childRecipesJson___parent___id = 'childRecipesJson.parent.id',
+  childRecipesJson___parent___parent___id = 'childRecipesJson.parent.parent.id',
+  childRecipesJson___parent___parent___children = 'childRecipesJson.parent.parent.children',
+  childRecipesJson___parent___children = 'childRecipesJson.parent.children',
+  childRecipesJson___parent___children___id = 'childRecipesJson.parent.children.id',
+  childRecipesJson___parent___children___children = 'childRecipesJson.parent.children.children',
+  childRecipesJson___parent___internal___content = 'childRecipesJson.parent.internal.content',
+  childRecipesJson___parent___internal___contentDigest = 'childRecipesJson.parent.internal.contentDigest',
+  childRecipesJson___parent___internal___description = 'childRecipesJson.parent.internal.description',
+  childRecipesJson___parent___internal___fieldOwners = 'childRecipesJson.parent.internal.fieldOwners',
+  childRecipesJson___parent___internal___ignoreType = 'childRecipesJson.parent.internal.ignoreType',
+  childRecipesJson___parent___internal___mediaType = 'childRecipesJson.parent.internal.mediaType',
+  childRecipesJson___parent___internal___owner = 'childRecipesJson.parent.internal.owner',
+  childRecipesJson___parent___internal___type = 'childRecipesJson.parent.internal.type',
+  childRecipesJson___children = 'childRecipesJson.children',
+  childRecipesJson___children___id = 'childRecipesJson.children.id',
+  childRecipesJson___children___parent___id = 'childRecipesJson.children.parent.id',
+  childRecipesJson___children___parent___children = 'childRecipesJson.children.parent.children',
+  childRecipesJson___children___children = 'childRecipesJson.children.children',
+  childRecipesJson___children___children___id = 'childRecipesJson.children.children.id',
+  childRecipesJson___children___children___children = 'childRecipesJson.children.children.children',
+  childRecipesJson___children___internal___content = 'childRecipesJson.children.internal.content',
+  childRecipesJson___children___internal___contentDigest = 'childRecipesJson.children.internal.contentDigest',
+  childRecipesJson___children___internal___description = 'childRecipesJson.children.internal.description',
+  childRecipesJson___children___internal___fieldOwners = 'childRecipesJson.children.internal.fieldOwners',
+  childRecipesJson___children___internal___ignoreType = 'childRecipesJson.children.internal.ignoreType',
+  childRecipesJson___children___internal___mediaType = 'childRecipesJson.children.internal.mediaType',
+  childRecipesJson___children___internal___owner = 'childRecipesJson.children.internal.owner',
+  childRecipesJson___children___internal___type = 'childRecipesJson.children.internal.type',
+  childRecipesJson___internal___content = 'childRecipesJson.internal.content',
+  childRecipesJson___internal___contentDigest = 'childRecipesJson.internal.contentDigest',
+  childRecipesJson___internal___description = 'childRecipesJson.internal.description',
+  childRecipesJson___internal___fieldOwners = 'childRecipesJson.internal.fieldOwners',
+  childRecipesJson___internal___ignoreType = 'childRecipesJson.internal.ignoreType',
+  childRecipesJson___internal___mediaType = 'childRecipesJson.internal.mediaType',
+  childRecipesJson___internal___owner = 'childRecipesJson.internal.owner',
+  childRecipesJson___internal___type = 'childRecipesJson.internal.type',
+  childRecipesJson___name = 'childRecipesJson.name',
+  childRecipesJson___description = 'childRecipesJson.description',
+  childRecipesJson___time___total = 'childRecipesJson.time.total',
+  childRecipesJson___time___prep = 'childRecipesJson.time.prep',
+  childRecipesJson___ingredientGroups = 'childRecipesJson.ingredientGroups',
+  childRecipesJson___ingredientGroups___ingredients = 'childRecipesJson.ingredientGroups.ingredients',
+  childRecipesJson___ingredientGroups___name = 'childRecipesJson.ingredientGroups.name',
+  childRecipesJson___directions = 'childRecipesJson.directions',
+  childRecipesJson___servings = 'childRecipesJson.servings'
 }
 
 type FileFilterInput = {
@@ -747,8 +747,8 @@ type FileFilterInput = {
   readonly parent: Maybe<NodeFilterInput>;
   readonly children: Maybe<NodeFilterListInput>;
   readonly internal: Maybe<InternalFilterInput>;
-  readonly childRecipesJson: Maybe<RecipesJsonFilterInput>;
   readonly childMdx: Maybe<MdxFilterInput>;
+  readonly childRecipesJson: Maybe<RecipesJsonFilterInput>;
 };
 
 type FileGroupConnection = {
@@ -1218,8 +1218,8 @@ type Query_fileArgs = {
   parent: Maybe<NodeFilterInput>;
   children: Maybe<NodeFilterListInput>;
   internal: Maybe<InternalFilterInput>;
-  childRecipesJson: Maybe<RecipesJsonFilterInput>;
   childMdx: Maybe<MdxFilterInput>;
+  childRecipesJson: Maybe<RecipesJsonFilterInput>;
 };
 
 
@@ -2153,8 +2153,6 @@ enum SitePageFieldsEnum {
   pluginCreator___pluginOptions___feeds___title = 'pluginCreator.pluginOptions.feeds.title',
   pluginCreator___pluginOptions___name = 'pluginCreator.pluginOptions.name',
   pluginCreator___pluginOptions___path = 'pluginCreator.pluginOptions.path',
-  pluginCreator___pluginOptions___gatsbyRemarkPlugins = 'pluginCreator.pluginOptions.gatsbyRemarkPlugins',
-  pluginCreator___pluginOptions___gatsbyRemarkPlugins___resolve = 'pluginCreator.pluginOptions.gatsbyRemarkPlugins.resolve',
   pluginCreator___pluginOptions___emitSchema___src___generated___gatsby_introspection_json = 'pluginCreator.pluginOptions.emitSchema.src___generated___gatsby_introspection_json',
   pluginCreator___pluginOptions___emitPluginDocuments___src___generated___gatsby_plugin_documents_graphql = 'pluginCreator.pluginOptions.emitPluginDocuments.src___generated___gatsby_plugin_documents_graphql',
   pluginCreator___pluginOptions___pathCheck = 'pluginCreator.pluginOptions.pathCheck',
@@ -2359,20 +2357,6 @@ enum SitePluginFieldsEnum {
   pluginOptions___feeds___title = 'pluginOptions.feeds.title',
   pluginOptions___name = 'pluginOptions.name',
   pluginOptions___path = 'pluginOptions.path',
-  pluginOptions___gatsbyRemarkPlugins = 'pluginOptions.gatsbyRemarkPlugins',
-  pluginOptions___gatsbyRemarkPlugins___resolve = 'pluginOptions.gatsbyRemarkPlugins.resolve',
-  pluginOptions___gatsbyRemarkPlugins___options___maxWidth = 'pluginOptions.gatsbyRemarkPlugins.options.maxWidth',
-  pluginOptions___gatsbyRemarkPlugins___options___pathPrefix = 'pluginOptions.gatsbyRemarkPlugins.options.pathPrefix',
-  pluginOptions___gatsbyRemarkPlugins___options___wrapperStyle = 'pluginOptions.gatsbyRemarkPlugins.options.wrapperStyle',
-  pluginOptions___gatsbyRemarkPlugins___options___backgroundColor = 'pluginOptions.gatsbyRemarkPlugins.options.backgroundColor',
-  pluginOptions___gatsbyRemarkPlugins___options___linkImagesToOriginal = 'pluginOptions.gatsbyRemarkPlugins.options.linkImagesToOriginal',
-  pluginOptions___gatsbyRemarkPlugins___options___showCaptions = 'pluginOptions.gatsbyRemarkPlugins.options.showCaptions',
-  pluginOptions___gatsbyRemarkPlugins___options___markdownCaptions = 'pluginOptions.gatsbyRemarkPlugins.options.markdownCaptions',
-  pluginOptions___gatsbyRemarkPlugins___options___withWebp = 'pluginOptions.gatsbyRemarkPlugins.options.withWebp',
-  pluginOptions___gatsbyRemarkPlugins___options___tracedSVG = 'pluginOptions.gatsbyRemarkPlugins.options.tracedSVG',
-  pluginOptions___gatsbyRemarkPlugins___options___loading = 'pluginOptions.gatsbyRemarkPlugins.options.loading',
-  pluginOptions___gatsbyRemarkPlugins___options___disableBgImageOnAlpha = 'pluginOptions.gatsbyRemarkPlugins.options.disableBgImageOnAlpha',
-  pluginOptions___gatsbyRemarkPlugins___options___disableBgImage = 'pluginOptions.gatsbyRemarkPlugins.options.disableBgImage',
   pluginOptions___emitSchema___src___generated___gatsby_introspection_json = 'pluginOptions.emitSchema.src___generated___gatsby_introspection_json',
   pluginOptions___emitPluginDocuments___src___generated___gatsby_plugin_documents_graphql = 'pluginOptions.emitPluginDocuments.src___generated___gatsby_plugin_documents_graphql',
   pluginOptions___pathCheck = 'pluginOptions.pathCheck',
@@ -2494,7 +2478,6 @@ type SitePluginPluginOptions = {
   readonly feeds: Maybe<ReadonlyArray<Maybe<SitePluginPluginOptionsFeeds>>>;
   readonly name: Maybe<Scalars['String']>;
   readonly path: Maybe<Scalars['String']>;
-  readonly gatsbyRemarkPlugins: Maybe<ReadonlyArray<Maybe<SitePluginPluginOptionsGatsbyRemarkPlugins>>>;
   readonly emitSchema: Maybe<SitePluginPluginOptionsEmitSchema>;
   readonly emitPluginDocuments: Maybe<SitePluginPluginOptionsEmitPluginDocuments>;
   readonly pathCheck: Maybe<Scalars['Boolean']>;
@@ -2538,54 +2521,9 @@ type SitePluginPluginOptionsFilterInput = {
   readonly feeds: Maybe<SitePluginPluginOptionsFeedsFilterListInput>;
   readonly name: Maybe<StringQueryOperatorInput>;
   readonly path: Maybe<StringQueryOperatorInput>;
-  readonly gatsbyRemarkPlugins: Maybe<SitePluginPluginOptionsGatsbyRemarkPluginsFilterListInput>;
   readonly emitSchema: Maybe<SitePluginPluginOptionsEmitSchemaFilterInput>;
   readonly emitPluginDocuments: Maybe<SitePluginPluginOptionsEmitPluginDocumentsFilterInput>;
   readonly pathCheck: Maybe<BooleanQueryOperatorInput>;
-};
-
-type SitePluginPluginOptionsGatsbyRemarkPlugins = {
-  readonly resolve: Maybe<Scalars['String']>;
-  readonly options: Maybe<SitePluginPluginOptionsGatsbyRemarkPluginsOptions>;
-};
-
-type SitePluginPluginOptionsGatsbyRemarkPluginsFilterInput = {
-  readonly resolve: Maybe<StringQueryOperatorInput>;
-  readonly options: Maybe<SitePluginPluginOptionsGatsbyRemarkPluginsOptionsFilterInput>;
-};
-
-type SitePluginPluginOptionsGatsbyRemarkPluginsFilterListInput = {
-  readonly elemMatch: Maybe<SitePluginPluginOptionsGatsbyRemarkPluginsFilterInput>;
-};
-
-type SitePluginPluginOptionsGatsbyRemarkPluginsOptions = {
-  readonly maxWidth: Maybe<Scalars['Int']>;
-  readonly pathPrefix: Maybe<Scalars['String']>;
-  readonly wrapperStyle: Maybe<Scalars['String']>;
-  readonly backgroundColor: Maybe<Scalars['String']>;
-  readonly linkImagesToOriginal: Maybe<Scalars['Boolean']>;
-  readonly showCaptions: Maybe<Scalars['Boolean']>;
-  readonly markdownCaptions: Maybe<Scalars['Boolean']>;
-  readonly withWebp: Maybe<Scalars['Boolean']>;
-  readonly tracedSVG: Maybe<Scalars['Boolean']>;
-  readonly loading: Maybe<Scalars['String']>;
-  readonly disableBgImageOnAlpha: Maybe<Scalars['Boolean']>;
-  readonly disableBgImage: Maybe<Scalars['Boolean']>;
-};
-
-type SitePluginPluginOptionsGatsbyRemarkPluginsOptionsFilterInput = {
-  readonly maxWidth: Maybe<IntQueryOperatorInput>;
-  readonly pathPrefix: Maybe<StringQueryOperatorInput>;
-  readonly wrapperStyle: Maybe<StringQueryOperatorInput>;
-  readonly backgroundColor: Maybe<StringQueryOperatorInput>;
-  readonly linkImagesToOriginal: Maybe<BooleanQueryOperatorInput>;
-  readonly showCaptions: Maybe<BooleanQueryOperatorInput>;
-  readonly markdownCaptions: Maybe<BooleanQueryOperatorInput>;
-  readonly withWebp: Maybe<BooleanQueryOperatorInput>;
-  readonly tracedSVG: Maybe<BooleanQueryOperatorInput>;
-  readonly loading: Maybe<StringQueryOperatorInput>;
-  readonly disableBgImageOnAlpha: Maybe<BooleanQueryOperatorInput>;
-  readonly disableBgImage: Maybe<BooleanQueryOperatorInput>;
 };
 
 type SitePluginPluginOptionsPlugins = {
@@ -2652,11 +2590,6 @@ type blogIndexQuery = { readonly allMdx: { readonly nodes: ReadonlyArray<(
       & { readonly fields: Maybe<Pick<MdxFields, 'slug'>>, readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'title' | 'date'>> }
     )> } };
 
-type NotFoundPageQueryVariables = {};
-
-
-type NotFoundPageQuery = { readonly allSitePage: { readonly nodes: ReadonlyArray<Pick<SitePage, 'path'>> } };
-
 type recipesIndexQueryVariables = {};
 
 
@@ -2664,6 +2597,11 @@ type recipesIndexQuery = { readonly allFile: { readonly nodes: ReadonlyArray<(
       Pick<File, 'name'>
       & { readonly childRecipesJson: Maybe<Pick<RecipesJson, 'name'>> }
     )> } };
+
+type NotFoundPageQueryVariables = {};
+
+
+type NotFoundPageQuery = { readonly allSitePage: { readonly nodes: ReadonlyArray<Pick<SitePage, 'path'>> } };
 
 type BlogPostQueryVariables = {
   id: Maybe<Scalars['String']>;
@@ -2675,16 +2613,6 @@ type BlogPostQuery = { readonly mdx: Maybe<(
     & { readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'title' | 'date'>> }
   )> };
 
-type MdxPageQueryVariables = {
-  id: Maybe<Scalars['String']>;
-};
-
-
-type MdxPageQuery = { readonly mdx: Maybe<(
-    Pick<Mdx, 'id' | 'body'>
-    & { readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'title'>> }
-  )> };
-
 type RecipeQueryVariables = {
   id: Maybe<Scalars['String']>;
 };
@@ -2694,6 +2622,16 @@ type RecipeQuery = { readonly file: Maybe<{ readonly childRecipesJson: Maybe<(
       Pick<RecipesJson, 'description' | 'directions' | 'id' | 'name' | 'servings'>
       & { readonly ingredientGroups: Maybe<ReadonlyArray<Maybe<Pick<RecipesJsonIngredientGroups, 'ingredients' | 'name'>>>>, readonly time: Maybe<Pick<RecipesJsonTime, 'prep' | 'total'>> }
     )> }> };
+
+type MdxPageQueryVariables = {
+  id: Maybe<Scalars['String']>;
+};
+
+
+type MdxPageQuery = { readonly mdx: Maybe<(
+    Pick<Mdx, 'id' | 'body'>
+    & { readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'title'>> }
+  )> };
 
 type PagesQueryQueryVariables = {};
 

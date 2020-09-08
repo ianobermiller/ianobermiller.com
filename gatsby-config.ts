@@ -4,7 +4,10 @@ import type {PluginOptions as TypegenPluginOptions} from 'gatsby-plugin-typegen/
 type Plugin =
   | string
   | {resolve: string; options: object}
-  | {resolve: `gatsby-plugin-typegen`; options: TypegenPluginOptions};
+  | {
+      resolve: `gatsby-plugin-typegen`;
+      options: TypegenPluginOptions;
+    };
 
 export const siteMetadata = {
   title: 'Ian Obermiller',
@@ -49,12 +52,16 @@ export const plugins: Array<Plugin> = [
         `,
       feeds: [
         {
-          serialize: ({query: {site, allMdx}}: SerializeArgs) => {
+          serialize: ({
+            query: {site, allMdx},
+          }: SerializeArgs) => {
             return allMdx.nodes.map(node => {
               return Object.assign({}, node.frontmatter, {
                 description: node.frontmatter.title,
                 date: node.frontmatter.date,
-                url: site.siteMetadata.siteUrl + node.fields.slug,
+                url:
+                  site.siteMetadata.siteUrl +
+                  node.fields.slug,
               });
             });
           },
@@ -104,12 +111,20 @@ export const plugins: Array<Plugin> = [
           },
         },
         {
-          resolve: 'gatsby-remark-prismjs',
-          options: {},
+          resolve: 'gatsby-remark-table-of-contents',
+          options: {
+            className: 'table-of-contents',
+            exclude: 'Contents',
+          },
         },
+        'gatsby-remark-autolink-headers',
+        'gatsby-remark-prismjs',
       ],
       // https://github.com/gatsbyjs/gatsby/issues/15486#issuecomment-510153237
-      plugins: ['gatsby-remark-images', 'gatsby-remark-prismjs'],
+      plugins: [
+        'gatsby-remark-images',
+        'gatsby-remark-prismjs',
+      ],
     },
   },
   'gatsby-plugin-sass',
