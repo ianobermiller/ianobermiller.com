@@ -1,24 +1,21 @@
 import React, {useContext} from 'react';
 import {
+  RecoilRoot,
   atom,
+  atomFamily,
+  useRecoilCallback,
   useRecoilValue,
   useSetRecoilState,
-  selectorFamily,
-  RecoilRoot,
 } from 'recoil';
 import {HarnessContext, ROWS, COLUMNS} from './Harness.js';
 
-const highlightedCell = atom({
-  key: 'highlightedCell',
+const currentHighlightedCellState = atom({
+  key: 'currentHighlightedCell',
   default: {row: -1, column: -1},
 });
-
-const isHighlightedSelector = selectorFamily({
-  key: 'isHighlightedSelector',
-  get: ({row, column}) => ({get}) => {
-    const h = get(highlightedCell);
-    return h.row === row || h.column === column;
-  },
+const isHighlightedStateFamily = atomFamily({
+  key: 'isHighlighted',
+  default: false,
 });
 
 function Table() {
@@ -38,7 +35,6 @@ function Table() {
 }
 
 function TableRow({row}) {
-  console.count('row render');
   return (
     <tr>
       {Array(COLUMNS)
@@ -51,13 +47,36 @@ function TableRow({row}) {
 }
 
 function TableCell({row, column}) {
-  console.count('tcell render');
-  const isHighlighted = useRecoilValue(isHighlightedSelector({row, column}));
-  const setHighlight = useSetRecoilState(highlightedCell);
+  const isHighlighted = useRecoilValue(
+    isHighlightedStateFamily({row, column}),
+  );
+
+  const onMouseEnter = useRecoilCallback(
+    ({snapshot: {getLoadable}, set, reset}) => () => {
+      const {row: oldRow, column: oldColumn} = getLoadable(
+        currentHighlightedCellState,
+      ).contents;
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLUMNS; c++) {
+          const atom = isHighlightedStateFamily({
+            row: r,
+            column: c,
+          });
+          if (r === row || c === column) {
+            set(atom, true);
+          } else if (r === oldRow || c === oldColumn) {
+            reset(atom);
+          }
+        }
+      }
+      set(currentHighlightedCellState, {row, column});
+    },
+  );
+
   const wrapSetter = useContext(HarnessContext);
   return (
     <td
-      onMouseEnter={wrapSetter(() => setHighlight({row, column}), 2)}
+      onMouseEnter={wrapSetter(onMouseEnter, 2)}
       style={isHighlighted ? highlightedStyle : null}>
       {row}x{column}
     </td>
