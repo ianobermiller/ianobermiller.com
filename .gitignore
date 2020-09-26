@@ -1,8 +1,16 @@
-# Project dependencies
+# Mac
+.DS_Store
+
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
-.cache/
-# Build directory
-.next
-.DS_Store
+
+# Yarn
 yarn-error.log
+
+# next.js build directory
+.next
+
+# next-mdx-enhanced cache directory
+.mdx-data
+
+.cache

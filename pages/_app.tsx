@@ -1,6 +1,6 @@
+import 'layouts/areset.css';
+import 'layouts/layout.scss';
 import type {AppProps} from 'next/app';
-import 'src/templates/areset.css';
-import 'src/templates/layout.scss';
 
 function MyApp({Component, pageProps}: AppProps) {
   return <Component {...pageProps} />;

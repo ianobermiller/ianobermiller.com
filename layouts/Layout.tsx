@@ -1,30 +1,36 @@
 import styled from '@emotion/styled';
-import Link from 'gatsby-link';
+import Head from 'next/head';
+import Link from 'next/link';
 import React, {ReactElement, ReactNode} from 'react';
-import {Helmet} from 'react-helmet';
-import './areset.css';
 import ColorSchemePicker from './ColorSchemePicker';
-import './layout.scss';
 
 interface Props {
   children: ReactNode;
   title: string;
 }
 
-export default function Layout({children, title}: Props): ReactElement {
+export default function Layout({
+  children,
+  title,
+}: Props): ReactElement {
   return (
     <Root>
-      <Helmet htmlAttributes={{lang: 'en'}}>
-        <title>{(title ? title + ' \u00AB ' : '') + 'Ian Obermiller'}</title>
+      <Head>
+        <title>
+          {(title ? title + ' \u00AB ' : '') +
+            'Ian Obermiller'}
+        </title>
         <meta
           name="Description"
           content="Personal site of Christian and software engineer Ian Obermiller."
         />
-      </Helmet>
+      </Head>
 
       <Header>
         <h1>
-          <Link to="/">Ian Obermiller</Link>
+          <Link href="/">
+            <a>Ian Obermiller</a>
+          </Link>
         </h1>
         <h2>Part time hacker, full time dad.</h2>
       </Header>
@@ -34,18 +40,24 @@ export default function Layout({children, title}: Props): ReactElement {
       <Nav>
         <ul>
           <li>
-            <Link activeClassName="active" to="/">
-              About Me
+            <Link activeClassName="active" href="/">
+              <a>About Me</a>
             </Link>
           </li>
           <li>
-            <Link activeClassName="active" partiallyActive={true} to="/blog">
-              Posts
+            <Link
+              activeClassName="active"
+              partiallyActive={true}
+              href="/blog">
+              <a>Posts</a>
             </Link>
           </li>
           <li>
-            <Link activeClassName="active" partiallyActive={true} to="/recipes">
-              Recipes
+            <Link
+              activeClassName="active"
+              partiallyActive={true}
+              href="/recipes">
+              <a>Recipes</a>
             </Link>
           </li>
         </ul>
@@ -55,7 +67,9 @@ export default function Layout({children, title}: Props): ReactElement {
 
       <Footer>
         <p>
-          <a href="mailto:ian@obermillers.com" target="_blank">
+          <a
+            href="mailto:ian@obermillers.com"
+            target="_blank">
             ian@obermillers.com
           </a>
           {' \u00B7 '}
@@ -67,8 +81,8 @@ export default function Layout({children, title}: Props): ReactElement {
           </a>
         </p>
         <Disclaimer>
-          Unless otherwise noted, source code on this blog is Licensed under the
-          MIT License.
+          Unless otherwise noted, source code on this blog
+          is Licensed under the MIT License.
         </Disclaimer>
       </Footer>
     </Root>
