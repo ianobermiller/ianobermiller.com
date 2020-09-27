@@ -130,7 +130,7 @@ const Nav = styled.nav`
   & li {
     display: inline-block;
 
-    & :not(:last-child) {
+    &:not(:last-child) {
       margin-right: var(--space-l);
     }
   }
