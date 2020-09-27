@@ -2,10 +2,9 @@ import styled from '@emotion/styled';
 import {differenceInYears, min as minDate} from 'date-fns';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
-import {graphql, Link, useStaticQuery} from 'gatsby';
+import DateText from 'layouts/DateText';
+import Layout from 'layouts/Layout';
 import React, {ReactElement} from 'react';
-import DateText from '../../templates/DateText';
-import Layout from '../../templates/Layout';
 
 export default function BlogIndex(): ReactElement {
   const {
@@ -51,7 +50,10 @@ export default function BlogIndex(): ReactElement {
   });
 
   const dates = posts.map(({date}) => date).filter(Boolean);
-  const years = differenceInYears(new Date(), minDate(dates));
+  const years = differenceInYears(
+    new Date(),
+    minDate(dates),
+  );
 
   return (
     <Layout title="Posts">

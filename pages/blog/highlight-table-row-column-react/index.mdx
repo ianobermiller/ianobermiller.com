@@ -1,11 +1,15 @@
----
-title: Highlight the row and column of a hovered table cell in React & Recoil
-date: 2020-09-07T09:00:00+00:00
-categories:
-  - React
-  - JavaScript
-  - Tables
----
+import Post from 'layouts/Post';
+
+export const metadata = {
+  date: '2020-09-07T09:00:00+00:00',
+  title:
+    'Highlight the row and column of a hovered table cell in React & Recoil',
+  categories: ['react', 'javascript', 'tables'],
+};
+
+export default ({children}) => (
+  <Post {...metadata}>{children}</Post>
+);
 
 export const timing = {
   state: '60ms',
