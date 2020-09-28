@@ -1,58 +1,66 @@
 import styled from '@emotion/styled';
-import {differenceInYears, min as minDate} from 'date-fns';
-import format from 'date-fns/format';
-import parseISO from 'date-fns/parseISO';
+import {
+  differenceInYears,
+  min as minDate,
+  parseISO,
+} from 'date-fns';
 import DateText from 'layouts/DateText';
 import Layout from 'layouts/Layout';
+import Link from 'next/link';
 import React, {ReactElement} from 'react';
 
-export default function BlogIndex(): ReactElement {
-  const {
-    allMdx: {nodes},
-  } = useStaticQuery<GatsbyTypes.blogIndexQuery>(graphql`
-    query blogIndex {
-      allMdx(
-        sort: {order: DESC, fields: [frontmatter___date]}
-        limit: 1000
-        filter: {fields: {type: {eq: "post"}}}
-      ) {
-        nodes {
-          id
-          fields {
-            slug
-          }
-          frontmatter {
-            title
-            date
-          }
-        }
-      }
-    }
-  `);
+type Props = {
+  posts: Array<{
+    date: string;
+    timestamp: number;
+    title: string;
+    url: string;
+  }>;
+};
 
-  const posts = nodes.map(node => {
-    let date;
-    let dateString;
-    try {
-      date = parseISO(node.frontmatter.date);
-      dateString = format(date, 'yyyy-MM-dd');
-    } catch {
-      dateString = date;
-    }
+export async function getStaticProps(): Promise<{
+  props: Props;
+}> {
+  // https://www.smashingmagazine.com/2020/09/build-blog-nextjs-mdx/
+  const mdxRequire = require.context(
+    '.',
+    /*includeSubdirs*/ true,
+    /\.mdx$/,
+  );
 
-    return {
-      id: node.id,
-      url: node.fields.slug,
-      title: node.frontmatter.title,
-      date,
-      dateString,
-    };
-  });
+  const posts = mdxRequire
+    .keys()
+    .map(fileName => {
+      const slug = fileName
+        .substr(1)
+        .replace(/\/index\.mdx$/, '');
+      const {metadata = {date: '', title: ''}} = mdxRequire(
+        fileName,
+      );
 
-  const dates = posts.map(({date}) => date).filter(Boolean);
+      return {
+        url: '/blog' + slug,
+        title: metadata.title,
+        date: metadata.date,
+        timestamp: parseISO(metadata.date).getTime(),
+      };
+    })
+    .sort((a, b) => b.timestamp - a.timestamp);
+
+  return {
+    props: {posts},
+  };
+}
+
+export default function BlogIndex({
+  posts,
+}: Props): ReactElement {
+  const timestamps = posts
+    .map(({timestamp}) => timestamp)
+    .filter(Boolean);
   const years = differenceInYears(
     new Date(),
-    minDate(dates),
+    minDate(timestamps),
   );
 
   return (
@@ -61,13 +69,15 @@ export default function BlogIndex(): ReactElement {
         {posts.length} posts over {years} years
       </Subtitle>
       <Posts>
-        {posts.map(({dateString, id, title, url}) => {
+        {posts.map(({date, title, url}) => {
           return (
-            <Post key={id}>
-              <PostLink to={url}>
-                <PostTitle>{title}</PostTitle>
-                <DateText>{dateString}</DateText>
-              </PostLink>
+            <Post key={url}>
+              <Link href={url}>
+                <PostLink>
+                  <PostTitle>{title || url}</PostTitle>
+                  <DateText>{date}</DateText>
+                </PostLink>
+              </Link>
             </Post>
           );
         })}
@@ -90,7 +100,7 @@ const Post = styled.li`
   margin: 0;
 `;
 
-const PostLink = styled(Link)`
+const PostLink = styled.a`
   display: block;
   margin: var(--space-m) 0;
   text-decoration: none;
