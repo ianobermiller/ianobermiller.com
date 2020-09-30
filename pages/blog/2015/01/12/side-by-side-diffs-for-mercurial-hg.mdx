@@ -1,11 +1,14 @@
----
-title: Side-by-side diffs for Mercurial (hg)
-author: iano
-date: 2015-01-12T22:25:32+00:00
-url: /blog/2015/01/12/side-by-side-diffs-for-mercurial-hg/
-categories:
-  - Mercurial
----
+import Post from 'layouts/Post';
+
+export const metadata = {
+  title: 'Side-by-side diffs for Mercurial (hg)',
+  date: '2015-01-12',
+  categories: ['Mercurial'],
+};
+
+export default ({children}) => (
+  <Post {...metadata}>{children}</Post>
+);
 
 **UPDATE:** This is easier now! See my new post, ["Side-by-side diffs for Mercurial (hg) & icdiff revisited"][1].
 

@@ -1,11 +1,11 @@
----
-title: 'Side-by-side diffs for Mercurial (hg) & icdiff revisited'
-author: iano
-date: 2016-07-14T18:22:58+00:00
-url: /blog/2016/07/14/side-by-side-diffs-for-mercurial-hg-icdiff-revisited/
-categories:
-  - Mercurial
----
+import Post from 'layouts/Post';
+
+export const metadata = {
+  title:
+    'Side-by-side diffs for Mercurial (hg) & icdiff revisited',
+  date: '2016-07-14',
+  categories: ['Mercurial'],
+};
 
 A [while back][1] I told you how to get side-by-side diffs in Mercurial using icdiff. Turns out the author of icdiff has added the `--recursive` flag to make the tool accept directories and diff the contents of the files within. New setup instructions follow.
 

@@ -1,16 +1,17 @@
----
-title: 'Highlight search terms in C#, Javascript and TypeScript'
-author: iano
-date: 2013-01-20T06:32:07+00:00
-url: /blog/2013/01/19/highlight-search-terms-in-c-javascript-and-typescript/
-categories:
-  - 'C#'
-  - JavaScript
-  - TypeScript
----
+import Post from 'layouts/Post';
+
+export const metadata = {
+  title:
+    'Highlight search terms in C#, Javascript and TypeScript',
+  date: '2013-01-20',
+  categories: ['C#', 'JavaScript', 'TypeScript'],
+};
+
+export default ({children}) => (
+  <Post {...metadata}>{children}</Post>
+);
 
 Following is a function that given a string and a search query will wrap bold tags around search terms that were found in the query:
-
 Example:
 
 text = `"The theory of the big bang was proposed in..."`<br />
@@ -24,8 +25,8 @@ rendered = The **theory** of the **big** **bang** was proposed in....
 
 <p>
   <small>
-    (note: you may want to return an HtmlString instead to make it easier to
-    call from a view.)
+    (note: you may want to return an HtmlString instead to
+    make it easier to call from a view.)
   </small>
 </p>
 
@@ -57,7 +58,10 @@ function highlightSearchTerms(text, query) {
 </p>
 
 ```typescript
-function highlightSearchTerms(text: string, query: string): string {
+function highlightSearchTerms(
+  text: string,
+  query: string,
+): string {
   var terms = query.split(' ').map(function (s) {
     return s.replace('|', '\\|');
   });

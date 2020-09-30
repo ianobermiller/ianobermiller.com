@@ -1,11 +1,14 @@
----
-title: Replace in files using Powershell and TFS
-author: iano
-date: 2012-07-05T18:52:33+00:00
-url: /blog/2012/07/05/replace-in-files-using-powershell-tfs/
-categories:
-  - Powershell
----
+import Post from 'layouts/Post';
+
+export const metadata = {
+  title: 'Replace in files using Powershell and TFS',
+  date: '2012-07-05',
+  categories: ['Powershell'],
+};
+
+export default ({children}) => (
+  <Post {...metadata}>{children}</Post>
+);
 
 Ever need to find and replace a regex within multiple files using Powershell, and possibly in a TFS workspace? The following function does just that.
 

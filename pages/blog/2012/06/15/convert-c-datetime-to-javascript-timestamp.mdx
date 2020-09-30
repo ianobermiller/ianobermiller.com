@@ -1,12 +1,14 @@
----
-title: 'Convert C# DateTime to javascript timestamp'
-author: iano
-date: 2012-06-15T18:06:31+00:00
-url: /blog/2012/06/15/convert-c-datetime-to-javascript-timestamp/
-categories:
-  - 'C#'
-  - JavaScript
----
+import Post from 'layouts/Post';
+
+export const metadata = {
+  title: 'Convert C# DateTime to javascript timestamp',
+  date: '2012-06-15',
+  categories: ['C#', 'JavaScript'],
+};
+
+export default ({children}) => (
+  <Post {...metadata}>{children}</Post>
+);
 
 The following method converts a .NET DateTime to a javascript timestamp. I use this extensively when working with javascript libraries like the fantastic [flot graphing library][1]. Code is modified from [a post by Iancscoder on StackOveflow][2].
 

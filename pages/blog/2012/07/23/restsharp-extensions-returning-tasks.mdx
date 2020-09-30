@@ -1,15 +1,20 @@
----
-title: RestSharp Extensions Returning Tasks
-author: iano
-date: 2012-07-24T06:01:03+00:00
-url: /blog/2012/07/23/restsharp-extensions-returning-tasks/
-categories:
-  - .NET 4.5
-  - async/await
-  - 'C#'
-  - Extensions
-  - RestSharp
----
+import Post from 'layouts/Post';
+
+export const metadata = {
+  title: 'RestSharp Extensions Returning Tasks',
+  date: '2012-07-24',
+  categories: [
+    '.NET 4.5',
+    'async/await',
+    'C#',
+    'Extensions',
+    'RestSharp',
+  ],
+};
+
+export default ({children}) => (
+  <Post {...metadata}>{children}</Post>
+);
 
 In order to use RestSharp with the async/await keywords, the methods must return `Task` objects. Since this isn't provided out of the box, some simple wrappers will do the trick:
 

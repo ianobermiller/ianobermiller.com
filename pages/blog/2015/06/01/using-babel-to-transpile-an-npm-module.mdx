@@ -1,17 +1,20 @@
----
-title: Using Babel to Transpile an NPM Module
-author: iano
-date: 2015-06-01T00:00:00+00:00
-draft: true
-url: /?p=273
-categories:
-  - JavaScript
-  - Node.js
-tags:
-  - babel
-  - node
-  - npm
----
+import Post from 'layouts/Post';
+
+export const metadata = {
+  title: 'Using Babel to Transpile an NPM Module',
+  date: '2015-06-01',
+  categories: [
+    'JavaScript',
+    'Node.js',
+    'babel',
+    'node',
+    'npm',
+  ],
+};
+
+export default ({children}) => (
+  <Post {...metadata}>{children}</Post>
+);
 
 You want to use the latest features of ES6, ES7, and beyond for your next JavaScript library project, right? Or, you may want to use CoffeeScript or some other transpiler. Problem is, you don't want the burden to be on the user of your module to run the transpiler or use a specific build tool that will, e.g. browserify. Here is our list of requirements when transpiling a module:
 

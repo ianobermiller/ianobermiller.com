@@ -1,13 +1,18 @@
----
-title: Pretty printing text with even line lengths
-author: iano
-date: 2013-02-19T07:31:15+00:00
-url: /blog/2013/02/18/pretty-printing-text-with-even-line-lengths/
-categories:
-  - Algorithms
-  - Dynamic Programming
-  - JavaScript
----
+import Post from 'layouts/Post';
+
+export const metadata = {
+  title: 'Pretty printing text with even line lengths',
+  date: '2013-02-19',
+  categories: [
+    'Algorithms',
+    'Dynamic Programming',
+    'JavaScript',
+  ],
+};
+
+export default ({children}) => (
+  <Post {...metadata}>{children}</Post>
+);
 
 import WrapTextExample from './WrapTextExample';
 
@@ -94,7 +99,10 @@ window.onload = function () {
 
   var ts = function () {
     text.setAttribute('cols', length.value);
-    pre.innerText = prettyPrint(text.value, Number(length.value));
+    pre.innerText = prettyPrint(
+      text.value,
+      Number(length.value),
+    );
   };
 
   ts();

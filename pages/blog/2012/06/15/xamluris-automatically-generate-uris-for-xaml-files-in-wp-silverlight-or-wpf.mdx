@@ -1,16 +1,18 @@
----
-title: 'XamlUris: Automatically generate URIs for Xaml files'
-author: iano
-date: 2012-06-15T18:37:08+00:00
-url: /blog/2012/06/15/xamluris-automatically-generate-uris-for-xaml-files-in-wp-silverlight-or-wpf/
-categories:
-  - 'C#'
-  - Silverlight
-  - T4
-  - Windows Phone
-  - WPF
-  - XAML
----
+import Post from 'layouts/Post';
+
+export const metadata = {
+  title:
+    'XamlUris: Automatically generate URIs for Xaml files',
+  date: '2012-06-15',
+  categories: [
+    'C#',
+    'Silverlight',
+    'T4',
+    'Windows Phone',
+    'WPF',
+    'XAML',
+  ],
+};
 
 We all know the mantra "magic strings are evil". Unfortunately when working with Windows Phone, Silverlight, or WPF, you often have to use strings when navigating between pages to specify the URI and any parameters. Parameters are such a pain to pass this way that most eschew them in favor of some static state shared between pages. This negates some of the benefits, especially on Windows Phone, that you get from having the parameters in your URIs, such as when dealing with live tiles and deep links.
 

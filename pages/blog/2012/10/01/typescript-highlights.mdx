@@ -1,12 +1,14 @@
----
-title: TypeScript Highlights
-author: iano
-date: 2012-10-01T21:14:44+00:00
-url: /blog/2012/10/01/typescript-highlights/
-categories:
-  - JavaScript
-  - TypeScript
----
+import Post from 'layouts/Post';
+
+export const metadata = {
+  title: 'TypeScript Highlights',
+  date: '2012-10-01',
+  categories: ['JavaScript', 'TypeScript'],
+};
+
+export default ({children}) => (
+  <Post {...metadata}>{children}</Post>
+);
 
 Microsoft recently released a new, open source language called [TypeScript][1]. It is a strict superset of Javascript, and compiles directly to Javascript. The compiler is open source, and written in TypeScript itself. My team at Microsoft has been dogfooding TypeScript for several months now, and I thought I'd share a few of my favorite parts of the language.
 
@@ -19,8 +21,7 @@ Note: you can try out the TypeScript language easily, in your browser, with the 
 Per the [language specification][3]:
 
 > TypeScript syntax includes several proposed features of Ecmascript 6 (ES6), including classes and modules.
-
-Modules can export classes, functions, and variables, and classes can have static and instance members. Classes members can have private or public scope, which is enforced by the compiler. As an example:
+> Modules can export classes, functions, and variables, and classes can have static and instance members. Classes members can have private or public scope, which is enforced by the compiler. As an example:
 
 ```typescript
 export module Sayings {
