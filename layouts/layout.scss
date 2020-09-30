@@ -196,7 +196,7 @@ code {
   vertical-align: top;
 }
 
-.gatsby-highlight {
+.remark-highlight > pre {
   background: var(--background-color-code);
   display: block;
   margin-top: -var(--space-m);
