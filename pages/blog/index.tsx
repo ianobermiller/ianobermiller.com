@@ -9,13 +9,14 @@ import Layout from 'layouts/Layout';
 import Link from 'next/link';
 import React, {ReactElement} from 'react';
 
+type Post = {
+  date: string;
+  timestamp: number;
+  title: string;
+  url: string;
+};
 type Props = {
-  posts: Array<{
-    date: string;
-    timestamp: number;
-    title: string;
-    url: string;
-  }>;
+  posts: Array<Post>;
 };
 
 export async function getStaticProps(): Promise<{
@@ -28,12 +29,13 @@ export async function getStaticProps(): Promise<{
     /\.mdx$/,
   );
 
-  const posts = mdxRequire
+  const posts: Array<Post> = mdxRequire
     .keys()
     .map(fileName => {
       const slug = fileName
         .substr(1)
-        .replace(/\/index\.mdx$/, '');
+        .replace(/\.mdx$/, '')
+        .replace(/\/index$/, '');
       const {metadata = {date: '', title: ''}} = mdxRequire(
         fileName,
       );
@@ -69,18 +71,16 @@ export default function BlogIndex({
         {posts.length} posts over {years} years
       </Subtitle>
       <Posts>
-        {posts.map(({date, title, url}) => {
-          return (
-            <Post key={url}>
-              <Link href={url}>
-                <PostLink>
-                  <PostTitle>{title || url}</PostTitle>
-                  <DateText>{date}</DateText>
-                </PostLink>
-              </Link>
-            </Post>
-          );
-        })}
+        {posts.map(({date, title, url}) => (
+          <Post key={url}>
+            <Link href={url} passHref={true}>
+              <PostLink>
+                <PostTitle>{title || url}</PostTitle>
+                <DateText>{date}</DateText>
+              </PostLink>
+            </Link>
+          </Post>
+        ))}
       </Posts>
     </Layout>
   );
