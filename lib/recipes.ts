@@ -1,7 +1,7 @@
 import {readdirSync, readFileSync} from 'fs';
 import path from 'path';
 
-const recipesDirectory = 'pages/recipes';
+const recipesDirectory = 'content/recipes';
 
 export function getAllRecipes() {
   const fileNames = readdirSync(recipesDirectory);
