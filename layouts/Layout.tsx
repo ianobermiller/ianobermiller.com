@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import Head from 'next/head';
 import Link from 'next/link';
+import {useRouter} from 'next/router';
 import React, {ReactElement, ReactNode} from 'react';
 import ColorSchemePicker from './ColorSchemePicker';
 
@@ -40,25 +41,17 @@ export default function Layout({
       <Nav>
         <ul>
           <li>
-            <Link activeClassName="active" href="/">
-              <a>About Me</a>
-            </Link>
+            <NavLink href="/">About Me</NavLink>
           </li>
           <li>
-            <Link
-              activeClassName="active"
-              partiallyActive={true}
-              href="/blog">
-              <a>Posts</a>
-            </Link>
+            <NavLink partial={true} href="/blog">
+              Posts
+            </NavLink>
           </li>
           <li>
-            <Link
-              activeClassName="active"
-              partiallyActive={true}
-              href="/recipes">
-              <a>Recipes</a>
-            </Link>
+            <NavLink partial={true} href="/recipes">
+              Recipes
+            </NavLink>
           </li>
         </ul>
       </Nav>
@@ -86,6 +79,30 @@ export default function Layout({
         </Disclaimer>
       </Footer>
     </Root>
+  );
+}
+
+function NavLink({
+  children,
+  href,
+  partial,
+}: {
+  children: ReactNode;
+  href: string;
+  partial?: boolean;
+}): ReactNode {
+  const router = useRouter();
+
+  const isActive =
+    router.pathname === href ||
+    (partial && router.pathname.startsWith(href));
+
+  return (
+    <Link href={href}>
+      <a className={isActive ? 'active' : null}>
+        {children}
+      </a>
+    </Link>
   );
 }
 
