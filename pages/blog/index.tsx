@@ -15,13 +15,14 @@ type Post = {
   title: string;
   url: string;
 };
+
 type Props = {
   posts: Array<Post>;
 };
 
-export async function getStaticProps(): Promise<{
+export function getStaticProps(): {
   props: Props;
-}> {
+} {
   // https://www.smashingmagazine.com/2020/09/build-blog-nextjs-mdx/
   const mdxRequire = require.context(
     '.',
