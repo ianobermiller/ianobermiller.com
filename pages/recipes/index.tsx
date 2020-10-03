@@ -5,14 +5,6 @@ import {getAllRecipes} from 'lib/recipes';
 import Link from 'next/link';
 import React, {ReactElement} from 'react';
 
-export async function getStaticPaths() {
-  const ids = getAllRecipes();
-  return {
-    paths: ids.map(({slug}) => ({params: {slug}})),
-    fallback: false,
-  };
-}
-
 export async function getStaticProps({params}) {
   const recipes = getAllRecipes()
     .map(({filePath, slug}) => {
