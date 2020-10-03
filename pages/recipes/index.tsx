@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import {readFileSync} from 'fs';
-import Layout from 'layouts/Layout';
-import {getAllRecipes} from 'lib/recipes';
 import Link from 'next/link';
 import React, {ReactElement} from 'react';
+import Layout from '../../layouts/Layout';
+import {getAllRecipes} from '../../lib/recipes';
 
 export async function getStaticProps({params}) {
   const recipes = getAllRecipes()

@@ -90,7 +90,7 @@ function NavLink({
   children: ReactNode;
   href: string;
   partial?: boolean;
-}): ReactNode {
+}): ReactElement {
   const router = useRouter();
 
   const isActive =

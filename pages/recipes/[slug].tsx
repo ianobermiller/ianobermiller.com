@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import Layout from 'layouts/Layout';
-import {getAllRecipes, getRecipe} from 'lib/recipes';
 import React, {ReactElement} from 'react';
+import Layout from '../../layouts/Layout';
+import {getAllRecipes, getRecipe} from '../../lib/recipes';
 
 type Props = {
   recipe: {

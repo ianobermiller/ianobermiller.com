@@ -4,10 +4,10 @@ import {
   min as minDate,
   parseISO,
 } from 'date-fns';
-import DateText from 'layouts/DateText';
-import Layout from 'layouts/Layout';
 import Link from 'next/link';
 import React, {ReactElement} from 'react';
+import DateText from '../../layouts/DateText';
+import Layout from '../../layouts/Layout';
 
 type Post = {
   date: string;
