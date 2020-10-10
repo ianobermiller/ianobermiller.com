@@ -140,4 +140,5 @@ export const plugins: Array<Plugin> = [
       },
     },
   },
+  'gatsby-plugin-webpack-bundle-analyser-v2',
 ];
