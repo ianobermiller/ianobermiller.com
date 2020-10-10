@@ -385,8 +385,8 @@ type File = Node & {
   readonly parent: Maybe<Node>;
   readonly children: ReadonlyArray<Node>;
   readonly internal: Internal;
-  readonly childRecipesJson: Maybe<RecipesJson>;
   readonly childMdx: Maybe<Mdx>;
+  readonly childRecipesJson: Maybe<RecipesJson>;
 };
 
 
@@ -593,53 +593,6 @@ enum FileFieldsEnum {
   internal___mediaType = 'internal.mediaType',
   internal___owner = 'internal.owner',
   internal___type = 'internal.type',
-  childRecipesJson___id = 'childRecipesJson.id',
-  childRecipesJson___parent___id = 'childRecipesJson.parent.id',
-  childRecipesJson___parent___parent___id = 'childRecipesJson.parent.parent.id',
-  childRecipesJson___parent___parent___children = 'childRecipesJson.parent.parent.children',
-  childRecipesJson___parent___children = 'childRecipesJson.parent.children',
-  childRecipesJson___parent___children___id = 'childRecipesJson.parent.children.id',
-  childRecipesJson___parent___children___children = 'childRecipesJson.parent.children.children',
-  childRecipesJson___parent___internal___content = 'childRecipesJson.parent.internal.content',
-  childRecipesJson___parent___internal___contentDigest = 'childRecipesJson.parent.internal.contentDigest',
-  childRecipesJson___parent___internal___description = 'childRecipesJson.parent.internal.description',
-  childRecipesJson___parent___internal___fieldOwners = 'childRecipesJson.parent.internal.fieldOwners',
-  childRecipesJson___parent___internal___ignoreType = 'childRecipesJson.parent.internal.ignoreType',
-  childRecipesJson___parent___internal___mediaType = 'childRecipesJson.parent.internal.mediaType',
-  childRecipesJson___parent___internal___owner = 'childRecipesJson.parent.internal.owner',
-  childRecipesJson___parent___internal___type = 'childRecipesJson.parent.internal.type',
-  childRecipesJson___children = 'childRecipesJson.children',
-  childRecipesJson___children___id = 'childRecipesJson.children.id',
-  childRecipesJson___children___parent___id = 'childRecipesJson.children.parent.id',
-  childRecipesJson___children___parent___children = 'childRecipesJson.children.parent.children',
-  childRecipesJson___children___children = 'childRecipesJson.children.children',
-  childRecipesJson___children___children___id = 'childRecipesJson.children.children.id',
-  childRecipesJson___children___children___children = 'childRecipesJson.children.children.children',
-  childRecipesJson___children___internal___content = 'childRecipesJson.children.internal.content',
-  childRecipesJson___children___internal___contentDigest = 'childRecipesJson.children.internal.contentDigest',
-  childRecipesJson___children___internal___description = 'childRecipesJson.children.internal.description',
-  childRecipesJson___children___internal___fieldOwners = 'childRecipesJson.children.internal.fieldOwners',
-  childRecipesJson___children___internal___ignoreType = 'childRecipesJson.children.internal.ignoreType',
-  childRecipesJson___children___internal___mediaType = 'childRecipesJson.children.internal.mediaType',
-  childRecipesJson___children___internal___owner = 'childRecipesJson.children.internal.owner',
-  childRecipesJson___children___internal___type = 'childRecipesJson.children.internal.type',
-  childRecipesJson___internal___content = 'childRecipesJson.internal.content',
-  childRecipesJson___internal___contentDigest = 'childRecipesJson.internal.contentDigest',
-  childRecipesJson___internal___description = 'childRecipesJson.internal.description',
-  childRecipesJson___internal___fieldOwners = 'childRecipesJson.internal.fieldOwners',
-  childRecipesJson___internal___ignoreType = 'childRecipesJson.internal.ignoreType',
-  childRecipesJson___internal___mediaType = 'childRecipesJson.internal.mediaType',
-  childRecipesJson___internal___owner = 'childRecipesJson.internal.owner',
-  childRecipesJson___internal___type = 'childRecipesJson.internal.type',
-  childRecipesJson___name = 'childRecipesJson.name',
-  childRecipesJson___description = 'childRecipesJson.description',
-  childRecipesJson___time___total = 'childRecipesJson.time.total',
-  childRecipesJson___time___prep = 'childRecipesJson.time.prep',
-  childRecipesJson___ingredientGroups = 'childRecipesJson.ingredientGroups',
-  childRecipesJson___ingredientGroups___ingredients = 'childRecipesJson.ingredientGroups.ingredients',
-  childRecipesJson___ingredientGroups___name = 'childRecipesJson.ingredientGroups.name',
-  childRecipesJson___directions = 'childRecipesJson.directions',
-  childRecipesJson___servings = 'childRecipesJson.servings',
   childMdx___rawBody = 'childMdx.rawBody',
   childMdx___fileAbsolutePath = 'childMdx.fileAbsolutePath',
   childMdx___frontmatter___title = 'childMdx.frontmatter.title',
@@ -705,7 +658,54 @@ enum FileFieldsEnum {
   childMdx___internal___ignoreType = 'childMdx.internal.ignoreType',
   childMdx___internal___mediaType = 'childMdx.internal.mediaType',
   childMdx___internal___owner = 'childMdx.internal.owner',
-  childMdx___internal___type = 'childMdx.internal.type'
+  childMdx___internal___type = 'childMdx.internal.type',
+  childRecipesJson___id = 'childRecipesJson.id',
+  childRecipesJson___parent___id = 'childRecipesJson.parent.id',
+  childRecipesJson___parent___parent___id = 'childRecipesJson.parent.parent.id',
+  childRecipesJson___parent___parent___children = 'childRecipesJson.parent.parent.children',
+  childRecipesJson___parent___children = 'childRecipesJson.parent.children',
+  childRecipesJson___parent___children___id = 'childRecipesJson.parent.children.id',
+  childRecipesJson___parent___children___children = 'childRecipesJson.parent.children.children',
+  childRecipesJson___parent___internal___content = 'childRecipesJson.parent.internal.content',
+  childRecipesJson___parent___internal___contentDigest = 'childRecipesJson.parent.internal.contentDigest',
+  childRecipesJson___parent___internal___description = 'childRecipesJson.parent.internal.description',
+  childRecipesJson___parent___internal___fieldOwners = 'childRecipesJson.parent.internal.fieldOwners',
+  childRecipesJson___parent___internal___ignoreType = 'childRecipesJson.parent.internal.ignoreType',
+  childRecipesJson___parent___internal___mediaType = 'childRecipesJson.parent.internal.mediaType',
+  childRecipesJson___parent___internal___owner = 'childRecipesJson.parent.internal.owner',
+  childRecipesJson___parent___internal___type = 'childRecipesJson.parent.internal.type',
+  childRecipesJson___children = 'childRecipesJson.children',
+  childRecipesJson___children___id = 'childRecipesJson.children.id',
+  childRecipesJson___children___parent___id = 'childRecipesJson.children.parent.id',
+  childRecipesJson___children___parent___children = 'childRecipesJson.children.parent.children',
+  childRecipesJson___children___children = 'childRecipesJson.children.children',
+  childRecipesJson___children___children___id = 'childRecipesJson.children.children.id',
+  childRecipesJson___children___children___children = 'childRecipesJson.children.children.children',
+  childRecipesJson___children___internal___content = 'childRecipesJson.children.internal.content',
+  childRecipesJson___children___internal___contentDigest = 'childRecipesJson.children.internal.contentDigest',
+  childRecipesJson___children___internal___description = 'childRecipesJson.children.internal.description',
+  childRecipesJson___children___internal___fieldOwners = 'childRecipesJson.children.internal.fieldOwners',
+  childRecipesJson___children___internal___ignoreType = 'childRecipesJson.children.internal.ignoreType',
+  childRecipesJson___children___internal___mediaType = 'childRecipesJson.children.internal.mediaType',
+  childRecipesJson___children___internal___owner = 'childRecipesJson.children.internal.owner',
+  childRecipesJson___children___internal___type = 'childRecipesJson.children.internal.type',
+  childRecipesJson___internal___content = 'childRecipesJson.internal.content',
+  childRecipesJson___internal___contentDigest = 'childRecipesJson.internal.contentDigest',
+  childRecipesJson___internal___description = 'childRecipesJson.internal.description',
+  childRecipesJson___internal___fieldOwners = 'childRecipesJson.internal.fieldOwners',
+  childRecipesJson___internal___ignoreType = 'childRecipesJson.internal.ignoreType',
+  childRecipesJson___internal___mediaType = 'childRecipesJson.internal.mediaType',
+  childRecipesJson___internal___owner = 'childRecipesJson.internal.owner',
+  childRecipesJson___internal___type = 'childRecipesJson.internal.type',
+  childRecipesJson___name = 'childRecipesJson.name',
+  childRecipesJson___description = 'childRecipesJson.description',
+  childRecipesJson___time___total = 'childRecipesJson.time.total',
+  childRecipesJson___time___prep = 'childRecipesJson.time.prep',
+  childRecipesJson___ingredientGroups = 'childRecipesJson.ingredientGroups',
+  childRecipesJson___ingredientGroups___ingredients = 'childRecipesJson.ingredientGroups.ingredients',
+  childRecipesJson___ingredientGroups___name = 'childRecipesJson.ingredientGroups.name',
+  childRecipesJson___directions = 'childRecipesJson.directions',
+  childRecipesJson___servings = 'childRecipesJson.servings'
 }
 
 type FileFilterInput = {
@@ -747,8 +747,8 @@ type FileFilterInput = {
   readonly parent: Maybe<NodeFilterInput>;
   readonly children: Maybe<NodeFilterListInput>;
   readonly internal: Maybe<InternalFilterInput>;
-  readonly childRecipesJson: Maybe<RecipesJsonFilterInput>;
   readonly childMdx: Maybe<MdxFilterInput>;
+  readonly childRecipesJson: Maybe<RecipesJsonFilterInput>;
 };
 
 type FileGroupConnection = {
@@ -1218,8 +1218,8 @@ type Query_fileArgs = {
   parent: Maybe<NodeFilterInput>;
   children: Maybe<NodeFilterListInput>;
   internal: Maybe<InternalFilterInput>;
-  childRecipesJson: Maybe<RecipesJsonFilterInput>;
   childMdx: Maybe<MdxFilterInput>;
+  childRecipesJson: Maybe<RecipesJsonFilterInput>;
 };
 
 
@@ -2582,6 +2582,14 @@ type blogIndexQuery = { readonly allMdx: { readonly nodes: ReadonlyArray<(
       & { readonly fields: Maybe<Pick<MdxFields, 'slug'>>, readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'title' | 'date'>> }
     )> } };
 
+type recipesIndexQueryVariables = {};
+
+
+type recipesIndexQuery = { readonly allFile: { readonly nodes: ReadonlyArray<(
+      Pick<File, 'name'>
+      & { readonly childRecipesJson: Maybe<Pick<RecipesJson, 'name'>> }
+    )> } };
+
 type NotFoundPageQueryVariables = {};
 
 
@@ -2597,16 +2605,6 @@ type MdxPageQuery = { readonly mdx: Maybe<(
     & { readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'title'>> }
   )> };
 
-type BlogPostQueryVariables = {
-  id: Maybe<Scalars['String']>;
-};
-
-
-type BlogPostQuery = { readonly mdx: Maybe<(
-    Pick<Mdx, 'id' | 'body'>
-    & { readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'title' | 'date'>> }
-  )> };
-
 type RecipeQueryVariables = {
   id: Maybe<Scalars['String']>;
 };
@@ -2617,12 +2615,14 @@ type RecipeQuery = { readonly file: Maybe<{ readonly childRecipesJson: Maybe<(
       & { readonly ingredientGroups: Maybe<ReadonlyArray<Maybe<Pick<RecipesJsonIngredientGroups, 'ingredients' | 'name'>>>>, readonly time: Maybe<Pick<RecipesJsonTime, 'prep' | 'total'>> }
     )> }> };
 
-type recipesIndexQueryVariables = {};
+type BlogPostQueryVariables = {
+  id: Maybe<Scalars['String']>;
+};
 
 
-type recipesIndexQuery = { readonly allFile: { readonly nodes: ReadonlyArray<(
-      Pick<File, 'name'>
-      & { readonly childRecipesJson: Maybe<Pick<RecipesJson, 'name'>> }
-    )> } };
+type BlogPostQuery = { readonly mdx: Maybe<(
+    Pick<Mdx, 'id' | 'body'>
+    & { readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'title' | 'date'>> }
+  )> };
 
 }
