@@ -1,54 +1,19 @@
 import styled from '@emotion/styled';
-import {
-  differenceInYears,
-  min as minDate,
-  parseISO,
-} from 'date-fns';
+import {differenceInYears, min as minDate} from 'date-fns';
 import Link from 'next/link';
 import React, {ReactElement} from 'react';
 import DateText from '../../layouts/DateText';
 import Layout from '../../layouts/Layout';
-
-type Post = {
-  date: string;
-  timestamp: number;
-  title: string;
-  url: string;
-};
+import {getAllPosts, Post} from '../../lib/posts';
 
 type Props = {
   posts: Array<Post>;
 };
 
-export function getStaticProps(): {
+export async function getStaticProps(): Promise<{
   props: Props;
-} {
-  // https://www.smashingmagazine.com/2020/09/build-blog-nextjs-mdx/
-  const mdxRequire = require.context(
-    '.',
-    /*includeSubdirs*/ true,
-    /\.mdx$/,
-  );
-
-  const posts: Array<Post> = mdxRequire
-    .keys()
-    .map(fileName => {
-      const slug = fileName
-        .substr(1)
-        .replace(/\.mdx$/, '')
-        .replace(/\/index$/, '');
-      const {metadata = {date: '', title: ''}} = mdxRequire(
-        fileName,
-      );
-
-      return {
-        url: '/blog' + slug,
-        title: metadata.title,
-        date: metadata.date,
-        timestamp: parseISO(metadata.date).getTime(),
-      };
-    })
-    .sort((a, b) => b.timestamp - a.timestamp);
+}> {
+  const posts = await getAllPosts();
 
   return {
     props: {posts},
@@ -73,14 +38,14 @@ export default function BlogIndex({
       </Subtitle>
       <Posts>
         {posts.map(({date, title, url}) => (
-          <Post key={url}>
+          <PostEntry key={url}>
             <Link href={url} passHref={true}>
               <PostLink>
                 <PostTitle>{title || url}</PostTitle>
                 <DateText>{date}</DateText>
               </PostLink>
             </Link>
-          </Post>
+          </PostEntry>
         ))}
       </Posts>
     </Layout>
@@ -97,7 +62,7 @@ const Posts = styled.ul`
   padding: 0;
 `;
 
-const Post = styled.li`
+const PostEntry = styled.li`
   margin: 0;
 `;
 
