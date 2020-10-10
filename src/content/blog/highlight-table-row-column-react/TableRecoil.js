@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
 import {
   atom,
+  RecoilRoot,
+  selectorFamily,
   useRecoilValue,
   useSetRecoilState,
-  selectorFamily,
-  RecoilRoot,
 } from 'recoil';
-import {HarnessContext, ROWS, COLUMNS} from './Harness.js';
+import {COLUMNS, HarnessContext, ROWS} from './Harness.js';
 
 const highlightedCell = atom({
   key: 'highlightedCell',
@@ -38,7 +38,6 @@ function Table() {
 }
 
 function TableRow({row}) {
-  console.count('row render');
   return (
     <tr>
       {Array(COLUMNS)
@@ -51,13 +50,17 @@ function TableRow({row}) {
 }
 
 function TableCell({row, column}) {
-  console.count('tcell render');
-  const isHighlighted = useRecoilValue(isHighlightedSelector({row, column}));
+  const isHighlighted = useRecoilValue(
+    isHighlightedSelector({row, column}),
+  );
   const setHighlight = useSetRecoilState(highlightedCell);
   const wrapSetter = useContext(HarnessContext);
   return (
     <td
-      onMouseEnter={wrapSetter(() => setHighlight({row, column}), 2)}
+      onMouseEnter={wrapSetter(
+        () => setHighlight({row, column}),
+        2,
+      )}
       style={isHighlighted ? highlightedStyle : null}>
       {row}x{column}
     </td>
