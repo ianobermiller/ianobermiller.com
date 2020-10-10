@@ -11,9 +11,7 @@ export const metadata = {
   ],
 };
 
-export default ({children}) => (
-  <Post {...metadata}>{children}</Post>
-);
+export default Post;
 
 If you've adopted JavaScript classes when working with React, you may be missing `PureRenderMixin`. You can emulate it easily using decorators:
 

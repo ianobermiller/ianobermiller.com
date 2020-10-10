@@ -6,9 +6,7 @@ export const metadata = {
   categories: ['JavaScript', 'TypeScript'],
 };
 
-export default ({children}) => (
-  <Post {...metadata}>{children}</Post>
-);
+export default Post;
 
 Microsoft recently released a new, open source language called [TypeScript][1]. It is a strict superset of Javascript, and compiles directly to Javascript. The compiler is open source, and written in TypeScript itself. My team at Microsoft has been dogfooding TypeScript for several months now, and I thought I'd share a few of my favorite parts of the language.
 

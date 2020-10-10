@@ -12,9 +12,7 @@ export const metadata = {
   ],
 };
 
-export default ({children}) => (
-  <Post {...metadata}>{children}</Post>
-);
+export default Post;
 
 So, you want to use the new [JavaScript Internationalization API, Intl][1]? Perhaps you even want to use it with the awesome [React Intl][2] library. [Browser support is okay][3], but if you want to support <IE11 and any version of Safari you'll have to use a polyfill. Unfortunately, [the polyfill][4] is pretty large if you use the full build with all languages, clocking in at ~150k minified and gzipped. Wouldn't it be great if we could set up our JavaScript app to download the Intl library only if the browser needs the polyfill? Fortunately, this is really easy to do using [webpack][5].
 

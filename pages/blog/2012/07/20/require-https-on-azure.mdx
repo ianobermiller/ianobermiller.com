@@ -12,9 +12,7 @@ export const metadata = {
   ],
 };
 
-export default ({children}) => (
-  <Post {...metadata}>{children}</Post>
-);
+export default Post;
 
 Once you have configured an Azure web role with an SSL certificate and setup the port configuration in the Azure project, you may want to redirect anyone who comes to the http:// version of your page to the secured https:// version. To do so in production, add the following to your Web.Release.config:
 

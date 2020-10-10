@@ -6,9 +6,7 @@ export const metadata = {
   categories: ['JavaScript', 'Radium', 'React'],
 };
 
-export default ({children}) => (
-  <Post {...metadata}>{children}</Post>
-);
+export default Post;
 
 [Radium][1] is a library for styling React components that I've spent a fair amount of development time on over the past few months. Radium uses inline styles exclusively, and there are some things you just can't do without CSS. Styling `:visited` links is one of them. Luckily, Radium provides a `<Style>` component which makes this pretty easy to accomplish.
 

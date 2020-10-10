@@ -6,9 +6,7 @@ export const metadata = {
   categories: ['Command line', 'ImageMagick', 'Photos'],
 };
 
-export default ({children}) => (
-  <Post {...metadata}>{children}</Post>
-);
+export default Post;
 
 Ever wanted to print four photos on a single 4&#215;6 (this is all wallet photos are, after all)? While this sounds like it should be simple, most photo services, like Costco, don't let you print 2&#215;3 photos unless you order 4 at once, and even then they charge several times the price of a single 4&#215;6. After searching around for solutions, I figured out how to spend a few minutes at the command line using ImageMagick instead.
 

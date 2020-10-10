@@ -11,9 +11,7 @@ export const metadata = {
   ],
 };
 
-export default ({children}) => (
-  <Post {...metadata}>{children}</Post>
-);
+export default Post;
 
 In many web apps, you want to trigger an action in response to a keypress when a certain component is showing. I ran into this while playing with [NuclearMail][1]. Think gmail style "y to archive" kind of shortcuts. So, building with React, we might have a `MessageView` component, which, when it is showing, we want to respond to the "y" keypress and archive the message. All we need is the `keyboardjs` library and some decorator glue code:
 

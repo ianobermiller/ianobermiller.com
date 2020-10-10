@@ -12,9 +12,7 @@ export const metadata = {
   ],
 };
 
-export default ({children}) => (
-  <Post {...metadata}>{children}</Post>
-);
+export default Post;
 
 In order to use RestSharp with the async/await keywords, the methods must return `Task` objects. Since this isn't provided out of the box, some simple wrappers will do the trick:
 

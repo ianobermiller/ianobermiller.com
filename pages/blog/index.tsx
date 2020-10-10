@@ -4,10 +4,15 @@ import Link from 'next/link';
 import React, {ReactElement} from 'react';
 import DateText from '../../layouts/DateText';
 import Layout from '../../layouts/Layout';
-import {getAllPosts, Post} from '../../lib/posts';
+import {getAllPosts} from '../../lib/posts';
 
 type Props = {
-  posts: Array<Post>;
+  posts: Array<{
+    date: string;
+    timestamp: number;
+    title: string;
+    url: string;
+  }>;
 };
 
 export async function getStaticProps(): Promise<{
@@ -16,7 +21,15 @@ export async function getStaticProps(): Promise<{
   const posts = await getAllPosts();
 
   return {
-    props: {posts},
+    props: {
+      posts: posts.map(p => ({
+        // Pull out only the data needed
+        date: p.date,
+        timestamp: p.timestamp,
+        title: p.title,
+        url: p.url,
+      })),
+    },
   };
 }
 

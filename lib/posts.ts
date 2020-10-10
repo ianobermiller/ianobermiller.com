@@ -3,6 +3,7 @@ import readdirp from 'readdirp';
 
 export type Post = {
   date: string;
+  path: string;
   timestamp: number;
   title: string;
   url: string;
@@ -10,8 +11,13 @@ export type Post = {
 
 export const blogPath = 'pages/blog/';
 
+let posts = null;
 export async function getAllPosts(): Promise<Array<Post>> {
-  const posts = [];
+  if (posts != null) {
+    return posts;
+  }
+
+  posts = [];
 
   for await (const {path} of readdirp(blogPath, {
     fileFilter: '*.mdx',
@@ -24,10 +30,11 @@ export async function getAllPosts(): Promise<Array<Post>> {
     } = require('../' + blogPath + path);
 
     posts.push({
-      url: '/blog/' + slug,
-      title: metadata.title,
       date: metadata.date,
+      path,
       timestamp: parseISO(metadata.date).getTime(),
+      title: metadata.title,
+      url: '/blog/' + slug,
     });
   }
 
