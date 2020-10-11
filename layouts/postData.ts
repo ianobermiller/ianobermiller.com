@@ -12,7 +12,7 @@ export async function getStaticProps(): Promise<{
   // Super hack way to get the path
   const currentPostPath = new Error().stack.match(
     /\/pages\/blog\/(.*\.mdx)/,
-  )[1];
+  )?.[1];
   const posts = await getAllPosts();
   const currentPostIndex = posts.findIndex(
     p => p.path === currentPostPath,
