@@ -11,11 +11,17 @@ interface Props {
   title: string;
 }
 
-export default function Layout({children, title}: Props): ReactElement {
+export default function Layout({
+  children,
+  title,
+}: Props): ReactElement {
   return (
     <Root>
       <Helmet htmlAttributes={{lang: 'en'}}>
-        <title>{(title ? title + ' \u00AB ' : '') + 'Ian Obermiller'}</title>
+        <title>
+          {(title ? title + ' \u00AB ' : '') +
+            'Ian Obermiller'}
+        </title>
         <meta
           name="Description"
           content="Personal site of Christian and software engineer Ian Obermiller."
@@ -39,12 +45,18 @@ export default function Layout({children, title}: Props): ReactElement {
             </Link>
           </li>
           <li>
-            <Link activeClassName="active" partiallyActive={true} to="/blog">
+            <Link
+              activeClassName="active"
+              partiallyActive={true}
+              to="/blog">
               Posts
             </Link>
           </li>
           <li>
-            <Link activeClassName="active" partiallyActive={true} to="/recipes">
+            <Link
+              activeClassName="active"
+              partiallyActive={true}
+              to="/recipes">
               Recipes
             </Link>
           </li>
@@ -55,20 +67,23 @@ export default function Layout({children, title}: Props): ReactElement {
 
       <Footer>
         <p>
-          <a href="mailto:ian@obermillers.com" target="_blank">
+          <a
+            href="mailto:ian@obermillers.com"
+            rel="me"
+            target="_blank">
             ian@obermillers.com
           </a>
           {' \u00B7 '}
           <a
             href="https://github.com/ianobermiller"
-            rel="noopener"
+            rel="me noopener"
             target="_blank">
             github.com/ianobermiller
           </a>
         </p>
         <Disclaimer>
-          Unless otherwise noted, source code on this blog is Licensed under the
-          MIT License.
+          Unless otherwise noted, source code on this blog
+          is Licensed under the MIT License.
         </Disclaimer>
       </Footer>
     </Root>
