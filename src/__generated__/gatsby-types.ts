@@ -699,13 +699,13 @@ enum FileFieldsEnum {
   childRecipesJson___internal___type = 'childRecipesJson.internal.type',
   childRecipesJson___name = 'childRecipesJson.name',
   childRecipesJson___description = 'childRecipesJson.description',
-  childRecipesJson___time___total = 'childRecipesJson.time.total',
-  childRecipesJson___time___prep = 'childRecipesJson.time.prep',
   childRecipesJson___ingredientGroups = 'childRecipesJson.ingredientGroups',
   childRecipesJson___ingredientGroups___ingredients = 'childRecipesJson.ingredientGroups.ingredients',
   childRecipesJson___ingredientGroups___name = 'childRecipesJson.ingredientGroups.name',
   childRecipesJson___directions = 'childRecipesJson.directions',
-  childRecipesJson___servings = 'childRecipesJson.servings'
+  childRecipesJson___servings = 'childRecipesJson.servings',
+  childRecipesJson___time___total = 'childRecipesJson.time.total',
+  childRecipesJson___time___prep = 'childRecipesJson.time.prep'
 }
 
 type FileFilterInput = {
@@ -1309,6 +1309,8 @@ type Query_allSitePageArgs = {
 type Query_siteArgs = {
   buildTime: Maybe<DateQueryOperatorInput>;
   siteMetadata: Maybe<SiteSiteMetadataFilterInput>;
+  port: Maybe<IntQueryOperatorInput>;
+  host: Maybe<StringQueryOperatorInput>;
   polyfill: Maybe<BooleanQueryOperatorInput>;
   pathPrefix: Maybe<StringQueryOperatorInput>;
   id: Maybe<StringQueryOperatorInput>;
@@ -1362,10 +1364,10 @@ type Query_recipesJsonArgs = {
   internal: Maybe<InternalFilterInput>;
   name: Maybe<StringQueryOperatorInput>;
   description: Maybe<StringQueryOperatorInput>;
-  time: Maybe<RecipesJsonTimeFilterInput>;
   ingredientGroups: Maybe<RecipesJsonIngredientGroupsFilterListInput>;
   directions: Maybe<StringQueryOperatorInput>;
   servings: Maybe<StringQueryOperatorInput>;
+  time: Maybe<RecipesJsonTimeFilterInput>;
 };
 
 
@@ -1425,10 +1427,10 @@ type RecipesJson = Node & {
   readonly internal: Internal;
   readonly name: Maybe<Scalars['String']>;
   readonly description: Maybe<Scalars['String']>;
-  readonly time: Maybe<RecipesJsonTime>;
   readonly ingredientGroups: Maybe<ReadonlyArray<Maybe<RecipesJsonIngredientGroups>>>;
   readonly directions: Maybe<ReadonlyArray<Maybe<Scalars['String']>>>;
   readonly servings: Maybe<Scalars['String']>;
+  readonly time: Maybe<RecipesJsonTime>;
 };
 
 type RecipesJsonConnection = {
@@ -1547,13 +1549,13 @@ enum RecipesJsonFieldsEnum {
   internal___type = 'internal.type',
   name = 'name',
   description = 'description',
-  time___total = 'time.total',
-  time___prep = 'time.prep',
   ingredientGroups = 'ingredientGroups',
   ingredientGroups___ingredients = 'ingredientGroups.ingredients',
   ingredientGroups___name = 'ingredientGroups.name',
   directions = 'directions',
-  servings = 'servings'
+  servings = 'servings',
+  time___total = 'time.total',
+  time___prep = 'time.prep'
 }
 
 type RecipesJsonFilterInput = {
@@ -1563,10 +1565,10 @@ type RecipesJsonFilterInput = {
   readonly internal: Maybe<InternalFilterInput>;
   readonly name: Maybe<StringQueryOperatorInput>;
   readonly description: Maybe<StringQueryOperatorInput>;
-  readonly time: Maybe<RecipesJsonTimeFilterInput>;
   readonly ingredientGroups: Maybe<RecipesJsonIngredientGroupsFilterListInput>;
   readonly directions: Maybe<StringQueryOperatorInput>;
   readonly servings: Maybe<StringQueryOperatorInput>;
+  readonly time: Maybe<RecipesJsonTimeFilterInput>;
 };
 
 type RecipesJsonGroupConnection = {
@@ -1610,6 +1612,8 @@ type RecipesJsonTimeFilterInput = {
 type Site = Node & {
   readonly buildTime: Maybe<Scalars['Date']>;
   readonly siteMetadata: Maybe<SiteSiteMetadata>;
+  readonly port: Maybe<Scalars['Int']>;
+  readonly host: Maybe<Scalars['String']>;
   readonly polyfill: Maybe<Scalars['Boolean']>;
   readonly pathPrefix: Maybe<Scalars['String']>;
   readonly id: Scalars['ID'];
@@ -1812,6 +1816,8 @@ enum SiteFieldsEnum {
   buildTime = 'buildTime',
   siteMetadata___title = 'siteMetadata.title',
   siteMetadata___siteUrl = 'siteMetadata.siteUrl',
+  port = 'port',
+  host = 'host',
   polyfill = 'polyfill',
   pathPrefix = 'pathPrefix',
   id = 'id',
@@ -1905,6 +1911,8 @@ enum SiteFieldsEnum {
 type SiteFilterInput = {
   readonly buildTime: Maybe<DateQueryOperatorInput>;
   readonly siteMetadata: Maybe<SiteSiteMetadataFilterInput>;
+  readonly port: Maybe<IntQueryOperatorInput>;
+  readonly host: Maybe<StringQueryOperatorInput>;
   readonly polyfill: Maybe<BooleanQueryOperatorInput>;
   readonly pathPrefix: Maybe<StringQueryOperatorInput>;
   readonly id: Maybe<StringQueryOperatorInput>;
@@ -2624,5 +2632,10 @@ type BlogPostQuery = { readonly mdx: Maybe<(
     Pick<Mdx, 'id' | 'body'>
     & { readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'title' | 'date'>> }
   )> };
+
+type PagesQueryQueryVariables = {};
+
+
+type PagesQueryQuery = { readonly allSitePage: { readonly nodes: ReadonlyArray<Pick<SitePage, 'path'>> } };
 
 }

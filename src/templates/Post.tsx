@@ -29,17 +29,28 @@ export default function Post(props: Props): ReactElement {
 
   return (
     <Layout title={title}>
-      <h1>{title}</h1>
-      {dateString && <DateText>Posted {dateString}</DateText>}
-      <div className="markdown">
-        <MDXRenderer>{props.data.mdx.body}</MDXRenderer>
-      </div>
+      <article className="h-entry">
+        <h1 className="p-name">{title}</h1>
+        {dateString && (
+          <DateText>
+            Posted{' '}
+            <time className="dt-published" dateTime={date}>
+              {dateString}
+            </time>
+          </DateText>
+        )}
+        <div className="e-content markdown">
+          <MDXRenderer>{props.data.mdx.body}</MDXRenderer>
+        </div>
+      </article>
       <RelatedPosts>
-        {props.pageContext.relatedPosts.map(({name, title, slug}) => (
-          <li key={slug}>
-            {name}: <Link to={slug}>{title}</Link>
-          </li>
-        ))}
+        {props.pageContext.relatedPosts.map(
+          ({name, title, slug}) => (
+            <li key={slug}>
+              {name}: <Link to={slug}>{title}</Link>
+            </li>
+          ),
+        )}
       </RelatedPosts>
     </Layout>
   );
