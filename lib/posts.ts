@@ -11,7 +11,7 @@ export type Post = {
 
 export const blogPath = 'pages/blog/';
 
-let posts = null;
+let posts: Array<Post> | null = null;
 export async function getAllPosts(): Promise<Array<Post>> {
   if (posts != null) {
     return posts;
