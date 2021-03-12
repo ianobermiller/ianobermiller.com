@@ -1,5 +1,6 @@
 import {GatsbyConfig} from 'gatsby';
 import type {PluginOptions as TypegenPluginOptions} from 'gatsby-plugin-typegen/types';
+import sass from 'sass';
 
 type Plugin =
   | string
@@ -127,7 +128,12 @@ export const plugins: Array<Plugin> = [
       ],
     },
   },
-  'gatsby-plugin-sass',
+  {
+    resolve: 'gatsby-plugin-sass',
+    options: {
+      implementation: sass,
+    },
+  },
   'gatsby-plugin-sitemap',
   {
     resolve: 'gatsby-plugin-typegen',

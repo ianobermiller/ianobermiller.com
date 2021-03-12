@@ -62,6 +62,11 @@ export default function Layout({
               Recipes
             </Link>
           </li>
+          <li>
+            <Link activeClassName="active" to="/projects">
+              Projects
+            </Link>
+          </li>
         </ul>
       </Nav>
 
@@ -133,7 +138,7 @@ const Nav = styled.nav`
   & li {
     display: inline-block;
 
-    & :not(:last-child) {
+    &:not(:last-child) {
       margin-right: var(--space-l);
     }
   }

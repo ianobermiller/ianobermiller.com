@@ -22,7 +22,9 @@ export default function Recipe(props: Props): ReactElement {
           {group.name ? <h3>{group.name}</h3> : null}
           <ul>
             {group.ingredients.map((ingredient, index) => (
-              <Ingredient key={index}>{ingredient}</Ingredient>
+              <Ingredient key={index}>
+                {ingredient}
+              </Ingredient>
             ))}
           </ul>
         </div>

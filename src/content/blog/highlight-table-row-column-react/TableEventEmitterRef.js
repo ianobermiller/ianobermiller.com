@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useContext} from 'react';
-import {Global, css} from '@emotion/core';
-import {HarnessContext, ROWS, COLUMNS} from './Harness.js';
+import {css, Global} from '@emotion/react';
+import React, {useContext, useEffect, useRef} from 'react';
+import {COLUMNS, HarnessContext, ROWS} from './Harness.js';
 
 // Use an IIFE to contain the variable declarations. In a production
 // app, I'd probably make this a class so you can test the instances,
@@ -26,8 +26,10 @@ const emitter = (() => {
     highlight(newRow, newCol) {
       subs.forEach((row, r) => {
         row.forEach((cb, c) => {
-          const wasHighlighted = r === currentRow || c === currentCol;
-          const isHighlighted = r === newRow || c === newCol;
+          const wasHighlighted =
+            r === currentRow || c === currentCol;
+          const isHighlighted =
+            r === newRow || c === newCol;
           // Only notify if the highlighting for this row has changed.
           // We could optimize this loop to only run for the changed
           // rows, but you're unlikely to see noticable gains.
@@ -87,14 +89,19 @@ function TableCell({row, column}) {
     emitter.subscribe(row, column, isHighlighted => {
       if (ref.current) {
         // Directly update the class on the DOM node
-        ref.current.classList.toggle('highlight-cell', isHighlighted);
+        ref.current.classList.toggle(
+          'highlight-cell',
+          isHighlighted,
+        );
       }
     });
   }, [column, row]);
   const wrapSetter = useContext(HarnessContext);
   return (
     <td
-      onMouseEnter={wrapSetter(() => emitter.highlight(row, column))}
+      onMouseEnter={wrapSetter(() =>
+        emitter.highlight(row, column),
+      )}
       ref={ref}>
       {row}x{column}
     </td>
