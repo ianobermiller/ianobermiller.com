@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useContext} from 'react';
-import {Global, css} from '@emotion/core';
-import {HarnessContext, ROWS, COLUMNS} from './Harness.js';
+import {css, Global} from '@emotion/react';
+import React, {useContext, useEffect, useRef} from 'react';
+import {COLUMNS, HarnessContext, ROWS} from './Harness.js';
 
 // Use an IIFE to contain the variable declarations. In a production
 // app, I'd probably make this a class so you can test the instances,
