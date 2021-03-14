@@ -205,6 +205,10 @@ code {
   padding: var(--space-m);
   position: relative;
 
+  &, & > code {
+    line-height: 1.5;
+  }
+
   @media screen and (min-device-width: 720px) {
     &::before {
       color: var(--accent-color);
