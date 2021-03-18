@@ -30,7 +30,7 @@ export default function Layout({
       <Header>
         <h1>
           <Link href="/">
-            <a>Ian Obermiller</a>
+            <a rel="me">Ian Obermiller</a>
           </Link>
         </h1>
         <h2>Part time hacker, full time dad.</h2>
@@ -62,13 +62,14 @@ export default function Layout({
         <p>
           <a
             href="mailto:ian@obermillers.com"
+            rel="me"
             target="_blank">
             ian@obermillers.com
           </a>
           {' \u00B7 '}
           <a
             href="https://github.com/ianobermiller"
-            rel="noopener"
+            rel="me noopener"
             target="_blank">
             github.com/ianobermiller
           </a>
