@@ -30,11 +30,18 @@ export default function Post({
 
   return (
     <Layout title={title}>
-      <h1>{title}</h1>
-      {dateString && (
-        <DateText>Posted {dateString}</DateText>
-      )}
-      <div className="markdown">{children}</div>
+      <article className="h-entry">
+        <h1 className="p-name">{title}</h1>
+        {dateString && (
+          <DateText>
+            Posted{' '}
+            <time className="dt-published" dateTime={date}>
+              {dateString}
+            </time>
+          </DateText>
+        )}
+        <div className="e-content markdown">{children}</div>
+      </article>
       <RelatedPosts>
         {relatedPosts.map(({name, title, url}) => (
           <li key={url}>

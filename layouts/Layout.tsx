@@ -30,7 +30,9 @@ export default function Layout({
       <Header>
         <h1>
           <Link href="/">
-            <a rel="me">Ian Obermiller</a>
+            <a className="h-card" rel="me">
+              Ian Obermiller
+            </a>
           </Link>
         </h1>
         <h2>Part time hacker, full time dad.</h2>
