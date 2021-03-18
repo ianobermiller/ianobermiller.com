@@ -1,5 +1,10 @@
 const remarkPrism = require('remark-prism');
 const remarkToC = require('remark-toc');
+const withBundleAnalyzer = require('@next/bundle-analyzer')(
+  {
+    enabled: process.env.ANALYZE === 'true',
+  },
+);
 
 const mdxRenderer = `
   import React from 'react'
@@ -22,6 +27,8 @@ const withMDX = require('@next/mdx')({
   },
 });
 
-module.exports = withMDX({
-  pageExtensions: ['page.tsx', 'md', 'mdx'],
-});
+module.exports = withBundleAnalyzer(
+  withMDX({
+    pageExtensions: ['page.tsx', 'md', 'mdx'],
+  }),
+);

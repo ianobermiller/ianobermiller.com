@@ -36,9 +36,13 @@
     "build": "next build",
     "start": "next start",
     "format": "prettier --parser typescript --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.ts*\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "analyze": "ANALYZE=true next build",
+    "analyze:server": "BUNDLE_ANALYZE=server next build",
+    "analyze:browser": "BUNDLE_ANALYZE=browser next build"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^10.0.9",
     "eslint": "^7.2.0",
     "eslint-plugin-graphql": "^4.0.0",
     "prettier": "^2.0.5",
