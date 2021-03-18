@@ -37,3 +37,18 @@ export function getRecipe(slug: string): Recipe {
   const parsed = JSON.parse(fileContents);
   return parsed;
 }
+
+export function getAllRecipesNameAndURL(): Array<{
+  name: string;
+  url: string;
+}> {
+  return getRecipeEntries()
+    .map(({slug}) => {
+      const recipe = getRecipe(slug);
+      return {
+        name: recipe.name,
+        url: `/recipes/${slug}`,
+      };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
+}

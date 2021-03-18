@@ -2,22 +2,10 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 import React, {ReactElement} from 'react';
 import Layout from '../../layouts/Layout';
-import {
-  getRecipe,
-  getRecipeEntries,
-} from '../../lib/recipes';
+import {getAllRecipesNameAndURL} from '../../lib/recipes';
 
 export async function getStaticProps({params}) {
-  const recipes = getRecipeEntries()
-    .map(({slug}) => {
-      const recipe = getRecipe(slug);
-      return {
-        name: recipe.name,
-        url: `/recipes/${slug}`,
-      };
-    })
-    .sort((a, b) => a.name.localeCompare(b.name));
-  return {props: {recipes}};
+  return {props: {recipes: getAllRecipesNameAndURL()}};
 }
 
 export default function RecipesIndex({
