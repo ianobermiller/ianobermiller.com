@@ -1,17 +1,18 @@
 import styled from '@emotion/styled';
-import {readFileSync} from 'fs';
 import Link from 'next/link';
 import React, {ReactElement} from 'react';
 import Layout from '../../layouts/Layout';
-import {getAllRecipes} from '../../lib/recipes';
+import {
+  getRecipe,
+  getRecipeEntries,
+} from '../../lib/recipes';
 
 export async function getStaticProps({params}) {
-  const recipes = getAllRecipes()
-    .map(({filePath, slug}) => {
-      const fileContents = readFileSync(filePath, 'utf8');
-      const parsed = JSON.parse(fileContents);
+  const recipes = getRecipeEntries()
+    .map(({slug}) => {
+      const recipe = getRecipe(slug);
       return {
-        name: parsed.name,
+        name: recipe.name,
         url: `/recipes/${slug}`,
       };
     })

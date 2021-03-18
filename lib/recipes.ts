@@ -3,7 +3,12 @@ import path from 'path';
 
 const recipesDirectory = 'content/recipes';
 
-export function getAllRecipes() {
+export interface RecipeEntry {
+  filePath: string;
+  slug: string;
+}
+
+export function getRecipeEntries(): Array<RecipeEntry> {
   const fileNames = readdirSync(recipesDirectory);
 
   return fileNames
@@ -14,7 +19,17 @@ export function getAllRecipes() {
     }));
 }
 
-export function getRecipe(slug: string) {
+export interface Recipe {
+  name: string;
+  description: string;
+  ingredientGroups: Array<{
+    ingredients: Array<string>;
+    name: string;
+  }>;
+  directions: Array<string>;
+}
+
+export function getRecipe(slug: string): Recipe {
   const fileContents = readFileSync(
     path.join(recipesDirectory, slug + '.json'),
     'utf8',

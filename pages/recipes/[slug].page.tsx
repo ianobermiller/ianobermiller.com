@@ -1,22 +1,18 @@
 import styled from '@emotion/styled';
 import React, {ReactElement} from 'react';
 import Layout from '../../layouts/Layout';
-import {getAllRecipes, getRecipe} from '../../lib/recipes';
+import type {Recipe} from '../../lib/recipes';
+import {
+  getRecipe,
+  getRecipeEntries,
+} from '../../lib/recipes';
 
 type Props = {
-  recipe: {
-    name: string;
-    description: string;
-    ingredientGroups: Array<{
-      ingredients: Array<string>;
-      name: string;
-    }>;
-    directions: Array<string>;
-  };
+  recipe: Recipe;
 };
 
 export async function getStaticPaths() {
-  const ids = getAllRecipes();
+  const ids = getRecipeEntries();
   return {
     paths: ids.map(({slug}) => ({params: {slug}})),
     fallback: false,
@@ -28,7 +24,7 @@ export function getStaticProps({params}): {props: Props} {
   return {props: {recipe}};
 }
 
-export default function Recipe({
+export default function RecipePage({
   recipe,
 }: Props): ReactElement {
   return (
