@@ -1,5 +1,7 @@
 import Head from 'next/head';
 import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
+import {parse as uuidParse, stringify as uuidStringify} from 'uuid';
+import {decode, encode} from './base64';
 import {decrypt, encrypt} from './crypto';
 import styles from './secure.module.scss';
 
@@ -58,7 +60,7 @@ export default function App() {
 async function fetchMessage(data: Data): Promise<string> {
   const response = await fetch(BASE_API + '/download', {
     method: 'POST',
-    body: JSON.stringify({id: data.id}),
+    body: JSON.stringify({id: base64ToUUID(data.id)}),
   });
   const json = await response.json();
   const decrypted = await decrypt({
@@ -119,7 +121,7 @@ function Input({setUploadResult}: {setUploadResult: (r: Data) => void}) {
       body: JSON.stringify({text: cipherText}),
     });
     const {id} = await response.json();
-    setUploadResult({secretKey: key, id});
+    setUploadResult({secretKey: key, id: uuidToBase64(id)});
   }
 
   function onChange(e: ChangeEvent<HTMLTextAreaElement>) {
@@ -162,4 +164,12 @@ function CopyLink({secretKey, id}: Data): JSX.Element {
       <CreateNew />
     </div>
   );
+}
+
+function uuidToBase64(uuid: string): string {
+  return encode(uuidParse(uuid));
+}
+
+function base64ToUUID(b64: string): string {
+  return uuidStringify(new Uint8Array(decode(b64)));
 }
