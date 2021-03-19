@@ -1,5 +1,7 @@
+import styled from '@emotion/styled';
 import Head from 'next/head';
 import Link from 'next/link';
+import {useRouter} from 'next/router';
 import React, {ReactElement, ReactNode} from 'react';
 import ColorSchemePicker from './ColorSchemePicker';
 
