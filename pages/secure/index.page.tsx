@@ -129,8 +129,17 @@ function Input({setUploadResult}: {setUploadResult: (r: Data) => void}) {
 
   return (
     <form onSubmit={submit}>
-      {value.length} / {MAX_LENGTH} characters
+      <p>
+        Your message will be encrypted before being uploaded to a secure server.
+        Simply send the generated link to someone and make sure to include the
+        part after the hash "#". When they open the link, the message will be
+        downloaded, decrypted and immediately deleted by the server. Unopened
+        messages will be deleted after 7 days.
+      </p>
       <textarea value={value} onChange={onChange} />
+      <p>
+        {value.length} / {MAX_LENGTH} characters
+      </p>
       <input disabled={!value} type="submit" value="Generate Link" />
     </form>
   );

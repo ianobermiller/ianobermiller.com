@@ -13,6 +13,7 @@ yarn-error.log
 
 # next.js build directory
 .next
+out
 
 # next-mdx-enhanced cache directory
 .mdx-data
