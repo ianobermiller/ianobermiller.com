@@ -2,10 +2,7 @@ import styled from '@emotion/styled';
 import React, {ReactElement} from 'react';
 import Layout from '../../layouts/Layout';
 import type {Recipe} from '../../lib/recipes';
-import {
-  getRecipe,
-  getRecipeEntries,
-} from '../../lib/recipes';
+import {getRecipe, getRecipeEntries} from '../../lib/recipes';
 
 type Props = {
   recipe: Recipe;
@@ -24,9 +21,7 @@ export function getStaticProps({params}): {props: Props} {
   return {props: {recipe}};
 }
 
-export default function RecipePage({
-  recipe,
-}: Props): ReactElement {
+export default function RecipePage({recipe}: Props): ReactElement {
   return (
     <Layout title={recipe.name}>
       <h1>{recipe.name}</h1>
@@ -41,9 +36,7 @@ export default function RecipePage({
           {group.name ? <h3>{group.name}</h3> : null}
           <ul>
             {group.ingredients.map((ingredient, index) => (
-              <Ingredient key={index}>
-                {ingredient}
-              </Ingredient>
+              <Ingredient key={index}>{ingredient}</Ingredient>
             ))}
           </ul>
         </div>

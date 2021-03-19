@@ -1,17 +1,12 @@
 import styled from '@emotion/styled';
-import React, {
-  ReactElement,
-  useEffect,
-  useState,
-} from 'react';
+import React, {ReactElement, useEffect, useState} from 'react';
 import {FaMoon, FaSun} from 'react-icons/fa';
 
 const DARK_CLASS = 'dark';
 const LIGHT_CLASS = 'light';
 
 function doesPreferDark(): boolean {
-  return window.matchMedia('(prefers-color-scheme: dark)')
-    .matches;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
 /**
@@ -33,8 +28,7 @@ export default function ColorSchemePicker(): ReactElement {
   const [isDark, setIsDark] = useState(
     // Detect if an override has been applied
     classList.contains(DARK_CLASS) ||
-      (doesPreferDark() &&
-        !classList.contains(LIGHT_CLASS)),
+      (doesPreferDark() && !classList.contains(LIGHT_CLASS)),
   );
 
   // Render on the second pass during hydration to avoid
@@ -67,17 +61,9 @@ export default function ColorSchemePicker(): ReactElement {
   return (
     <Button onClick={toggleIsDark}>
       {isDark ? (
-        <FaMoon
-          color="currentColor"
-          size={16}
-          title="Switch to Light mode"
-        />
+        <FaMoon color="currentColor" size={16} title="Switch to Light mode" />
       ) : (
-        <FaSun
-          color="currentColor"
-          size={16}
-          title="Switch to Dark mode"
-        />
+        <FaSun color="currentColor" size={16} title="Switch to Dark mode" />
       )}
     </Button>
   );

@@ -3,7 +3,7 @@ import React from 'react';
 
 function prettyPrint(text: string, lineLength: number) {
   var words = text.split(' ');
-  var lengths = words.map(function(w: {length: any}) {
+  var lengths = words.map(function (w: {length: any}) {
     return w.length;
   });
   var opt = [];
@@ -16,7 +16,7 @@ function prettyPrint(text: string, lineLength: number) {
       // Sum the lengths of words from i to j
       var len =
         sum(
-          lengths.slice(i, j + 1).map(function(n) {
+          lengths.slice(i, j + 1).map(function (n) {
             return n + 1;
           }),
         ) - 1;

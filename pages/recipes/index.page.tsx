@@ -8,9 +8,7 @@ export async function getStaticProps({params}) {
   return {props: {recipes: getAllRecipesNameAndURL()}};
 }
 
-export default function RecipesIndex({
-  recipes,
-}): ReactElement {
+export default function RecipesIndex({recipes}): ReactElement {
   return (
     <Layout title="Recipes">
       <Subtitle>{recipes.length} recipes</Subtitle>

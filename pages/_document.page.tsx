@@ -1,9 +1,4 @@
-import Document, {
-  Head,
-  Html,
-  Main,
-  NextScript,
-} from 'next/document';
+import Document, {Head, Html, Main, NextScript} from 'next/document';
 
 // This small snippet runs before the page renders and sets a class on the
 // root element if the stored theme does not match the OS preference.
@@ -22,9 +17,7 @@ const codeToRunOnClient = `
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(
-      ctx,
-    );
+    const initialProps = await Document.getInitialProps(ctx);
     return {...initialProps};
   }
 

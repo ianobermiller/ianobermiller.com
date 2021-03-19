@@ -33,16 +33,9 @@ export async function getStaticProps(): Promise<{
   };
 }
 
-export default function BlogIndex({
-  posts,
-}: Props): ReactElement {
-  const timestamps = posts
-    .map(({timestamp}) => timestamp)
-    .filter(Boolean);
-  const years = differenceInYears(
-    new Date(),
-    minDate(timestamps),
-  );
+export default function BlogIndex({posts}: Props): ReactElement {
+  const timestamps = posts.map(({timestamp}) => timestamp).filter(Boolean);
+  const years = differenceInYears(new Date(), minDate(timestamps));
 
   return (
     <Layout title="Posts">

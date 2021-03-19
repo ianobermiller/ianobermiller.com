@@ -51,9 +51,7 @@ function TableCell({row, column, setHighlightedCell}) {
   const wrapSetter = useContext(HarnessContext);
   return (
     <td
-      onMouseEnter={wrapSetter(() =>
-        setHighlightedCell({row, column}),
-      )}
+      onMouseEnter={wrapSetter(() => setHighlightedCell({row, column}))}
       style={isHighlighted ? highlightedStyle : null}>
       {row}x{column}
     </td>

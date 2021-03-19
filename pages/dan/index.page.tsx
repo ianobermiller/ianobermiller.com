@@ -1,10 +1,6 @@
 import styled from '@emotion/styled';
 import Head from 'next/head';
-import React, {
-  ReactElement,
-  useEffect,
-  useState,
-} from 'react';
+import React, {ReactElement, useEffect, useState} from 'react';
 
 export default function DansQuotes(): ReactElement {
   return (
@@ -22,10 +18,7 @@ export default function DansQuotes(): ReactElement {
   );
 }
 
-const INCLUDE_CATTLE = [
-  'Prime Holstein Steers',
-  'Premium Bulls',
-];
+const INCLUDE_CATTLE = ['Prime Holstein Steers', 'Premium Bulls'];
 
 type StockyardsData = {
   date: string;
@@ -33,9 +26,7 @@ type StockyardsData = {
 };
 
 function Stockyards(): ReactElement {
-  const data = useWrapAPI<StockyardsData>(
-    'milwaukeestockyards/quotes/0.0.9',
-  );
+  const data = useWrapAPI<StockyardsData>('milwaukeestockyards/quotes/0.0.9');
 
   if (!data) {
     return null;
@@ -56,14 +47,10 @@ function Stockyards(): ReactElement {
       </tr>
       <DateRow>{date}</DateRow>
       {quotes
-        .filter(({name}) =>
-          INCLUDE_CATTLE.some(n => name.includes(n)),
-        )
+        .filter(({name}) => INCLUDE_CATTLE.some(n => name.includes(n)))
         .map(({name, low, high}) => (
           <tr key={name}>
-            <td>
-              {INCLUDE_CATTLE.find(n => name.includes(n))}
-            </td>
+            <td>{INCLUDE_CATTLE.find(n => name.includes(n))}</td>
             <td>
               {low} to {high}
             </td>
@@ -92,9 +79,7 @@ type AgroData = {
 };
 
 function Agro(): ReactElement {
-  const data = useWrapAPI<AgroData>(
-    'cme/grain-and-oilseed/0.0.3',
-  );
+  const data = useWrapAPI<AgroData>('cme/grain-and-oilseed/0.0.3');
 
   if (!data) {
     return null;
@@ -111,9 +96,7 @@ function Agro(): ReactElement {
           </Heading>
         </td>
       </tr>
-      <DateRow>
-        {data.quotes[0].updated.replace('<br />', '')}
-      </DateRow>
+      <DateRow>{data.quotes[0].updated.replace('<br />', '')}</DateRow>
       {data.quotes
         .filter(({name}) => INCLUDE_AGRO[name])
         .map(({name, last, change}) => (
@@ -123,9 +106,7 @@ function Agro(): ReactElement {
               {last}{' '}
               <span
                 style={{
-                  color: change.startsWith('-')
-                    ? 'red'
-                    : 'green',
+                  color: change.startsWith('-') ? 'red' : 'green',
                 }}>
                 {change}
               </span>

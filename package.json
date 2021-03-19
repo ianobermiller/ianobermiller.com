@@ -55,6 +55,14 @@
     "jsxBracketSameLine": true,
     "singleQuote": true,
     "trailingComma": "all",
-    "printWidth": 60
+    "printWidth": 80,
+    "overrides": [
+      {
+        "files": "*.mdx",
+        "options": {
+          "printWidth": 60
+        }
+      }
+    ]
   }
 }

@@ -14,9 +14,7 @@ export async function getStaticProps(): Promise<{
     /\/pages\/blog\/(.*\.mdx)/,
   )?.[1];
   const posts = await getAllPosts();
-  const currentPostIndex = posts.findIndex(
-    p => p.path === currentPostPath,
-  );
+  const currentPostIndex = posts.findIndex(p => p.path === currentPostPath);
   const getRelated = (name, index) => {
     const post = posts[index];
     if (!post) return;

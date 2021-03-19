@@ -47,8 +47,7 @@ export default function NotFoundPage(props: Props) {
       <div>
         <h1>404 NOT FOUND</h1>
         <p>
-          Oh, this is embarassing. We couldn't find the page
-          you're looking for.
+          Oh, this is embarassing. We couldn't find the page you're looking for.
         </p>
         <p>Perhaps you were looking for one of these?</p>
         {props.categories.map(({links, title}) => (

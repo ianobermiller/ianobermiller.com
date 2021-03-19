@@ -10,17 +10,11 @@ interface Props {
   title: string;
 }
 
-export default function Layout({
-  children,
-  title,
-}: Props): ReactElement {
+export default function Layout({children, title}: Props): ReactElement {
   return (
     <Root>
       <Head>
-        <title>
-          {(title ? title + ' \u00AB ' : '') +
-            'Ian Obermiller'}
-        </title>
+        <title>{(title ? title + ' \u00AB ' : '') + 'Ian Obermiller'}</title>
         <meta
           name="Description"
           content="Personal site of Christian and software engineer Ian Obermiller."
@@ -62,10 +56,7 @@ export default function Layout({
 
       <Footer>
         <p>
-          <a
-            href="mailto:ian@obermillers.com"
-            rel="me"
-            target="_blank">
+          <a href="mailto:ian@obermillers.com" rel="me" target="_blank">
             ian@obermillers.com
           </a>
           {' \u00B7 '}
@@ -77,8 +68,8 @@ export default function Layout({
           </a>
         </p>
         <Disclaimer>
-          Unless otherwise noted, source code on this blog
-          is Licensed under the MIT License.
+          Unless otherwise noted, source code on this blog is Licensed under the
+          MIT License.
         </Disclaimer>
       </Footer>
     </Root>
@@ -97,14 +88,11 @@ function NavLink({
   const router = useRouter();
 
   const isActive =
-    router.pathname === href ||
-    (partial && router.pathname.startsWith(href));
+    router.pathname === href || (partial && router.pathname.startsWith(href));
 
   return (
     <Link href={href}>
-      <a className={isActive ? 'active' : null}>
-        {children}
-      </a>
+      <a className={isActive ? 'active' : null}>{children}</a>
     </Link>
   );
 }
