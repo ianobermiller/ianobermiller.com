@@ -5,7 +5,6 @@ import {decode, encode} from './base64';
 import {decrypt, encrypt} from './crypto';
 import styles from './secure.module.scss';
 
-const BASE_PATH = '/secure';
 const BASE_API = 'https://ianobermiller-secure.builtwithdark.com/';
 
 interface Data {
@@ -14,9 +13,7 @@ interface Data {
 }
 
 function parseURL(): Data | null {
-  const split = location.pathname.slice(BASE_PATH.length).split('/');
-  const id = split[split.length - 1];
-  const secretKey = location.hash.slice(1);
+  const [id, secretKey] = location.hash.slice(1).split('=');
   if (id && secretKey) {
     return {id, secretKey};
   }
@@ -101,7 +98,7 @@ function DisplayMessage({id, secretKey}: Data): JSX.Element {
 
 function CreateNew() {
   function createNew() {
-    location.assign(BASE_PATH);
+    location.assign(location.pathname);
   }
   return <button onClick={createNew}>Create a new secure message</button>;
 }
@@ -148,8 +145,7 @@ function CopyLink({secretKey, id}: Data): JSX.Element {
   }
 
   const url = new URL(location.href);
-  url.hash = secretKey;
-  url.pathname = BASE_PATH + '/' + id;
+  url.hash = id + '=' + secretKey;
   return (
     <div>
       <p>
