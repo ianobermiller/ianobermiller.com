@@ -1,0 +1,520 @@
+import Post from 'layouts/Post';
+
+export const metadata = {
+  date: '2020-09-07',
+  title:
+    'Highlight the row and column of a hovered table cell in React & Recoil',
+  categories: ['react', 'javascript', 'tables'],
+};
+
+export default Post;
+
+export const timing = {
+  state: '60ms',
+  context: '55ms',
+  recoil: '300ms',
+  eventEmitterWithState: '45ms',
+  eventEmitterWithRef: '7ms',
+};
+
+## Table of Contents
+
+## Intro
+
+I recently came across an internal post at Facebook asking if Recoil would be a
+good solution for highlighting the row and column of a table when you select or
+hover an individual cell. They had been using [React
+context](https://reactjs.org/docs/context.html) for this, but were running into
+performance issues.
+
+Inspired by the question, I took a look at the different
+methods for highlighting a table row and column with React, including plain old
+state, context, Recoil, and a custom event emitter. This post will compare the
+code and performance of each solution, and I'll provide some takeaways at
+the end.
+
+## Setup
+
+We'll start out with a simple table, broken into a few components. I used
+create-react-app to bootstrap the project:
+
+```bash
+yarn create react-app table-highlighting
+```
+
+Then, replace `App.js` with the following code, which simply renders a large
+table, breaking the table, row, and cell into separate components.
+
+```jsx
+import React from 'react';
+
+const ROWS = 400;
+const COLUMNS = 30;
+
+function App() {
+  return <Table />;
+}
+
+function Table() {
+  return (
+    <table>
+      <tbody>
+        {
+          // One-liner for _.range
+          Array(ROWS)
+            .fill()
+            .map((_, i) => (
+              <TableRow key={i} row={i} />
+            ))
+        }
+      </tbody>
+    </table>
+  );
+}
+
+function TableRow({row}) {
+  return (
+    <tr>
+      {Array(COLUMNS)
+        .fill()
+        .map((_, i) => (
+          <TableCell key={i} row={row} column={i} />
+        ))}
+    </tr>
+  );
+}
+
+function TableCell({row, column}) {
+  return (
+    <td>
+      {row}x{column}
+    </td>
+  );
+}
+
+export default App;
+```
+
+**Plain table example**
+
+import Harness from './Harness.js';
+import TablePlain from './TablePlain.js';
+
+<Harness>
+  <TablePlain />
+</Harness>
+
+Alright, so we have a big table. Next, we want to highlight the entire column
+and row whenever you hover over a single cell. Let's start with the simplest
+solution posible, React component state at the table root.
+
+## React state
+
+For our first try, we will store the highlighted cell's row and column in the
+top level `Table`'s component state.
+
+```jsx
+function Table() {
+  const [highlightedCell, setHighlightedCell] = useState({
+    row: -1,
+    column: -1,
+  });
+  // ...
+}
+```
+
+The state, along with a setter, will be
+passed down through every row into each `TableCell` component, which will apply
+its highlighted style and call the setter `onMouseEnter`.
+
+```jsx
+function TableCell({
+  row,
+  column,
+  highlightedCell,
+  setHighlightedCell,
+}) {
+  const isHighlighted =
+    highlightedCell.row === row ||
+    highlightedCell.column === column;
+
+  return (
+    <td
+      onMouseEnter={() => setHighlightedCell({row, column})}
+      style={isHighlighted ? highlightedStyle : null}>
+      {row}x{column}
+    </td>
+  );
+}
+```
+
+Try it out for yourself below. I've added in a timing hook to let us measure the
+performance of each alternative.
+
+**Table with state example**
+
+import TableState from './TableState.js';
+
+<Harness>
+  <TableState />
+</Harness>
+
+On my machine, hovering a cell takes about <span children={timing.state} /> [^1]. This is ok, but
+won't get you to 60fps and may not scale with a larger table. Why, though?
+You'll notice that this implementation re-renders everything on every hover; the
+main `Table`, every `TableRow`, and every `TableCell`. We only need to update
+the `TableCell` though. Luckily, "Context provides a way to pass data through
+the component tree without having to pass props down manually at every level."
+(Source: [React Docs](https://reactjs.org/docs/context.html)).
+
+[^1]: Profiling was done using production mode React. After firing off the call to update state, the harness measures the elapsed time until an animation frame has completed. For recoil, though, two animation frames are required to capture all of the work that happens for some reason. The numbers look very fast for Recoil with a single animation frame, even though it is visually slow.
+
+## React context
+
+Next, we will modify the example to pass the highlighted cell down via context.
+
+```jsx
+const TableHighlightContext = React.createContext();
+
+function Table() {
+  const [highlightedCell, setHighlightedCell] = useState({
+    row: -1,
+    column: -1,
+  });
+  return (
+    <TableHighlightContext.Provider value={highlightedCell}>
+      <table>...</table>
+    </TableHighlightContext.Provider>
+  );
+}
+```
+
+Memoize `TableRow` so that it doesn't re-render.
+
+```jsx
+const TableRow = React.memo(({row, setHighlightedCell}) => {
+  // ...
+});
+```
+
+And finally read the value in `TableCell` from context instead of props.
+
+```jsx
+function TableCell({row, column, setHighlightedCell}) {
+  const highlightedCell = React.useContext(
+    TableHighlightContext,
+  );
+  const isHighlighted =
+    highlightedCell.row === row ||
+    highlightedCell.column === column;
+  // ...
+}
+```
+
+**Table with context example**
+
+import TableContext from './TableContext.js';
+
+<Harness>
+  <TableContext />
+</Harness>
+
+Using context doesn't really affect the performance, resulting in about <span children={timing.context} />
+again on my machine. It isn't that much faster because all 12,000 `TableCell`
+components are still re-rendering every single time you hover a cell. But, we
+know that we only need to re-render the cells that are changing, which should be
+at most two rows and columns worth, or 860 cells.
+
+Recoil is one (of many) state libraries for React that can help with the
+problem of granular state updates.
+
+## Recoil
+
+The problem with context is that too many components were re-rendering.
+[Recoil](https://recoiljs.org/) is a state management library that allows
+components to subscribe only to the atomic units of state (called atoms) that
+they need to render. So, each cell should be able to subscribe to the value it
+needs (that is, to know whether or not it is highlighted) and only re-render
+when that value changes.
+
+To integrate Recoil, we'll create an atom to hold the highlightedCell.
+
+```jsx
+const highlightedCell = atom({
+  key: 'highlightedCell',
+  default: {row: -1, column: -1},
+});
+```
+
+Wrap `Table` in `RecoilRoot`.
+
+```tsx
+function Table() {
+  return (
+    <RecoilRoot>
+      <table>...</table>
+    </RecoilRoot>
+  );
+}
+```
+
+Create a [`selectorFamily`](https://recoiljs.org/docs/api-reference/utils/selectorFamily) that will create a new selector for each cell,
+returning a boolean indicating whether or not this cell is highlighted.
+
+```jsx
+const isHighlightedSelector = selectorFamily({
+  key: 'isHighlightedSelector',
+  get: ({row, column}) => ({get}) => {
+    const h = get(highlightedCell);
+    return h.row === row || h.column === column;
+  },
+});
+```
+
+And finally use the atom and the selector family in the `TableCell` component:
+
+```jsx
+function TableCell({row, column}) {
+  const isHighlighted = useRecoilValue(
+    isHighlightedSelector({row, column}),
+  );
+  const setHighlightedCell = useSetRecoilState(
+    highlightedCell,
+  );
+  return (
+    <td
+      onMouseEnter={() => setHighlightedCell({row, column})}
+      style={isHighlighted ? highlightedStyle : null}>
+      {row}x{column}
+    </td>
+  );
+}
+```
+
+**Table with Recoil example**
+
+import TableRecoil from './LazyTableRecoil.js';
+
+<Harness>
+  <TableRecoil />
+</Harness>
+
+On my machine, the Recoil example is surprisingly the slowest, at <span children={timing.recoil} /> per
+hover. I'm not actually sure why, and I'll update this post after asking the
+Recoil team. From a cursory look, all the `TableCell`s were re-rendering twice
+for each change to the atom, which would of course be slow.
+
+Recoil has another performance issue, which you'll have noticed if you started
+the example above. It takes a considerable amount of time to start. This is
+because `selectorFamily` actually creates a selector (and its associated entry
+in the Redux root store) for every single cell, which (as of this version of
+Recoil) is not very optimized.
+
+We've gone through state, context, and Recoil, the only thing left is to roll
+our own customized state management.
+
+## Custom event emitter
+
+As mentioned before, for peak performance we need to make sure all 12,000
+`TableCell` components don't re-render at once. Only the cells that are changing
+need to re-render, which should be at most two rows and columns worth, or 860
+cells.
+
+We can accomplish this by rolling our own simple event emitter to listen for the
+hoverer cell (identified by the row and column) to change, and then only
+notifying the cells that are changing by calling a callback, which will in turn
+set some local state.
+
+We'll start out with the event emitter.
+
+```jsx
+// Use an IIFE to contain the variable declarations. In a
+// production app, I'd probably make this a class so you can
+// test the instances, and also throw it into context to
+// avoid the global.
+const emitter = (() => {
+  // 2d array indexed by row and column
+  const subs = [];
+  return {
+    // Subscribe function that will be called once for each
+    // cell, in a useEffect
+    subscribe(r, c, cb) {
+      subs[r] = subs[r] ?? [];
+      // Note that this does not handle multiple
+      // subscriptions for the same cell
+      subs[r][c] = cb;
+      // This will be invoked by useEffect's cleanup
+      return () => delete subs[r][c];
+    },
+    // Called by each cell when it is hovered
+    highlight(newRow, newCol) {
+      subs.forEach((row, r) => {
+        row.forEach((cb, c) => {
+          const isHighlighted =
+            r === newRow || c === newCol;
+          // useState won't rerender the component if the
+          // value hasn't changed, so we can call it for
+          // every cell
+          cb(isHighlighted);
+        });
+      });
+    },
+  };
+})();
+```
+
+The implementation is rather simplistic, and does not handle multiple
+subscriptions for the same cell, but it will suffice for our purposes.
+
+Next we update `TableCell` to subscribe to the event emitter
+and keep its own highlighted state.
+
+```jsx
+function TableCell({row, column}) {
+  const [isHighlighted, setIsHighlighted] = useState(false);
+  useEffect(() => {
+    // Subscribe and return the result to remove the
+    // callback when the component unmounts
+    return emitter.subscribe(row, column, setIsHighlighted);
+  }, [column, row]);
+  return (
+    <td
+      onMouseEnter={() => emitter.highlight(row, column)}
+      style={isHighlighted ? highlightedStyle : null}>
+      {row}x{column}
+    </td>
+  );
+}
+```
+
+**Table with custom event emitter example**
+
+import TableEventEmitter from './TableEventEmitter.js';
+
+<Harness>
+  <TableEventEmitter />
+</Harness>
+
+This implementation is the fastest yet, at <span
+children={timing.eventEmitterWithState} />. The speed here comes from
+only rerendering the cells that change. But can we do better?
+
+## Direct DOM manipulation
+
+You'll notice a pattern of cutting React out of the picture, which
+tends to speed things up. By modeling the highlighting with a domain
+specific event emitter, we only call React when the component actually
+needs to change. However, we don't actually need to use React state to
+update the component. Instead, we can get a `ref` to the underlying
+DOM element and update the styles directly.
+
+Since we will be doing work in every callback, and React won't be
+deduping, we want to avoid calling the subscriber's callback if the
+highlighted state isn't changing for that cell.
+
+```jsx
+const emitter = (() => {
+  // Keep track of the currently highlighted row and column
+  let currentRow = -1;
+  let currentCol = -1;
+  const subs = [];
+  return {
+    subscribe(r, c, cb) {
+      subs[r] = subs[r] ?? [];
+      subs[r][c] = cb;
+      return () => delete subs[r][c];
+    },
+    highlight(newRow, newCol) {
+      subs.forEach((row, r) => {
+        row.forEach((cb, c) => {
+          const wasHighlighted =
+            r === currentRow || c === currentCol;
+          const isHighlighted =
+            r === newRow || c === newCol;
+          // Only notify if the highlighting for this row
+          // has changed. We could optimize this loop to
+          // only run for the changed rows, but you're
+          // unlikely to see noticable gains.
+          if (wasHighlighted !== isHighlighted) {
+            cb(isHighlighted);
+          }
+        });
+      });
+
+      // Update the currently highlighted cell, otherwise
+      // you'll never unhighlight the old ones.
+      currentRow = newRow;
+      currentCol = newCol;
+    },
+  };
+})();
+```
+
+Then, in the event emitter callback, instead of setting the `style`
+prop, we can get another small boost (from 10ms to 7ms) by toggling a class using
+`node.classList.toggle`.
+
+```jsx
+function TableCell({row, column}) {
+  const ref = useRef();
+  useEffect(() => {
+    emitter.subscribe(row, column, isHighlighted => {
+      if (ref.current) {
+        // Directly update the class on the DOM node
+        ref.current.classList.toggle(
+          'highlight-cell',
+          isHighlighted,
+        );
+      }
+    });
+  }, [column, row]);
+  return (
+    <td
+      onMouseEnter={() => emitter.highlight(row, column)}
+      ref={ref}>
+      {row}x{column}
+    </td>
+  );
+}
+```
+
+**Table with event emitter and ref**
+
+import TableEventEmitterRef from './TableEventEmitterRef.js';
+
+<Harness>
+  <TableEventEmitterRef />
+</Harness>
+
+Directly manipulating the DOM paid off, as this one clocks in at a
+blazing <span
+children={timing.eventEmitterWithRef} />, well within the 16ms limit
+to hit 60 frames per second.
+
+## Takeaways
+
+- **React is fast.** The naive implementation
+  with global state performed very well, considering we were
+  updating over 12,000 components at once. It is worth
+  noting that you will likely have other performance
+  troubles besides highlighting if you are rendering that
+  many components at once, and you'd probably want to look
+  into virtualizing the table with something like
+  [react-window](https://github.com/bvaughn/react-window)
+  first, which would probably make most of this article
+  moot.
+- **Recoil isn't a panacea.** Especially if you have
+  thousands of selectors, Recoil may not be your best bet.
+  They are actively working on performance with many atoms and
+  selectors, so I expect this to improve.
+- **Avoid invoking React at all for top speed.** At the end
+  of the day, React has to perform DOM manipulations to get
+  anything done, so if you have a simple way to remove
+  React from the critical path it will nearly always be
+  faster.
+
+The full code to all the examples used in this article,
+including the test harness, can be found [on
+GitHub](https://github.com/ianobermiller/ianobermiller.com/tree/master/src/content/blog/highlight-table-row-column-react/),
+and can be used however you see fit, as all the code for
+this blog is [MIT licensed](https://github.com/ianobermiller/ianobermiller.com/blob/master/LICENSE).

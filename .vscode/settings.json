@@ -4,7 +4,8 @@
   "files.associations": {
     "*.js": "javascriptreact"
   },
-  "prettier.printWidth": 60,
-  "editor.wordWrapColumn": 60,
-  "editor.rulers": [60]
+  "[mdx]": {
+    "editor.rulers": [60],
+    "editor.wordWrapColumn": 60
+  }
 }

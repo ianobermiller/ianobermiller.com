@@ -1,0 +1,16 @@
+import Post from 'layouts/Post';
+
+export const metadata = {
+  title: 'Local time in UTC ticks with javascript',
+  date: '2012-06-15',
+  categories: ['JavaScript'],
+};
+
+export default Post;
+
+Simple method to get the current local time in UTC ticks (milliseconds since the epoch, 1970/01/01):
+
+```javascript
+var currentTime =
+  Date.now() - new Date().getTimezoneOffset() * 60 * 1000;
+```

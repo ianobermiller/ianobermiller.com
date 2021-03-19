@@ -1,14 +1,23 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "esModuleInterop": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "lib": ["dom", "es2015", "es2017"],
     "module": "commonjs",
     "noImplicitAny": true,
     "outDir": "./dist/",
     "resolveJsonModule": true,
     "sourceMap": true,
-    "target": "esnext"
+    "target": "esnext",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "moduleResolution": "node",
+    "isolatedModules": true
   },
-  "include": ["./src/**/*", "*.ts"]
+  "include": ["*.tsx", "*.ts"],
+  "exclude": ["node_modules"]
 }

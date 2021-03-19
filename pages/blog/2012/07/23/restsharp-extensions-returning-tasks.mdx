@@ -1,0 +1,68 @@
+import Post from 'layouts/Post';
+
+export const metadata = {
+  title: 'RestSharp Extensions Returning Tasks',
+  date: '2012-07-24',
+  categories: [
+    '.NET 4.5',
+    'async/await',
+    'C#',
+    'Extensions',
+    'RestSharp',
+  ],
+};
+
+export default Post;
+
+In order to use RestSharp with the async/await keywords, the methods must return `Task` objects. Since this isn't provided out of the box, some simple wrappers will do the trick:
+
+<!-- more -->
+
+```csharp
+using System;
+using System.Threading.Tasks;
+using RestSharp;
+
+namespace RestSharpEx
+{
+    public static class RestClientExtensions
+    {
+        private static Task<T> SelectAsync<T>(this RestClient client, IRestRequest request, Func<IRestResponse, T> selector)
+        {
+            var tcs = new TaskCompletionSource<T>();
+            var loginResponse = client.ExecuteAsync(request, r =>
+            {
+                if (r.ErrorException == null)
+                {
+                    tcs.SetResult(selector(r));
+                }
+                else
+                {
+                    tcs.SetException(r.ErrorException);
+                }
+            });
+            return tcs.Task;
+        }
+
+        public static Task<string> GetContentAsync(this RestClient client, IRestRequest request)
+        {
+            return client.SelectAsync(request, r => r.Content);
+        }
+
+        public static Task<IRestResponse> GetResponseAsync(this RestClient client, IRestRequest request)
+        {
+            return client.SelectAsync(request, r => r);
+        }
+    }
+}
+```
+
+They can be used easily in the Async CTP or .NET 4.5 as follows:
+
+```csharp
+var client = new RestClient("http://example.org");
+var request = new RestRequest("product/42", Method.GET);
+var content = await client.GetContentAsync(request);
+```
+
+Enjoy!

@@ -1,0 +1,390 @@
+import Post from 'layouts/Post';
+
+export const metadata = {
+  title:
+    'XamlUris: Automatically generate URIs for Xaml files',
+  date: '2012-06-15',
+  categories: [
+    'C#',
+    'Silverlight',
+    'T4',
+    'Windows Phone',
+    'WPF',
+    'XAML',
+  ],
+};
+
+We all know the mantra "magic strings are evil". Unfortunately when working with Windows Phone, Silverlight, or WPF, you often have to use strings when navigating between pages to specify the URI and any parameters. Parameters are such a pain to pass this way that most eschew them in favor of some static state shared between pages. This negates some of the benefits, especially on Windows Phone, that you get from having the parameters in your URIs, such as when dealing with live tiles and deep links.
+
+<!-- more -->
+
+This is the way you typically navigate to a new page (examples are from Windows Phone Silverlight code):
+
+```csharp
+NavigationService.Navigate(@"/PhoneApp1;component/Page1.xaml");
+```
+
+With a simple [T4 Text Template][1], you can do the following instead:
+
+```csharp
+NavigationService.Navigate(XamlUris.Page1());
+```
+
+Instead of magic strings, you have strongly typed goodness that will fail to compile if the specified page no longer exists.
+
+In addition, XamlUris makes passing parameters extremely simple, using either anonymous or strongly typed objects:
+
+```csharp
+// Anonymous object
+NavigationService.Navigate(XamlUris.Page1(new { Id = 42, Foo = "bar" }));
+
+// Strongly typed object
+NavigationService.Navigate(XamlUris.Page1(new Baz() { Id = 42, Foo = "bar" }));
+```
+
+If using strongly typed objects, XamlUrls provides an extension method (ToObject) to easily get a strongly typed object on the other end (eg. OnNavigatedTo):
+
+```csharp
+protected override void OnNavigatedTo(NavigationEventArgs e)
+{
+    var baz = NavigationContext.QueryString.ToObject<Baz>;();
+
+    // Use the object directly
+    uxText.Text = string.Format("Id: {0}, Name: {1}", baz.Id, baz.Name);
+
+    // or use for databinding
+    uxPanel.DataContext = baz;
+
+    base.OnNavigatedTo(e);
+}
+```
+
+Here is the code for XamlUris.tt:
+
+```csharp
+<#@ template language="C#" hostSpecific="true" #>;
+<#@ assembly name="EnvDTE" #>;
+<#@ import namespace="EnvDTE" #>;
+<#@ import namespace="System.IO" #>;
+<#@ import namespace="System.Text.RegularExpressions" #>;
+<#@ import namespace="System.Globalization" #>;
+<# Init(); #>;
+//-----------------------------------------------------------------------
+// <copyright file="XamlUris.cs" company="Ian Obermiller">;
+//     Copyright 2012 (c) Ian Obermiller. All rights reserved.
+// </copyright>;
+//-----------------------------------------------------------------------
+namespace <# WriteLine(defaultNamespace); #>;
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Windows.Navigation;
+
+    /// <summary>;
+    /// Contains Uris for every page in the solution.
+    /// </summary>;
+    public static class XamlUris
+    {<# Process(); #>;
+
+        /// <summary>;
+        /// Builds the URI from the given page and a parameters object.
+        /// </summary>;
+        /// <param name="pageUri">;The page URI.</param>;
+        /// <param name="parameters">;The parameters object (optional).</param>;
+        /// <returns>;
+        /// The pageUri with the properties from the parameters object as query string parameters..
+        /// </returns>;
+        public static Uri BuildUri(string pageUri, object parameters = null)
+        {
+            var queryString = string.Empty;
+
+            if (parameters != null)
+            {
+                var keyValuePairs = parameters.GetType().GetProperties()
+                    .Select(p =>; p.Name + "=" + Uri.EscapeDataString(p.GetValue(parameters, null).ToString()))
+                    .ToArray();
+
+                queryString = string.Join("&", keyValuePairs);
+
+                if (!string.IsNullOrEmpty(queryString))
+                {
+                    queryString = "?" + queryString;
+                }
+            }
+
+            return new Uri(pageUri + queryString, UriKind.Relative);
+        }
+
+        /// <summary>;
+        /// Converts the string dictionary to a strongly typed object.
+        /// Intended for use with NavigationContext.QueryString.
+        /// </summary>;
+        /// <typeparam name="T">;The object type.</typeparam>;
+        /// <param name="queryStringDictionary">;The query string dictionary.</param>;
+        /// <returns>;
+        /// The requested strongly typed object.
+        /// </returns>;
+        public static T ToObject<T>;(this IDictionary<string, string>; queryStringDictionary) where T : new()
+        {
+            if (queryStringDictionary == null)
+            {
+                return default(T);
+            }
+
+            T t = new T();
+
+            var type = typeof(T);
+
+            var props = type.GetProperties().ToDictionary(p =>; p.Name, p =>; p);
+
+            foreach (var param in queryStringDictionary)
+            {
+                PropertyInfo prop;
+                if (props.TryGetValue(param.Key, out prop))
+                {
+                    prop.SetValue(t, Convert.ChangeType(param.Value, prop.PropertyType, null), null);
+                }
+            }
+
+            return t;
+        }
+    }
+}
+<#+
+
+    Project project;
+    string outputAssemblyName;
+    string defaultNamespace;
+    readonly Regex xClassRegex = new Regex(@"x:Class=""(?<KeyName>;[^""]+/?)""", RegexOptions.Compiled);
+
+    public void Init()
+    {
+        IServiceProvider hostServiceProvider = (IServiceProvider)Host;
+        EnvDTE.DTE dte = (EnvDTE.DTE)hostServiceProvider.GetService(typeof(EnvDTE.DTE));
+        EnvDTE.ProjectItem containingProjectItem = dte.Solution.FindProjectItem(Host.TemplateFile);
+        project = containingProjectItem.ContainingProject;
+        outputAssemblyName = project.Properties.Item("AssemblyName").Value.ToString();
+        defaultNamespace = project.Properties.Item("DefaultNamespace").Value.ToString();
+    }
+
+    public void Process()
+    {
+        /* Build the namespace representations, which contain class etc. */
+        foreach (ProjectItem projectItem in project.ProjectItems)
+        {
+            ProcessProjectItem(projectItem);
+        }
+    }
+
+    string processingDirectory = string.Empty;
+
+    public void ProcessProjectItem(
+        ProjectItem projectItem)
+    {
+        string itemName = projectItem.Name;
+        if (itemName.EndsWith(".xaml", true, CultureInfo.InvariantCulture))
+        {
+            string fileName = projectItem.get_FileNames(0);
+            WriteLine(string.Format(
+                @"
+        /// <summary>;
+        /// Gets the Uri for the {0} page.
+        /// </summary>;
+        /// <returns>;The Uri for navigation.</returns>;
+        public static Uri {0}()
+        {{
+            return {0}(null);
+        }}
+
+        /// <summary>;
+        /// Builds a Uri for the {0} page.
+        /// </summary>;
+        /// <param name=""parameters"">;The parameters object.</param>;
+        /// <returns>;The Uri for navigation.</returns>;
+        public static Uri {0}(object parameters)
+        {{
+            return BuildUri(@""/{2};component/{1}"", parameters);
+        }}",
+                Path.GetFileNameWithoutExtension(itemName).Replace('.', '_').Replace(' ', '_'),
+                Path.GetFileName(itemName),
+                outputAssemblyName
+            ));
+        }
+
+        if (projectItem.ProjectItems != null)
+        {
+            foreach (ProjectItem childItem in projectItem.ProjectItems)
+            {
+                ProcessProjectItem(childItem);
+            }
+        }
+    }
+#>;
+```
+
+And here is an example of the generated XamlUris.cs (note that it is StyleCop and Code Analysis compliant with the default rules):
+
+```csharp
+//-----------------------------------------------------------------------
+// <copyright file="XamlUris.cs" company="Ian Obermiller">;
+//     Copyright 2012 (c) Ian Obermiller. All rights reserved.
+// </copyright>;
+//-----------------------------------------------------------------------
+namespace PhoneApp1
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Windows.Navigation;
+
+    /// <summary>;
+    /// Contains Uris for every page in the solution.
+    /// </summary>;
+    public static class XamlUris
+    {
+        /// <summary>;
+        /// Gets the Uri for the App page.
+        /// </summary>;
+        /// <returns>;The Uri for navigation.</returns>;
+        public static Uri App()
+        {
+            return App(null);
+        }
+
+        /// <summary>;
+        /// Builds a Uri for the App page.
+        /// </summary>;
+        /// <param name="parameters">;The parameters object.</param>;
+        /// <returns>;The Uri for navigation.</returns>;
+        public static Uri App(object parameters)
+        {
+            return BuildUri(@"/PhoneApp1;component/App.xaml", parameters);
+        }
+
+        /// <summary>;
+        /// Gets the Uri for the MainPage page.
+        /// </summary>;
+        /// <returns>;The Uri for navigation.</returns>;
+        public static Uri MainPage()
+        {
+            return MainPage(null);
+        }
+
+        /// <summary>;
+        /// Builds a Uri for the MainPage page.
+        /// </summary>;
+        /// <param name="parameters">;The parameters object.</param>;
+        /// <returns>;The Uri for navigation.</returns>;
+        public static Uri MainPage(object parameters)
+        {
+            return BuildUri(@"/PhoneApp1;component/MainPage.xaml", parameters);
+        }
+
+        /// <summary>;
+        /// Gets the Uri for the Page1 page.
+        /// </summary>;
+        /// <returns>;The Uri for navigation.</returns>;
+        public static Uri Page1()
+        {
+            return Page1(null);
+        }
+
+        /// <summary>;
+        /// Builds a Uri for the Page1 page.
+        /// </summary>;
+        /// <param name="parameters">;The parameters object.</param>;
+        /// <returns>;The Uri for navigation.</returns>;
+        public static Uri Page1(object parameters)
+        {
+            return BuildUri(@"/PhoneApp1;component/Page1.xaml", parameters);
+        }
+
+        /// <summary>;
+        /// Gets the Uri for the PivotPage1 page.
+        /// </summary>;
+        /// <returns>;The Uri for navigation.</returns>;
+        public static Uri PivotPage1()
+        {
+            return PivotPage1(null);
+        }
+
+        /// <summary>;
+        /// Builds a Uri for the PivotPage1 page.
+        /// </summary>;
+        /// <param name="parameters">;The parameters object.</param>;
+        /// <returns>;The Uri for navigation.</returns>;
+        public static Uri PivotPage1(object parameters)
+        {
+            return BuildUri(@"/PhoneApp1;component/PivotPage1.xaml", parameters);
+        }
+
+        /// <summary>;
+        /// Builds the URI from the given page and a parameters object.
+        /// </summary>;
+        /// <param name="pageUri">;The page URI.</param>;
+        /// <param name="parameters">;The parameters object (optional).</param>;
+        /// <returns>;
+        /// The pageUri with the properties from the parameters object as query string parameters..
+        /// </returns>;
+        public static Uri BuildUri(string pageUri, object parameters = null)
+        {
+            var queryString = string.Empty;
+
+            if (parameters != null)
+            {
+                var keyValuePairs = parameters.GetType().GetProperties()
+                    .Select(p =>; p.Name + "=" + Uri.EscapeDataString(p.GetValue(parameters, null).ToString()))
+                    .ToArray();
+
+                queryString = string.Join("&", keyValuePairs);
+
+                if (!string.IsNullOrEmpty(queryString))
+                {
+                    queryString = "?" + queryString;
+                }
+            }
+
+            return new Uri(pageUri + queryString, UriKind.Relative);
+        }
+
+        /// <summary>;
+        /// Converts the string dictionary to a strongly typed object.
+        /// Intended for use with NavigationContext.QueryString.
+        /// </summary>;
+        /// <typeparam name="T">;The object type.</typeparam>;
+        /// <param name="queryStringDictionary">;The query string dictionary.</param>;
+        /// <returns>;
+        /// The requested strongly typed object.
+        /// </returns>;
+        public static T ToObject<T>;(this IDictionary<string, string>; queryStringDictionary) where T : new()
+        {
+            if (queryStringDictionary == null)
+            {
+                return default(T);
+            }
+
+            T t = new T();
+
+            var type = typeof(T);
+
+            var props = type.GetProperties().ToDictionary(p =>; p.Name, p =>; p);
+
+            foreach (var param in queryStringDictionary)
+            {
+                PropertyInfo prop;
+                if (props.TryGetValue(param.Key, out prop))
+                {
+                    prop.SetValue(t, Convert.ChangeType(param.Value, prop.PropertyType, null), null);
+                }
+            }
+
+            return t;
+        }
+    }
+}
+```
+
+[1]: http://msdn.microsoft.com/en-us/library/bb126445.aspx

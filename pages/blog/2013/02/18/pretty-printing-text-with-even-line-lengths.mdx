@@ -1,0 +1,110 @@
+import Post from 'layouts/Post';
+
+export const metadata = {
+  title: 'Pretty printing text with even line lengths',
+  date: '2013-02-19',
+  categories: [
+    'Algorithms',
+    'Dynamic Programming',
+    'JavaScript',
+  ],
+};
+
+export default Post;
+
+import WrapTextExample from './WrapTextExample';
+
+The following demo pretty prints the entered text to the desired line width by making the lines as even as possible. The demo uses a dynamic programming algorithm to choose line breaks in such a way that the sum of the squares of the slack is minimized.
+
+<!-- more -->
+
+<WrapTextExample
+  lineLength={46}
+  text="Call me Ishmael. Some years ago, never mind how long precisely, having little
+    or no money in my purse, and nothing particular to interest me on shore, I
+    thought I would sail about a little and see the watery part of the world."
+/>
+
+## Javascript Source
+
+The javascript source, should work in any ES5 compatible browser:
+
+```javascript
+function prettyPrint(text, lineLength) {
+  var words = text.split(' ');
+  var lengths = words.map(function (w) {
+    return w.length;
+  });
+  var opt = [];
+  var index = [];
+  for (var j = 0; j < words.length; j++) {
+    // Let i be the index that minimizes the expression slack(i, j) + opt[i – 1]
+    var minIndex = -1;
+    var minError = Number.MAX_VALUE;
+    for (var i = 0; i <= j; i++) {
+      // Sum the lengths of words from i to j
+      var len =
+        sum(
+          lengths.slice(i, j + 1).map(function (n) {
+            return n + 1;
+          }),
+        ) - 1;
+
+      // Slack is the distance from the end of the line
+      var slack = lineLength - len;
+
+      // If it is negative, we have picked up too many words
+      if (slack < 0) continue;
+
+      // Error is equal to the slack squared plus the previous optimal error
+      var error = slack * slack;
+      if (i > 0) error += opt[i - 1];
+
+      // Save only the lowest error
+      if (error < minError) {
+        minError = error;
+        minIndex = i;
+      }
+    }
+    opt[j] = minError;
+    index[j] = minIndex;
+  }
+
+  // The minimum slack will be in opt[n – 1]
+  // To reconstruct the lines:
+  var x = words.length - 1;
+  var lines = [];
+  while (x >= 0) {
+    // Add line consisting of words from index[x] to x
+    lines.unshift(words.slice(index[x], x + 1).join(' '));
+    x = index[x] - 1;
+  }
+  return lines.join('\n');
+}
+
+function sum(numbers) {
+  var s = 0;
+  for (var i = 0; i < numbers.length; i++) {
+    s += numbers[i];
+  }
+  return s;
+}
+
+window.onload = function () {
+  var pre = document.getElementById('formatted'),
+    text = document.getElementById('raw-text'),
+    length = document.getElementById('line-length');
+
+  var ts = function () {
+    text.setAttribute('cols', length.value);
+    pre.innerText = prettyPrint(
+      text.value,
+      Number(length.value),
+    );
+  };
+
+  ts();
+
+  length.onchange = length.onclick = text.onchange = text.onkeyup = text.onclick = ts;
+};
+```
