@@ -47,6 +47,8 @@ export default function App() {
     <div className={styles.SecureApp}>
       <Head>
         <title>Secure Message</title>
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="alternate icon" href="/favicon.ico" />
       </Head>
       <h1>Secure Message</h1>
       {content}

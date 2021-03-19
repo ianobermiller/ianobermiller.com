@@ -1,7 +1,5 @@
-import styled from '@emotion/styled';
 import Head from 'next/head';
 import Link from 'next/link';
-import {useRouter} from 'next/router';
 import React, {ReactElement, ReactNode} from 'react';
 import ColorSchemePicker from './ColorSchemePicker';
 
@@ -19,6 +17,8 @@ export default function Layout({children, title}: Props): ReactElement {
           name="Description"
           content="Personal site of Christian and software engineer Ian Obermiller."
         />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="alternate icon" href="/favicon.ico" />
       </Head>
 
       <Header>
