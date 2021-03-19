@@ -34,6 +34,7 @@
     background: var(--accent-color);
     border: none;
     color: var(--background-color);
+    cursor: pointer;
 
     &:hover:not(:disabled) {
       background: var(--accent-color-hover);

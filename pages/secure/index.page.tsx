@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import {decrypt, encrypt} from './crypto';
 import styles from './secure.module.scss';
@@ -42,6 +43,9 @@ export default function App() {
 
   return (
     <div className={styles.SecureApp}>
+      <Head>
+        <title>Secure Message</title>
+      </Head>
       <h1>Secure Message</h1>
       {content}
       <footer>
