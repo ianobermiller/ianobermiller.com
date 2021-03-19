@@ -44,6 +44,9 @@ export default function App() {
     <div className={styles.SecureApp}>
       <h1>Secure Message</h1>
       {content}
+      <footer>
+        Made with <a href="https://darklang.com/">Dark</a>.
+      </footer>
     </div>
   );
 }
