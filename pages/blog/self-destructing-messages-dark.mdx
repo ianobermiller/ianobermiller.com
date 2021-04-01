@@ -1,0 +1,35 @@
+import Post from 'layouts/Post';
+
+export const metadata = {
+  date: '2021-04-01',
+  title: 'Self-Destructing Messages with Dark and React',
+  categories: ['dark', 'javascript', 'react'],
+};
+
+export default Post;
+
+Ever needed to send a password or other sensitive
+information to someone over email or text? Both mediums are
+insecure, unencrypted, and persistent, which means there are
+many opportunities for someone nefarious to find that
+information and exploit it.
+
+There are tons of websites that offer to encrypt some text
+and allow it to be viewed only once from a given link. The
+problem with all of them is that I didn't write them, and
+have to trust their authors and the entire chain of
+deployment. I've used [1ty.me](https://1ty.me/) many times
+in the past and had no issues, but I figured it couldn't be
+that hard to build a simple clone, and it would be a good
+excuse to play around more with
+[Dark](https://darklang.com).
+
+Throughout this process I tried to do things the "Dark way"
+as much as possible, using "trace driven development"
+and relying on the repl. I went through a couple iterations
+for the API design, but ended up with this:
+
+- `/upload` takes encrypted `text` in a `POST` payload, puts
+  it in the DB and returns a `uuid`
+- `/download` takes the `uuid`, returns the text, and
+  deletes the payload
