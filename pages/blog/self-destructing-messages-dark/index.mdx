@@ -1,0 +1,151 @@
+import Post from 'layouts/Post';
+import uploadImage from './secure-dark-upload.png';
+import downloadImage from './secure-dark-download.png';
+import dbImage from './secure-dark-db.png';
+import cronImage from './secure-dark-cron.png';
+import Image from 'next/image';
+
+export const metadata = {
+  date: '2021-04-01',
+  title: 'Self-Destructing Messages with Dark and React',
+  categories: ['dark', 'javascript', 'react'],
+};
+
+export default Post;
+
+Ever needed to send a password or other sensitive
+information to someone over email or text? Both mediums are
+insecure, unencrypted, and persistent, which means there are
+many opportunities for someone nefarious to find that
+information and exploit it.
+
+There are tons of websites that offer to encrypt some text
+and allow it to be viewed only once from a given link. The
+problem with all of them is that I didn't write them, and
+have to trust their authors and the entire chain of
+deployment. I've used [1ty.me](https://1ty.me/) many times
+in the past and had no issues, but I figured it couldn't be
+that hard to build a simple clone, and it would be a good
+excuse to play around more with
+[Dark](https://darklang.com).
+
+## Backend
+
+Throughout this process I tried to do things the "Dark way"
+as much as possible, using "trace driven development"
+and relying on the repl. I went through a couple iterations
+for the API design, but ended up with this:
+
+- `/upload` takes `text` that was encrypted on the client in
+  a `POST` payload, puts it in the database and returns a `uuid`
+- `/download` takes the `uuid`, returns the encrypted text,
+  and deletes the payload
+
+Unfortunately the best way to share Dark code is with
+screenshots, so please forgive me. Dark doesn't really
+support copying and pasting anyway, and if you are new to
+learning the language as I am, it is worth the effort of
+typing it out yourself to reinforce the learning. With that
+disclaimer out of the way, let's take a look at the code.
+
+### Database
+
+<Image src={dbImage} width={1480} height={390} />
+
+First, we'll create a database to store the messages. I
+started out very simple with this one, just added a `text`
+field of type `String`. Later, I added a `createdAt` fields
+of type `Date` so that I can periodically clean up the
+database to remove old messages. Note that once a database
+has data, the schema cannot be changed, so you have to
+delete all the records first.
+
+### Upload
+
+In the client UI, the user enters a message and clicks
+"Generate Link", which encrypts the data on the client and
+sends it to the `/upload` endpoint.
+
+```fsharp
+let text = request.body.text
+if String::lengthv1 text > 1024
+then
+  Http::badRequest "Text too long: text is limited to 256 ch
+                   aracters"
+else
+  let key = DB::generateKey
+  let _ = DB::setv1
+            {
+              text : text
+              createdAt : Date::now
+            }
+            key
+            Messages
+  {
+    id : key
+  }
+```
+
+Before saving the message, we reject any requests that are
+too long. The client also enforces this, but the client can
+easily be bypassed. Since the client encrypts and base64
+encodes the error message has a smaller max length than we
+actually check.
+
+Next, we generate a database key (a UUID) using
+`DB::generateKey` and insert a record into the database with
+the current date. Finally, the last row returns a JSON
+object with the `id`, for example `{id: "482e50a5-dbb5-4cc5-9fcd-0c94470f60b3"}`. The client will
+put the ID into a url, and then the user will send that url
+to someone else.
+
+### Download
+
+When the other party visits the url, the client's JavaScript
+will call the `/download` endpoint.
+
+```fsharp
+let entry = DB::getv2 request.body.id Messages
+let _ = DB::deletev1 request.body.id Messages
+{
+  text : entry.text
+}
+```
+
+Download simply fetches the message, deletes it, and returns
+the text. If any of the operations fail, like `DB::get` when
+the ID doesn't exist, the call will enter the ["error
+rail"](https://docs.darklang.com/tutorials/error-rail-http-tutorial/)
+and return an empty response.
+
+### Delete Expired Messages
+
+For this simple application I wanted any messages to be
+automatically deleted if they were not read in 7 days.
+
+```fsharp
+let deleteBeforeDate = Date::subtract Date::now 60 * 60 * 24 * 7
+let keysToDelete = DB::queryWithKeyv3 Messages \entry -> entry.createdAt Date::<= deleteBeforeDate
+Dict::map keysToDelete \key, value -> DB::deletev1 key Messages
+```
+
+Since we were already storing the current date and time for
+each entry, deleting them is a matter of computing the time
+7 days ago, querying for messages created before that date,
+and deleting them.
+
+Note that `DB::queryWithKey` is special -- it takes a lambda
+function and compiles it to database query. You are limited
+as to what you can put inside, which is why the code to
+compute `deleteBeforeDate` is outside of the lambda. If you
+don't do this, you will get an error message like:
+
+```
+<Error: You're using our new experimental Datastore query compiler. It compiles your lambdas into optimized (and partially indexed) Datastore queries, which should be reasonably faster.
+
+Unfortunately, we hit a snag while compiling your lambda. We only support a subset of Dark's functionality, but will be expanding it in the future.
+
+Some Dark code is not supported in DB::query lambdas for now, and some of it won't be supported because it's an odd thing to do in a datastore query. If you think your operation should be supported, let us know in #general.
+
+Error: We do not yet support compiling this code: (EBlank 1223731764)>
+```
