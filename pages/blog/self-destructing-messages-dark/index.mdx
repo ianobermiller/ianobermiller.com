@@ -6,7 +6,7 @@ import cronImage from './secure-dark-cron.png';
 import Image from 'next/image';
 
 export const metadata = {
-  date: '2021-04-01',
+  date: '2021-04-12',
   title: 'Self-Destructing Messages with Dark and React',
   categories: ['dark', 'javascript', 'react'],
 };
@@ -41,30 +41,48 @@ for the API design, but ended up with this:
 - `/download` takes the `uuid`, returns the encrypted text,
   and deletes the payload
 
-Unfortunately the best way to share Dark code is with
-screenshots, so please forgive me. Dark doesn't really
-support copying and pasting anyway, and if you are new to
-learning the language as I am, it is worth the effort of
-typing it out yourself to reinforce the learning. With that
-disclaimer out of the way, let's take a look at the code.
-
 ### Database
 
 <Image src={dbImage} width={1480} height={390} />
 
-First, we'll create a database to store the messages. I
+First, create a database to store the messages. I
 started out very simple with this one, just added a `text`
-field of type `String`. Later, I added a `createdAt` fields
+field of type `String`. Later, I added a `createdAt` field
 of type `Date` so that I can periodically clean up the
 database to remove old messages. Note that once a database
 has data, the schema cannot be changed, so you have to
-delete all the records first.
+delete all the records first. That is easy enough, just add
+a new repl with:
+
+```fsharp
+DB::deleteAllv1 Messages
+```
 
 ### Upload
 
 In the client UI, the user enters a message and clicks
 "Generate Link", which encrypts the data on the client and
 sends it to the `/upload` endpoint.
+
+I wrote some very simple client-side code in TypeScript
+while testing in order to load a trace into Dark. It looked
+something like this:
+
+```typescript
+const BASE_API =
+  'https://ianobermiller-secure.builtwithdark.com/';
+
+const response = await fetch(BASE_API + '/upload', {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({text: 'Hello world'}),
+});
+```
+
+TODO: this works because Dark CORS default blah blah
+
+Then in Dark, under 404s on the left side, you can select
+the `/upload` endpoint and start coding:
 
 ```fsharp
 let text = request.body.text
@@ -86,23 +104,57 @@ else
   }
 ```
 
-Before saving the message, we reject any requests that are
+Before saving the message, reject any requests that are
 too long. The client also enforces this, but the client can
-easily be bypassed. Since the client encrypts and base64
-encodes the error message has a smaller max length than we
-actually check.
+easily be bypassed by sending a request directly. The
+checked length is actually greater than the reported max
+because the client will encrypt and base64 encode, which
+adds overhead.
 
-Next, we generate a database key (a UUID) using
+Next, generate a database key (a UUID) using
 `DB::generateKey` and insert a record into the database with
 the current date. Finally, the last row returns a JSON
 object with the `id`, for example `{id: "482e50a5-dbb5-4cc5-9fcd-0c94470f60b3"}`. The client will
 put the ID into a url, and then the user will send that url
 to someone else.
 
+You can verify that the database contains what you expect by
+adding a new repl with:
+
+```fsharp
+DB::getAllWithKeysv2 Messages
+```
+
+That might look something like:
+
+```json
+{
+  5ee86e28-3ce9-4173-97b5-d68bdd8ca1e9: {
+    createdAt: <Date: 2021-04-11T05:17:04Z>,
+    text: "Hello world"
+  }
+}
+```
+
 ### Download
 
 When the other party visits the url, the client's JavaScript
 will call the `/download` endpoint.
+
+Again, write a simple version of the client side code to
+generate a trace to write the backend:
+
+```typescript
+const response = await fetch(BASE_API + '/download', {
+  method: 'POST',
+  body: JSON.stringify({
+    id: '5ee86e28-3ce9-4173-97b5-d68bdd8ca1e9',
+  }),
+});
+```
+
+You can then find `/download` in the 404s section and fill it
+out:
 
 ```fsharp
 let entry = DB::getv2 request.body.id Messages
@@ -117,6 +169,13 @@ the text. If any of the operations fail, like `DB::get` when
 the ID doesn't exist, the call will enter the ["error
 rail"](https://docs.darklang.com/tutorials/error-rail-http-tutorial/)
 and return an empty response.
+
+You might be wondering why I didn't go with a slightly more
+RESTful API, with routes like `POST /message` and `GET /message/:id`. First, the download request
+is not idempotent and shouldn't be a GET anyway. Second,
+Dark works best if you have separate routes for each
+endpoint, allowing you to more easily switch between traces
+and keep the code separate.
 
 ### Delete Expired Messages
 
@@ -135,17 +194,92 @@ each entry, deleting them is a matter of computing the time
 and deleting them.
 
 Note that `DB::queryWithKey` is special -- it takes a lambda
-function and compiles it to database query. You are limited
+function and compiles it to a database query. You are limited
 as to what you can put inside, which is why the code to
 compute `deleteBeforeDate` is outside of the lambda. If you
 don't do this, you will get an error message like:
 
+> <Error: You're using our new experimental Datastore query compiler. It compiles your lambdas into optimized (and partially indexed) Datastore queries, which should be reasonably faster.
+>
+> Unfortunately, we hit a snag while compiling your lambda. We only support a subset of Dark's functionality, but will be expanding it in the future.
+>
+> Some Dark code is not supported in DB::query lambdas for now, and some of it won't be supported because it's an odd thing to do in a datastore query. If you think your operation should be supported, let us know in #general.
+>
+> Error: We do not yet support compiling this code: (EBlank 1223731764)>
+
+## Client
+
+With the API feature complete, I filled in the UI. The [full
+source code can be found on
+GitHub](https://github.com/ianobermiller/ianobermiller.com/blob/5ee080fbd1a1359fbede7a0ec55270e363b3fd54/pages/secure/index.page.tsx).
+Overall, the code is pretty straightforward, with separate
+components for viewing a message, creating a message, and
+the creation confirmation screen.
+
+### Encryption
+
+Since the whole point of a secure message is to send
+sensitive information, it is important that the server
+cannot read the data. So, the first step is to encrypt the
+data. To keep things simple, I used `crypto.subtle` with
+128-bit AES encryption. A larger key would in theory be
+safer, but it results in longer urls and in practice
+128 bits will be fine considering the short-lived nature of
+a self-destructing message.
+
+The encryption code was copied and modified from (this
+gist)[https://gist.github.com/andreburgaud/6f73fd2d690b629346b8].
+
+### URL
+
+The entire point of this project is to send someone a simple
+url, like
+`https://ianobermiller.com/secure#rVCv88kDTLWAlToREDhbRQ=qwoiNo1iV6OFPpy_EcEVAw`,
+and have them view the contents of the message. I went
+through a few iterations on the url before landing here.
+
+First, we want the key (the part after the `=` sign) to be
+in the hash of the url, since the hash it not sent to the
+server. This gives you extra confidence that the server
+cannot decrypt your message.
+
+I originally tried to put the ID in the path, like
+`/secure/rVCv88kDTLWAlToREDhbRQ`, but realized that wouldn't
+work for a statically generated site deployment, which is
+how I deploy ianobermiller.com using Next.js. Next I
+considered a url parameter, e.g.
+`/secure?id=rVCv88kDTLWAlToREDhbRQ`, but ended up sticking
+both the ID and the key in the hash to keep parsing simple.
+If the backend was moved to the same server, having the ID
+sent to the server in the original request would save a
+round trip, since the server could send back the encrypted
+message without waiting for the client code to download it.
+
+You'll also notice that the ID in the url,
+`rVCv88kDTLWAlToREDhbRQ` doesn't look like the UUID we
+generated on the Dark backend. Since a UUID is just a 128
+bit number, we can display it however we want. Here, I use
+the `uuid` library and url-safe base64 encoding to transform
+the UUID given from Dark into a shorter, more friendly
+looking random string:
+
+```tsx
+import {parse as uuidParse} from 'uuid';
+import {encode} from './base64';
+
+function uuidToBase64(uuid: string): string {
+  return encode(uuidParse(uuid));
+}
 ```
-<Error: You're using our new experimental Datastore query compiler. It compiles your lambdas into optimized (and partially indexed) Datastore queries, which should be reasonably faster.
 
-Unfortunately, we hit a snag while compiling your lambda. We only support a subset of Dark's functionality, but will be expanding it in the future.
+For more details check out the [full source code on
+GitHub](https://github.com/ianobermiller/ianobermiller.com/blob/5ee080fbd1a1359fbede7a0ec55270e363b3fd54/pages/secure/index.page.tsx).
 
-Some Dark code is not supported in DB::query lambdas for now, and some of it won't be supported because it's an odd thing to do in a datastore query. If you think your operation should be supported, let us know in #general.
+## Conclusion
 
-Error: We do not yet support compiling this code: (EBlank 1223731764)>
-```
+Overall this was a fun project to practice using Dark and
+stand up a simple but useful service for myself. Future
+improvements might include:
+
+- Emailing the sender when the link is viewed
+- Configurable length of time until self-destruction
