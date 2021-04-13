@@ -40,4 +40,15 @@
       background: var(--accent-color-hover);
     }
   }
+
+  textarea,
+  input[type='text'] {
+    border-color: var(--text-color);
+  }
+
+  input[type='text'] {
+    background-color: var(--background-color);
+    border: solid 1px;
+    color: var(--text-color);
+  }
 }

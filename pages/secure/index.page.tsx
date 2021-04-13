@@ -106,25 +106,30 @@ function CreateNew() {
 const MAX_LENGTH = 256;
 
 function Input({setUploadResult}: {setUploadResult: (r: Data) => void}) {
-  const [value, setValue] = useState('');
+  const [text, setText] = useState('');
+  const [email, setEmail] = useState('');
 
   async function submit(e: FormEvent) {
     e.preventDefault();
 
-    if (!value) return;
+    if (!text) return;
 
-    const {key, cipherText} = await encrypt(value);
+    const {key, cipherText} = await encrypt(text);
     const response = await fetch(BASE_API + '/upload', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({text: cipherText}),
+      body: JSON.stringify({text: cipherText, email}),
     });
     const {id} = await response.json();
     setUploadResult({secretKey: key, id: uuidToBase64(id)});
   }
 
-  function onChange(e: ChangeEvent<HTMLTextAreaElement>) {
-    setValue(e.currentTarget.value.slice(0, MAX_LENGTH));
+  function onChangeText(e: ChangeEvent<HTMLTextAreaElement>) {
+    setText(e.currentTarget.value.slice(0, MAX_LENGTH));
+  }
+
+  function onChangeEmail(e: ChangeEvent<HTMLInputElement>) {
+    setEmail(e.currentTarget.value.slice(0, MAX_LENGTH));
   }
 
   return (
@@ -136,11 +141,24 @@ function Input({setUploadResult}: {setUploadResult: (r: Data) => void}) {
         downloaded, decrypted and immediately deleted by the server. Unopened
         messages will be deleted after 7 days.
       </p>
-      <textarea value={value} onChange={onChange} />
+      <textarea
+        value={text}
+        onChange={onChangeText}
+        placeholder="The password is hunter2."
+      />
       <p>
-        {value.length} / {MAX_LENGTH} characters
+        {text.length} / {MAX_LENGTH} characters
       </p>
-      <input disabled={!value} type="submit" value="Generate Link" />
+      <p>
+        Enter an email if you'd like to be notified when the message is read.
+      </p>
+      <input
+        type="text"
+        value={email}
+        onChange={onChangeEmail}
+        placeholder="you@example.com"
+      />
+      <input disabled={!text} type="submit" value="Generate Link" />
     </form>
   );
 }
