@@ -7,5 +7,6 @@
   "[mdx]": {
     "editor.rulers": [60],
     "editor.wordWrapColumn": 60
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
