@@ -6,7 +6,7 @@ import cronImage from './secure-dark-cron.png';
 import Image from 'next/image';
 
 export const metadata = {
-  date: '2021-04-12',
+  date: '2021-04-21',
   title: 'Self-Destructing Messages with Dark and React',
   categories: ['dark', 'javascript', 'react'],
 };
@@ -19,7 +19,7 @@ insecure, unencrypted, and persistent, which means there are
 many opportunities for someone nefarious to find that
 information and exploit it.
 
-There are tons of websites that offer to encrypt some text
+There are many websites that offer to encrypt some text
 and allow it to be viewed only once from a given link. The
 problem with all of them is that I didn't write them, and
 have to trust their authors and the entire chain of
@@ -45,14 +45,14 @@ for the API design, but ended up with this:
 
 <Image src={dbImage} width={1480} height={390} />
 
-First, create a database to store the messages. I
-started out very simple with this one, just added a `text`
-field of type `String`. Later, I added a `createdAt` field
-of type `Date` so that I can periodically clean up the
-database to remove old messages. Note that once a database
-has data, the schema cannot be changed, so you have to
-delete all the records first. That is easy enough, just add
-a new repl with:
+First, I created a database to store the messages. It
+started out very simple, with only a `text` field of type
+`String`. Later, I added a `createdAt` field of type `Date`
+so that I can periodically clean up the database to remove
+old messages. Note that once a database has data, the schema
+cannot be changed, so you have to delete all the records
+first. That is easy enough by using a repl with the
+following:
 
 ```fsharp
 DB::deleteAllv1 Messages
@@ -79,10 +79,15 @@ const response = await fetch(BASE_API + '/upload', {
 });
 ```
 
-TODO: this works because Dark CORS default blah blah
+> Note: This works from `localhost` or from your own custom
+> domain because [Dark sets CORs headers by
+> default](https://docs.darklang.com/cors/).
 
-Then in Dark, under 404s on the left side, you can select
-the `/upload` endpoint and start coding:
+You can use a snippet or the console from your browser to
+make the request without even standing up a site. Once
+you've made the request switch back to Dark and under 404s
+on the left side you can select the `/upload` endpoint and
+start coding:
 
 ```fsharp
 let text = request.body.text
@@ -104,28 +109,28 @@ else
   }
 ```
 
-Before saving the message, reject any requests that are
-too long. The client also enforces this, but the client can
-easily be bypassed by sending a request directly. The
-checked length is actually greater than the reported max
-because the client will encrypt and base64 encode, which
-adds overhead.
+Before saving the message, the code rejects any requests
+that are too long. The client also enforces this, but those
+checks can be bypassed by sending a request directly. The
+checked length (1024) is actually greater than the reported
+max (256) because the client will encrypt and base64 encode
+the message, adding overhead.
 
-Next, generate a database key (a UUID) using
-`DB::generateKey` and insert a record into the database with
-the current date. Finally, the last row returns a JSON
+Next, it generates a database key (a UUID) using
+`DB::generateKey` and inserts a record into the database
+with the current date. Finally, the last row returns a JSON
 object with the `id`, for example `{id: "482e50a5-dbb5-4cc5-9fcd-0c94470f60b3"}`. The client will
-put the ID into a url, and then the user will send that url
-to someone else.
+put the ID into a url which the user will send to the
+message recipient.
 
-You can verify that the database contains what you expect by
-adding a new repl with:
+To check that this code works and the database contains what
+I expect I can add a new repl with:
 
 ```fsharp
 DB::getAllWithKeysv2 Messages
 ```
 
-That might look something like:
+The result might look something like:
 
 ```json
 {
@@ -138,11 +143,12 @@ That might look something like:
 
 ### Download
 
-When the other party visits the url, the client's JavaScript
+When the recipient visits the url, the client's JavaScript
 will call the `/download` endpoint.
 
-Again, write a simple version of the client side code to
-generate a trace to write the backend:
+Once again, to leverage trace-driven development I wrote a
+simple version of the client side code to generate a trace
+to write the backend:
 
 ```typescript
 const response = await fetch(BASE_API + '/download', {
@@ -153,8 +159,8 @@ const response = await fetch(BASE_API + '/download', {
 });
 ```
 
-You can then find `/download` in the 404s section and fill it
-out:
+Once executed, I select `/download` in the 404s section and
+fill it in:
 
 ```fsharp
 let entry = DB::getv2 request.body.id Messages
@@ -170,17 +176,18 @@ the ID doesn't exist, the call will enter the ["error
 rail"](https://docs.darklang.com/tutorials/error-rail-http-tutorial/)
 and return an empty response.
 
-You might be wondering why I didn't go with a slightly more
-RESTful API, with routes like `POST /message` and `GET /message/:id`. First, the download request
-is not idempotent and shouldn't be a GET anyway. Second,
-Dark works best if you have separate routes for each
-endpoint, allowing you to more easily switch between traces
-and keep the code separate.
+> You might be wondering why I didn't go with a slightly
+> more RESTful API, with routes like `POST /message` and `GET /message/:id`. First, the download request is not idempotent
+> (since it deletes the message) and therefore shouldn't be a
+> GET to begin with. Second, Dark works best if you have
+> separate routes for each endpoint, allowing you to more
+> easily switch between traces and keep the code separate.
 
 ### Delete Expired Messages
 
-For this simple application I wanted any messages to be
-automatically deleted if they were not read in 7 days.
+For this simple application I want any messages to be
+automatically deleted if they are not read in 7 days. Dark
+supports scheduled jobs like this via a Cron component.
 
 ```fsharp
 let deleteBeforeDate = Date::subtract Date::now 60 * 60 * 24 * 7
@@ -188,10 +195,10 @@ let keysToDelete = DB::queryWithKeyv3 Messages \entry -> entry.createdAt Date::<
 Dict::map keysToDelete \key, value -> DB::deletev1 key Messages
 ```
 
-Since we were already storing the current date and time for
-each entry, deleting them is a matter of computing the time
-7 days ago, querying for messages created before that date,
-and deleting them.
+I went back and added the created date and time to each
+database entry, so removing stale messages is a matter of
+computing the time 7 days ago, querying for messages created
+before that date, and deleting them.
 
 Note that `DB::queryWithKey` is special -- it takes a lambda
 function and compiles it to a database query. You are limited
@@ -207,14 +214,20 @@ don't do this, you will get an error message like:
 >
 > Error: We do not yet support compiling this code: (EBlank 1223731764)>
 
+Since Dark does not yet have a bulk deletion command, the
+last line simply maps over all the keys and deletes them one
+by one.
+
 ## Client
 
-With the API feature complete, I filled in the UI. The [full
-source code can be found on
+With the API feature complete, I built out the simple UI
+using `fetch` and React. The [full source code can be found
+on
 GitHub](https://github.com/ianobermiller/ianobermiller.com/blob/5ee080fbd1a1359fbede7a0ec55270e363b3fd54/pages/secure/index.page.tsx).
 Overall, the code is pretty straightforward, with separate
 components for viewing a message, creating a message, and
-the creation confirmation screen.
+the creation confirmation screen. I've included more details
+of the interesting bits below.
 
 ### Encryption
 
@@ -238,16 +251,16 @@ url, like
 and have them view the contents of the message. I went
 through a few iterations on the url before landing here.
 
-First, we want the key (the part after the `=` sign) to be
-in the hash of the url, since the hash it not sent to the
-server. This gives you extra confidence that the server
-cannot decrypt your message.
+First, I want the decryption key (the part after the `=`
+sign) to be in the hash of the url, since the hash is not
+sent to the server. This gives you extra confidence that the
+server cannot decrypt your message.
 
 I originally tried to put the ID in the path, like
 `/secure/rVCv88kDTLWAlToREDhbRQ`, but realized that wouldn't
 work for a statically generated site deployment, which is
-how I deploy ianobermiller.com using Next.js. Next I
-considered a url parameter, e.g.
+how I deploy ianobermiller.com using Next.js on Vercel. Next
+I considered a url parameter, e.g.
 `/secure?id=rVCv88kDTLWAlToREDhbRQ`, but ended up sticking
 both the ID and the key in the hash to keep parsing simple.
 If the backend was moved to the same server, having the ID
@@ -258,10 +271,10 @@ message without waiting for the client code to download it.
 You'll also notice that the ID in the url,
 `rVCv88kDTLWAlToREDhbRQ` doesn't look like the UUID we
 generated on the Dark backend. Since a UUID is just a 128
-bit number, we can display it however we want. Here, I use
-the `uuid` library and url-safe base64 encoding to transform
-the UUID given from Dark into a shorter, more friendly
-looking random string:
+bit number, it can be re-encoded into a friendlier form.
+Here, I use the `uuid` library and url-safe base64 encoding
+to transform the UUID given from Dark into a shorter, more
+friendly looking random string:
 
 ```tsx
 import {parse as uuidParse} from 'uuid';
@@ -272,14 +285,18 @@ function uuidToBase64(uuid: string): string {
 }
 ```
 
-For more details check out the [full source code on
+For more details on the React components check out the [full
+source code on
 GitHub](https://github.com/ianobermiller/ianobermiller.com/blob/5ee080fbd1a1359fbede7a0ec55270e363b3fd54/pages/secure/index.page.tsx).
 
 ## Conclusion
 
-Overall this was a fun project to practice using Dark and
-stand up a simple but useful service for myself. Future
-improvements might include:
+This was a fun project to practice using Dark and stand up a
+simple but useful service for myself. Future improvements
+might include:
 
 - Emailing the sender when the link is viewed
 - Configurable length of time until self-destruction
+
+Thanks for following along, and if you haveany questions or
+comments please email or send a PR!
