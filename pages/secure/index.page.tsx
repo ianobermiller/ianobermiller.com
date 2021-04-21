@@ -1,9 +1,9 @@
+import styled from '@emotion/styled';
 import Head from 'next/head';
 import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import {parse as uuidParse, stringify as uuidStringify} from 'uuid';
 import {decode, encode} from './base64';
 import {decrypt, encrypt} from './crypto';
-import styles from './secure.module.scss';
 
 const BASE_API = 'https://ianobermiller-secure.builtwithdark.com/';
 
@@ -41,7 +41,7 @@ export default function App() {
   }
 
   return (
-    <div className={styles.SecureApp}>
+    <Root>
       <Head>
         <title>Secure Message</title>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -52,7 +52,7 @@ export default function App() {
       <footer>
         Made with <a href="https://darklang.com/">Dark</a>.
       </footer>
-    </div>
+    </Root>
   );
 }
 
@@ -89,7 +89,7 @@ function DisplayMessage({id, secretKey}: Data): JSX.Element {
 
   return (
     <div>
-      <textarea readOnly value={plainText} />
+      <TextArea readOnly value={plainText} />
       <div>{notice}</div>
       <CreateNew />
     </div>
@@ -100,7 +100,7 @@ function CreateNew() {
   function createNew() {
     location.assign(location.pathname);
   }
-  return <button onClick={createNew}>Create a new secure message</button>;
+  return <Button onClick={createNew}>Create a new secure message</Button>;
 }
 
 const MAX_LENGTH = 256;
@@ -141,7 +141,7 @@ function Input({setUploadResult}: {setUploadResult: (r: Data) => void}) {
         downloaded, decrypted and immediately deleted by the server. Unopened
         messages will be deleted after 7 days.
       </p>
-      <textarea
+      <TextArea
         value={text}
         onChange={onChangeText}
         placeholder="The password is hunter2."
@@ -152,13 +152,13 @@ function Input({setUploadResult}: {setUploadResult: (r: Data) => void}) {
       <p>
         Enter an email if you'd like to be notified when the message is read.
       </p>
-      <input
+      <TextInput
         type="text"
         value={email}
         onChange={onChangeEmail}
         placeholder="you@example.com"
       />
-      <input disabled={!text} type="submit" value="Generate Link" />
+      <Button as="input" disabled={!text} type="submit" value="Generate Link" />
     </form>
   );
 }
@@ -179,10 +179,10 @@ function CopyLink({secretKey, id}: Data): JSX.Element {
         The message will be deleted the first time it is viewed, or after 7
         days.
       </p>
-      <input
-        type="text"
-        readOnly={true}
+      <TextInput
         onClick={onClick}
+        readOnly={true}
+        type="text"
         value={url.toString()}
       />
       {didCopy && <p>Copied to clipboard!</p>}
@@ -198,3 +198,50 @@ function uuidToBase64(uuid: string): string {
 function base64ToUUID(b64: string): string {
   return uuidStringify(new Uint8Array(decode(b64)));
 }
+
+const Root = styled.div`
+  box-sizing: border-box;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 0 20px;
+`;
+
+const TextArea = styled.textarea`
+  box-sizing: border-box;
+  display: block;
+  height: 300px;
+  line-height: 1.2;
+  padding: 8px;
+  width: 100%;
+  border-radius: 4px;
+  font-size: 100%;
+  margin: 20px 0;
+`;
+
+const Button = styled.button`
+  box-sizing: border-box;
+  display: block;
+  padding: 8px;
+  width: 100%;
+  border-radius: 4px;
+  font-size: 100%;
+  margin: 20px 0;
+  background: var(--accent-color);
+  border: none;
+  color: var(--background-color);
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: var(--accent-color-hover);
+  }
+`;
+
+const TextInput = styled.input`
+  box-sizing: border-box;
+  display: block;
+  padding: 8px;
+  width: 100%;
+  border-radius: 4px;
+  font-size: 100%;
+  margin: 20px 0;
+`;
