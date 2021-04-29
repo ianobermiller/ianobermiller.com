@@ -52,6 +52,16 @@ export default function Post({
           </li>
         ))}
       </RelatedPosts>
+      <script
+        async
+        crossOrigin="anonymous"
+        issue-term="pathname"
+        // @ts-ignore label and repo are for https://utteranc.es/
+        label="comment"
+        repo="ianobermiller/ianobermiller.com"
+        src="https://utteranc.es/client.js"
+        theme="preferred-color-scheme"
+      />
     </Layout>
   );
 }
