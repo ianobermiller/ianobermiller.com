@@ -29,7 +29,12 @@ module.exports = withBundleAnalyzer(
   withImages({
     inlineImageLimit: false,
     ...withMDX({
+      // TODO: figure out why webpack errors with "Module parse failed:
+      // Unexpected token". In 4, this doesn't block the build, but in 5 it
+      // does. Not sure why webpack is parsing LICENSE and other files.
+      // future: {webpack5: true},
       pageExtensions: ['page.tsx', 'md', 'mdx'],
+      reactStrictMode: true,
     }),
   }),
 );
