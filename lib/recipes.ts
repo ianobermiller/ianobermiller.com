@@ -1,7 +1,7 @@
 import {readdirSync, readFileSync} from 'fs';
 import path from 'path';
 
-const recipesDirectory = 'content/recipes';
+const RECIPES_DIRECTORY = 'content/recipes/';
 
 export interface RecipeEntry {
   filePath: string;
@@ -9,13 +9,13 @@ export interface RecipeEntry {
 }
 
 export function getRecipeEntries(): Array<RecipeEntry> {
-  const fileNames = readdirSync(recipesDirectory);
+  const fileNames = readdirSync(RECIPES_DIRECTORY);
 
   return fileNames
     .filter(fileName => fileName.endsWith('.json'))
     .map(fileName => ({
       slug: fileName.replace(/\.json$/, ''),
-      filePath: path.join(recipesDirectory, fileName),
+      filePath: path.join(RECIPES_DIRECTORY, fileName),
     }));
 }
 
@@ -31,7 +31,7 @@ export interface Recipe {
 
 export function getRecipe(slug: string): Recipe {
   const fileContents = readFileSync(
-    path.join(recipesDirectory, slug + '.json'),
+    path.join(RECIPES_DIRECTORY, slug + '.json'),
     'utf8',
   );
   const parsed = JSON.parse(fileContents);

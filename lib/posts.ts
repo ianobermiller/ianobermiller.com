@@ -9,7 +9,7 @@ export type Post = {
   url: string;
 };
 
-export const blogPath = 'pages/blog/';
+export const BLOG_DIRECTORY = 'pages/blog/';
 
 let posts: Array<Post> | null = null;
 export async function getAllPosts(): Promise<Array<Post>> {
@@ -19,11 +19,13 @@ export async function getAllPosts(): Promise<Array<Post>> {
 
   posts = [];
 
-  for await (const {path} of readdirp(blogPath, {
+  for await (const {path} of readdirp(BLOG_DIRECTORY, {
     fileFilter: '*.mdx',
   })) {
     const slug = path.replace(/\.mdx$/, '').replace(/\/index$/, '');
-    const {metadata = {date: '', title: ''}} = require('../' + blogPath + path);
+    const {metadata = {date: '', title: ''}} = require('../' +
+      BLOG_DIRECTORY +
+      path);
 
     posts.push({
       date: metadata.date,
