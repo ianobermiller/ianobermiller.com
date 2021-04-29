@@ -1,40 +1,35 @@
-const remarkPrism = require('remark-prism');
-const remarkToC = require('remark-toc');
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-});
-const withImages = require('next-images');
-
-const mdxRenderer = `
-  import React from 'react'
-  import {mdx} from '@mdx-js/react'
-  import {getStaticProps as gsp} from 'layouts/postData';
-
-  // We can't just export this directly because we need the call stack.
-  export async function getStaticProps(ctx) {
-    return gsp(ctx);
-  }
-`;
+const BASE_CONFIG = {
+  pageExtensions: ['page.tsx', 'md', 'mdx'],
+  reactStrictMode: true,
+};
 
 const withMDX = require('@next/mdx')({
   extension: /\.mdx?$/,
   options: {
-    renderer: mdxRenderer,
-    remarkPlugins: [remarkToC, remarkPrism],
+    renderer: `
+      import React from 'react'
+      import {mdx} from '@mdx-js/react'
+      import {getStaticProps as gsp} from 'layouts/postData';
+
+      // We can't just export this directly because we need the call stack.
+      export async function getStaticProps(ctx) {
+        return gsp(ctx);
+      }
+    `,
+    remarkPlugins: [require('remark-toc'), require('remark-prism')],
     rehypePlugins: [],
   },
 });
 
-module.exports = withBundleAnalyzer(
-  withImages({
-    inlineImageLimit: false,
-    ...withMDX({
-      // TODO: figure out why webpack errors with "Module parse failed:
-      // Unexpected token". In 4, this doesn't block the build, but in 5 it
-      // does. Not sure why webpack is parsing LICENSE and other files.
-      // future: {webpack5: true},
-      pageExtensions: ['page.tsx', 'md', 'mdx'],
-      reactStrictMode: true,
-    }),
-  }),
-);
+const withImagesRaw = require('next-images');
+const withImages = config =>
+  withImagesRaw({inlineImageLimit: false, ...config});
+
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+const pipe = (...fns) =>
+  fns.reduce((prevFn, nextFn) => value => nextFn(prevFn(value)));
+
+module.exports = pipe(withMDX, withImages, withBundleAnalyzer)(BASE_CONFIG);
