@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 import Link from 'next/link';
-import React, {ReactElement} from 'react';
+import React, {ReactElement, useEffect, useRef} from 'react';
 import DateText from './DateText';
 import Layout from './Layout';
 import {RelatedPost} from './postData';
@@ -21,6 +21,21 @@ export default function Post({
   metadata: {date, title},
   relatedPosts,
 }: Props): ReactElement {
+  const commentsRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const scriptElement = document.createElement('script');
+    scriptElement.async = true;
+    scriptElement.crossOrigin = 'anonymous';
+    scriptElement.src = 'https://utteranc.es/client.js';
+
+    scriptElement.setAttribute('issue-term', 'pathname');
+    scriptElement.setAttribute('label', 'comment');
+    scriptElement.setAttribute('repo', 'ianobermiller/ianobermiller.com');
+    scriptElement.setAttribute('theme', 'preferred-color-scheme');
+
+    commentsRef.current?.appendChild(scriptElement);
+  }, []);
+
   let dateString;
   try {
     dateString = format(parseISO(date), 'yyyy-MM-dd');
@@ -52,16 +67,7 @@ export default function Post({
           </li>
         ))}
       </RelatedPosts>
-      <script
-        async
-        crossOrigin="anonymous"
-        issue-term="pathname"
-        // @ts-ignore label and repo are for https://utteranc.es/
-        label="comment"
-        repo="ianobermiller/ianobermiller.com"
-        src="https://utteranc.es/client.js"
-        theme="preferred-color-scheme"
-      />
+      <div ref={commentsRef} />
     </Layout>
   );
 }
