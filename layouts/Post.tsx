@@ -21,21 +21,6 @@ export default function Post({
   metadata: {date, title},
   relatedPosts,
 }: Props): ReactElement {
-  const commentsRef = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
-    const scriptElement = document.createElement('script');
-    scriptElement.async = true;
-    scriptElement.crossOrigin = 'anonymous';
-    scriptElement.src = 'https://utteranc.es/client.js';
-
-    scriptElement.setAttribute('issue-term', 'pathname');
-    scriptElement.setAttribute('label', 'comment');
-    scriptElement.setAttribute('repo', 'ianobermiller/ianobermiller.com');
-    scriptElement.setAttribute('theme', 'preferred-color-scheme');
-
-    commentsRef.current?.appendChild(scriptElement);
-  }, []);
-
   let dateString;
   try {
     dateString = format(parseISO(date), 'yyyy-MM-dd');
@@ -67,9 +52,28 @@ export default function Post({
           </li>
         ))}
       </RelatedPosts>
-      <div ref={commentsRef} />
+      <Comments />
     </Layout>
   );
+}
+
+function Comments() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const scriptElement = document.createElement('script');
+    scriptElement.async = true;
+    scriptElement.crossOrigin = 'anonymous';
+    scriptElement.src = 'https://utteranc.es/client.js';
+
+    scriptElement.setAttribute('issue-term', 'pathname');
+    scriptElement.setAttribute('label', 'comment');
+    scriptElement.setAttribute('repo', 'ianobermiller/ianobermiller.com');
+    scriptElement.setAttribute('theme', 'preferred-color-scheme');
+
+    ref.current?.appendChild(scriptElement);
+  }, []);
+
+  return <div ref={ref} />;
 }
 
 const RelatedPosts = styled.ul`
