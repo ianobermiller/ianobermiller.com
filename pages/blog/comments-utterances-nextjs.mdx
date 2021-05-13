@@ -1,0 +1,77 @@
+import Post from 'layouts/Post';
+
+export const metadata = {
+  date: '2021-05-13',
+  title: 'Comments with Utterances on Next.js',
+  categories: ['utterances', 'nextjs', 'react'],
+};
+
+export default Post;
+
+[Utterances](https://utteranc.es) is a neat little script
+and GitHub app that adds commenting to your blog backed by
+comments on GitHub issues. The script is lightweight, at the
+time of writing clocking in at 14KB compressed.
+
+The official instructions say to include a script tag in
+your HTML, like so:
+
+```html
+<script
+  src="https://utteranc.es/client.js"
+  repo="ianobermiller/ianobermiller.com"
+  issue-term="pathname"
+  theme="preferred-color-scheme"
+  crossorigin="anonymous"
+  async
+></script>
+```
+
+You can put this same snippet in a React component in
+Next.js, but won't work as expected. If you navigate
+directly to a post that includes the script, it will work
+because the script will be rendered on the server. If you
+click a link within the application however, like from an
+index page, the comments will not load. This is because
+React doesn't dynamically render `script` tags.
+
+Instead, you need to create a `script` tag inside of
+`useEffect`, assign the attributes, and append it to an
+element. It looks like this:
+
+```tsx
+function Comments() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const scriptElement = document.createElement('script');
+    scriptElement.async = true;
+    scriptElement.crossOrigin = 'anonymous';
+    scriptElement.src = 'https://utteranc.es/client.js';
+
+    scriptElement.setAttribute('issue-term', 'pathname');
+    scriptElement.setAttribute('label', 'comment');
+    scriptElement.setAttribute(
+      'repo',
+      'ianobermiller/ianobermiller.com',
+    );
+    scriptElement.setAttribute(
+      'theme',
+      'preferred-color-scheme',
+    );
+
+    ref.current?.appendChild(scriptElement);
+  }, []);
+
+  return <div ref={ref} />;
+}
+```
+
+First off, we'll separate this into a component to keep our
+main `Post` component clean. Next, we'll create a `ref` that
+will be assigned to an empty `div` which will be the
+container for the script tag. Then, inside of `useEffect`,
+we create the actual script tag, assign standard props
+(`async`, `crossOrigin`, and `src`) directly, and use
+`setAttribute` for the utterances specific props.
+
+And that's it! You can see the result below this post.
