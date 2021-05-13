@@ -15,7 +15,7 @@ export async function getStaticProps(): Promise<{
   )?.[1];
   const posts = await getAllPosts();
   const currentPostIndex = posts.findIndex(p => p.path === currentPostPath);
-  const getRelated = (name, index) => {
+  const getRelated = (name: string, index: number) => {
     const post = posts[index];
     if (!post) return;
 

@@ -7,6 +7,7 @@ export type Post = {
   timestamp: number;
   title: string;
   url: string;
+  isDraft: boolean;
 };
 
 export const BLOG_DIRECTORY = 'pages/blog/';
@@ -33,9 +34,11 @@ export async function getAllPosts(): Promise<Array<Post>> {
       timestamp: parseISO(metadata.date).getTime(),
       title: metadata.title,
       url: '/blog/' + slug,
+      isDraft: Boolean(metadata.isDraft),
     });
   }
 
-  posts.sort((a, b) => b.timestamp - a.timestamp);
-  return posts;
+  return posts
+    .sort((a, b) => b.timestamp - a.timestamp)
+    .filter(p => !p.isDraft);
 }
