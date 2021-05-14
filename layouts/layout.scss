@@ -20,6 +20,7 @@ $dark-accent: lighten($accent, 45%);
   --background-color: #fff;
   --background-color-inline-code: #{lighten($accent, 60%)};
   --background-color-code: #{lighten($accent, 64%)};
+  --background-color-code-highlight: #feb;
   --text-color: #000;
   --text-color-secondary: #333;
 }
@@ -30,6 +31,7 @@ $dark-accent: lighten($accent, 45%);
   --accent-color-quote: #{darken($dark-accent, 60%)};
   --background-color: #222;
   --background-color-code: #282828;
+  --background-color-code-highlight: rgb(77, 56, 0);
   --background-color-inline-code: #{darken($accent, 15%)};
   --text-color: #fff;
   --text-color-secondary: #ddd;
@@ -222,6 +224,16 @@ code {
       transform-origin: right top 0;
       transform: translate(calc(-100% - 48px), 0) rotate(-90deg);
     }
+  }
+
+  /* highlight for each spotlight line */
+  .remark-highlight-code-line {
+    background-color: var(--background-color-code-highlight);
+    display: block;
+    margin-right: -1em;
+    margin-left: -1em;
+    padding-right: 1em;
+    padding-left: 1em;
   }
 }
 

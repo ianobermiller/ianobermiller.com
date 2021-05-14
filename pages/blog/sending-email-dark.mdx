@@ -1,0 +1,129 @@
+import Post from 'layouts/Post';
+
+export const metadata = {
+  date: '2021-05-14',
+  title: 'Sending Email with Dark',
+  categories: ['dark', 'react'],
+};
+
+export default Post;
+
+In my last post on Dark, I created a [self-destructing
+message app](/blog/self-destructing-messages-dark) that lets
+you share a secret, like a password, with someone by sharing
+a link. When they view the message it will be deleted on the
+server. A nice feature would be to notify the sender via
+email when their message was viewed.
+
+To start, we will modify the React client to pass the email
+address to the backend:
+
+```tsx{4}
+const response = await fetch(BASE_API + '/upload', {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({text: cipherText, email}),
+});
+```
+
+Then we can submit the form, now including an email, to
+create a trace in Dark. Recall from our last post that we
+have a Datastore named `Messages`, that has two fields,
+`text` and `createdAt`. In order to add a new field, we will
+need to clear the Datastore:
+
+```fsharp
+DB::deleteAllv1 Messages
+```
+
+Then we can add a new field `email` of type `String`. Next,
+as we process the message upload, we will include the
+`email` in the call to `DB::set`:
+
+```fsharp{12}
+let text = request.body.text
+if String::lengthv1 text > 1024
+then
+  Http::badRequest "Text too long: text is limited to 256 ch
+                   aracters"
+else
+  let key = DB::generateKey
+  let _ = DB::setv1
+            {
+              text : text
+              createdAt : Date::now
+              email : request.body.email
+            }
+            key
+            Messages
+  {
+    id : key
+  }
+```
+
+Finally we get to the part where we actually send an email.
+I used (sendinblue)[https://www.sendinblue.com/] because
+they have a generous free tier and good docs with an easy to
+use API. Once you've signed up, create a new Secret Key in
+Dark by clicking the `+` next to "Secret Keys". Call it
+`SENDINBLUE_API` and paste in your API key.
+
+Then we'll create a function in Dark to keep the `/download`
+handler concise. Click the `+` next to "Functions" and call
+it `emailMessageViewed`. We will setup this function with
+one paramter `email` of type `String`.
+
+In the body we will use sendinblue's REST API to send a
+confirmation email:
+
+```fsharp
+HttpClient::postv5
+  "https://api.sendinblue.com/v3/smtp/email"
+  {
+    sender : {
+               name : "Secure Message"
+               email : "noreply@ianobermiller.com"
+             }
+    to : [{
+            email : email
+          }]
+    subject : "Secure Message Viewed"
+    htmlContent : "<html><head></head><body><p>Your secure
+                  message has been viewed and deleted.</p>
+                  <p><a href="https://ianobermiller.com/se
+                  cure">Create a new message</a></p></body
+                  ></html>"
+  }
+  {}
+  {
+    api-key : SENDINBLUE_API
+  }
+```
+
+This is quite straightforward since Dark provides good
+helpers for making HTTP calls. In this case we use the
+sendinblue API endpoint
+`https://api.sendinblue.com/v3/smtp/email`, pass in a JSON
+blob with the `sender`, `to`, `subject`, and `htmlContent`,
+and finally set the `api-key` header to our Secret Key named
+`SENDINBLUE_API`.
+
+Finally, let's call this new function from our `/download'
+handlers:
+
+```fsharp{3-7}
+let entry = DB::getv2 request.body.id Messages
+let _ = DB::deletev1 request.body.id Messages
+let _ = if entry.email
+        then
+          emailMessageViewed entry.email
+        else
+          Nothing
+{
+  text : entry.text
+}
+```
+
+Since the email is optional, we want to verify it is
+non-empty before trying to send a confirmation. And that's
+all there is to it!
