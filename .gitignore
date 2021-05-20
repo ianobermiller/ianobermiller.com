@@ -19,3 +19,6 @@ out
 .mdx-data
 
 .cache
+
+# Generated RSS files
+public/rss

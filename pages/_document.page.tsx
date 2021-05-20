@@ -24,7 +24,26 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head />
+        <Head>
+          <link
+            rel="alternate"
+            type="application/feed+json"
+            title="RSS Feed for ianobermiller.com"
+            href="/rss/feed.json"
+          />
+          <link
+            rel="alternate"
+            type="application/atom+xml"
+            title="RSS Feed for ianobermiller.com"
+            href="/rss/atom.xml"
+          />
+          <link
+            rel="alternate"
+            type="application/rss+xml"
+            title="RSS Feed for ianobermiller.com"
+            href="/rss/feed.xml"
+          />
+        </Head>
         <body>
           <script
             dangerouslySetInnerHTML={{

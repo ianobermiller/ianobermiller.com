@@ -5,6 +5,7 @@ import React, {ReactElement} from 'react';
 import DateText from '../../layouts/DateText';
 import Layout from '../../layouts/Layout';
 import {getAllPosts} from '../../lib/posts';
+import {writeRSSFile} from '../../lib/rss';
 
 type Props = {
   posts: Array<{
@@ -19,6 +20,8 @@ export async function getStaticProps(): Promise<{
   props: Props;
 }> {
   const posts = await getAllPosts();
+
+  await writeRSSFile(posts);
 
   return {
     props: {
