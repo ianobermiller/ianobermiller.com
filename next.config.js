@@ -1,5 +1,5 @@
 const BASE_CONFIG = {
-  pageExtensions: ['page.tsx', 'md', 'mdx'],
+  pageExtensions: ['page.tsx', 'md', 'mdx', 'ts'],
   reactStrictMode: true,
 };
 
