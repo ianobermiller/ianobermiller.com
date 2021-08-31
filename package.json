@@ -38,7 +38,7 @@
   "license": "MIT",
   "main": "n/a",
   "scripts": {
-    "build": "next build && next export",
+    "build": "next build",
     "start": "NODE_OPTIONS='--max-http-header-size=81000' next dev",
     "format": "prettier --parser typescript --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.ts*\"",
     "test": "echo \"Error: no test specified\" && exit 1",
