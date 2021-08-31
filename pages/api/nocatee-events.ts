@@ -7,6 +7,7 @@ export default async function main(req, res) {
   const calendarHtml = await (
     await fetch(`${BASE_URL}/events?type=calendar`)
   ).text();
+
   const eventsJson = calendarHtml.match(/events:(.*),/)?.[1];
 
   if (!eventsJson) {
