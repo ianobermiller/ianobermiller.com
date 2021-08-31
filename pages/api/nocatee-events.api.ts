@@ -17,6 +17,7 @@ export default async function main(req, res) {
   const events = JSON.parse(eventsJson);
 
   const calendar = ical({name: 'Nocatee Events'});
+  calendar.timezone('America/New_York');
 
   for (const event of events) {
     calendar.createEvent({
