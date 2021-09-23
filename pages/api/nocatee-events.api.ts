@@ -1,9 +1,8 @@
 import type {VercelRequest, VercelResponse} from '@vercel/node';
+import cheerio from 'cheerio';
+import {FormData} from 'formdata-node';
 import ical from 'ical-generator';
 import fetch from 'node-fetch';
-import {FormData} from 'formdata-node';
-import cheerio from 'cheerio';
-import {OPENSSL_VERSION_NUMBER} from 'node:constants';
 
 const BASE_URL = 'https://residents.nocatee.com';
 
@@ -59,17 +58,18 @@ export default async function main(
       address = address.slice(venue.length).trim();
     }
 
+    const url = BASE_URL + jsonEvent.url;
     calendar.createEvent({
       id,
       start: jsonEvent.start,
       end: jsonEvent.end,
       summary: jsonEvent.title,
-      url: BASE_URL + jsonEvent.url,
+      url,
       location: {
         title: venue,
         address,
       },
-      description,
+      description: `${description}\n\n${url}`,
     });
   }
 
