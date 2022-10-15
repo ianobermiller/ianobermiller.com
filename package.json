@@ -23,7 +23,7 @@
     "formdata-node": "^4.0.1",
     "formdata-polyfill": "^4.0.6",
     "ical-generator": "^3.0.0",
-    "next": "10.2.0",
+    "next": "12.1.0",
     "next-images": "1.7.0",
     "node-fetch": "^2.6.1",
     "prismjs": "1.23.0",
