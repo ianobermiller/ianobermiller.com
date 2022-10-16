@@ -16,8 +16,6 @@ export default Post;
 
 Once you have configured an Azure web role with an SSL certificate and setup the port configuration in the Azure project, you may want to redirect anyone who comes to the http:// version of your page to the secured https:// version. To do so in production, add the following to your Web.Release.config:
 
-<!-- more -->
-
 ```xml
 <system.webServer>
     <rewrite xdt:Transform="Insert">
@@ -43,5 +41,5 @@ Some important things to note:
 
 References
 
-- <http://blog.smarx.com/posts/redirecting-to-https-in-windows-azure-two-methods>
-- <http://forums.asp.net/p/1704544/4527302.aspx/1?Azure+Url+Rewrite+not+working>
+- http://blog.smarx.com/posts/redirecting-to-https-in-windows-azure-two-methods
+- http://forums.asp.net/p/1704544/4527302.aspx/1?Azure+Url+Rewrite+not+working

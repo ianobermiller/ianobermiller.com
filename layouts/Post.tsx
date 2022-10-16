@@ -1,11 +1,8 @@
-import styled from '@emotion/styled';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
-import Link from 'next/link';
 import React, {ReactElement, useEffect, useRef} from 'react';
 import DateText from './DateText';
 import Layout from './Layout';
-import {RelatedPost} from './postData';
 
 type Props = {
   children: React.ReactNode;
@@ -13,13 +10,11 @@ type Props = {
     date: string;
     title: string;
   };
-  relatedPosts: Array<RelatedPost>;
 };
 
 export default function Post({
   children,
   metadata: {date, title},
-  relatedPosts,
 }: Props): ReactElement {
   let dateString;
   try {
@@ -42,16 +37,6 @@ export default function Post({
         )}
         <div className="e-content markdown">{children}</div>
       </article>
-      <RelatedPosts>
-        {relatedPosts.map(({name, title, url}) => (
-          <li key={url}>
-            {name}:{' '}
-            <Link href={url}>
-              <a>{title}</a>
-            </Link>
-          </li>
-        ))}
-      </RelatedPosts>
       <Comments />
     </Layout>
   );
@@ -75,7 +60,3 @@ function Comments() {
 
   return <div ref={ref} />;
 }
-
-const RelatedPosts = styled.ul`
-  margin-top: var(--space-xl);
-`;

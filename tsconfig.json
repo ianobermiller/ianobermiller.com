@@ -3,7 +3,11 @@
     "baseUrl": ".",
     "esModuleInterop": true,
     "jsx": "preserve",
-    "lib": ["dom", "es2015", "es2017"],
+    "lib": [
+      "dom",
+      "es2015",
+      "es2017"
+    ],
     "module": "commonjs",
     "noImplicitAny": true,
     "outDir": "./dist/",
@@ -16,8 +20,14 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "moduleResolution": "node",
-    "isolatedModules": true
+    "isolatedModules": true,
+    "incremental": true
   },
-  "include": ["*.tsx", "*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "*.tsx",
+    "*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -1,6 +1,4 @@
-const path = require('path');
-
-module.exports = {
+export default {
   parserOptions: {
     ecmaFeatures: {
       jsx: true,

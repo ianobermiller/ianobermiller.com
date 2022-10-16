@@ -16,8 +16,6 @@ export const metadata = {
 
 We all know the mantra "magic strings are evil". Unfortunately when working with Windows Phone, Silverlight, or WPF, you often have to use strings when navigating between pages to specify the URI and any parameters. Parameters are such a pain to pass this way that most eschew them in favor of some static state shared between pages. This negates some of the benefits, especially on Windows Phone, that you get from having the parameters in your URIs, such as when dealing with live tiles and deep links.
 
-<!-- more -->
-
 This is the way you typically navigate to a new page (examples are from Windows Phone Silverlight code):
 
 ```csharp

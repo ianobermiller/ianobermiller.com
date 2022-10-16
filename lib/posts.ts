@@ -20,14 +20,10 @@ export async function getAllPosts(): Promise<Array<Post>> {
 
   posts = [];
 
-  for await (const {path} of readdirp(BLOG_DIRECTORY, {
-    fileFilter: '*.mdx',
-  })) {
+  for await (const {path} of readdirp(BLOG_DIRECTORY, {fileFilter: '*.mdx'})) {
     const slug = path.replace(/\.mdx$/, '').replace(/\/index$/, '');
-    const {metadata = {date: '', title: ''}} = require('../' +
-      BLOG_DIRECTORY +
-      path);
-
+    const fullPath = `../${BLOG_DIRECTORY}${path}`;
+    const {metadata = {date: '', title: ''}} = require(fullPath);
     posts.push({
       date: metadata.date,
       path,

@@ -16,8 +16,6 @@ import WrapTextExample from './WrapTextExample';
 
 The following demo pretty prints the entered text to the desired line width by making the lines as even as possible. The demo uses a dynamic programming algorithm to choose line breaks in such a way that the sum of the squares of the slack is minimized.
 
-<!-- more -->
-
 <WrapTextExample
   lineLength={46}
   text="Call me Ishmael. Some years ago, never mind how long precisely, having little
@@ -105,6 +103,11 @@ window.onload = function () {
 
   ts();
 
-  length.onchange = length.onclick = text.onchange = text.onkeyup = text.onclick = ts;
+  length.onchange =
+    length.onclick =
+    text.onchange =
+    text.onkeyup =
+    text.onclick =
+      ts;
 };
 ```

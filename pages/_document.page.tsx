@@ -1,4 +1,5 @@
 import Document, {Head, Html, Main, NextScript} from 'next/document';
+import React from 'react';
 
 // This small snippet runs before the page renders and sets a class on the
 // root element if the stored theme does not match the OS preference.
