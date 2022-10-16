@@ -1,14 +1,15 @@
-import Post from 'layouts/Post';
-import dbImage from './secure-dark-db.png';
-import Image from 'next/image';
+---
+title: Self-Destructing Messages with Dark and React
+date: '2021-04-21'
+categories: ['dark', 'javascript', 'react']
+---
 
-export const metadata = {
-  date: '2021-04-21',
-  title: 'Self-Destructing Messages with Dark and React',
-  categories: ['dark', 'javascript', 'react'],
-};
+import Post from 'layouts/Post';
 
 export default Post;
+
+import dbImage from './secure-dark-db.png';
+import Image from 'next/image';
 
 Ever needed to send a password or other sensitive
 information to someone over email or text? Both mediums are
@@ -135,7 +136,7 @@ The result might look something like:
 ```json
 {
   5ee86e28-3ce9-4173-97b5-d68bdd8ca1e9: {
-    createdAt: <Date: 2021-04-11T05:17:04Z>,
+    createdAt: <date: '2021-04-11'
     text: "Hello world"
   }
 }

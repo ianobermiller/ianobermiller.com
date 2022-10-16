@@ -1,12 +1,15 @@
 ---
 title: Styling Visited Links with Radium and React
-date: 2015-06-24T17:00:00+00:00
+date: '2015-06-24'
 categories:
   - JavaScript
   - Radium
   - React
 ---
 
+import Post from 'layouts/Post';
+
+export default Post;
 [Radium][1] is a library for styling React components that I've spent a fair amount of development time on over the past few months. Radium uses inline styles exclusively, and there are some things you just can't do without CSS. Styling `:visited` links is one of them. Luckily, Radium provides a `<Style>` component which makes this pretty easy to accomplish.
 
 The `<Style>` component will render a `<style>` tag, and will prepend each selector with the specified `scopeSelector`. We use the name of the component as the class, but you could be extra careful and append a generated string to the class to be certain it won't conflict.

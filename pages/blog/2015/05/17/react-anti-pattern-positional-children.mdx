@@ -1,10 +1,14 @@
 ---
 title: 'React Anti-Pattern: Positional Children'
-date: 2015-05-18T01:25:35+00:00
+date: '2015-05-18'
 categories:
   - JavaScript
   - React
 ---
+
+import Post from 'layouts/Post';
+
+export default Post;
 
 When designing reusable components with React, you may need to dig into the `children` prop, say to wrap each child in another element or change the ordering. Once you've done so, you may also be tempted to do different things depending on the index of the child. An example from the Facebook codebase is the `<LeftRight>` component, which floats one child to the left, and another to the right. Its API looks like this:
 

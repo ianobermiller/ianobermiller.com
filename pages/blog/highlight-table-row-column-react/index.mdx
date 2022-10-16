@@ -1,11 +1,10 @@
-import Post from 'layouts/Post';
+---
+title: Highlight the row and column of a hovered table cell in React & Recoil
+date: '2020-09-07'
+categories: ['react', 'javascript', 'tables']
+---
 
-export const metadata = {
-  date: '2020-09-07',
-  title:
-    'Highlight the row and column of a hovered table cell in React & Recoil',
-  categories: ['react', 'javascript', 'tables'],
-};
+import Post from 'layouts/Post';
 
 export default Post;
 
@@ -264,10 +263,12 @@ returning a boolean indicating whether or not this cell is highlighted.
 ```jsx
 const isHighlightedSelector = selectorFamily({
   key: 'isHighlightedSelector',
-  get: ({row, column}) => ({get}) => {
-    const h = get(highlightedCell);
-    return h.row === row || h.column === column;
-  },
+  get:
+    ({row, column}) =>
+    ({get}) => {
+      const h = get(highlightedCell);
+      return h.row === row || h.column === column;
+    },
 });
 ```
 
@@ -278,9 +279,8 @@ function TableCell({row, column}) {
   const isHighlighted = useRecoilValue(
     isHighlightedSelector({row, column}),
   );
-  const setHighlightedCell = useSetRecoilState(
-    highlightedCell,
-  );
+  const setHighlightedCell =
+    useSetRecoilState(highlightedCell);
   return (
     <td
       onMouseEnter={() => setHighlightedCell({row, column})}

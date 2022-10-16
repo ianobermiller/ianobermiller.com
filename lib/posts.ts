@@ -1,4 +1,5 @@
-import {parseISO} from 'date-fns';
+import {readFileSync} from 'fs';
+import matter from 'gray-matter';
 import readdirp from 'readdirp';
 
 export type Post = {
@@ -22,15 +23,19 @@ export async function getAllPosts(): Promise<Array<Post>> {
 
   for await (const {path} of readdirp(BLOG_DIRECTORY, {fileFilter: '*.mdx'})) {
     const slug = path.replace(/\.mdx$/, '').replace(/\/index$/, '');
-    const fullPath = `../${BLOG_DIRECTORY}${path}`;
-    const {metadata = {date: '', title: ''}} = require(fullPath);
+    const fullPath = `${BLOG_DIRECTORY}${path}`;
+    const fileContents = readFileSync(fullPath, 'utf8');
+    const {
+      data: {date, title, isDraft = false},
+    } = matter(fileContents);
+
     posts.push({
-      date: metadata.date,
+      date,
       path,
-      timestamp: parseISO(metadata.date).getTime(),
-      title: metadata.title,
+      timestamp: new Date(date).getTime(),
+      title,
       url: '/blog/' + slug,
-      isDraft: Boolean(metadata.isDraft),
+      isDraft,
     });
   }
 

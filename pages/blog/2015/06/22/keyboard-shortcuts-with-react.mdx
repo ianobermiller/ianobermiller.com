@@ -1,6 +1,6 @@
 ---
 title: Keyboard Shortcuts with React
-date: 2015-06-22T12:00:42+00:00
+date: '2015-06-22'
 categories:
   - JavaScript
   - React
@@ -8,6 +8,10 @@ tags:
   - keyboard
   - shortcuts
 ---
+
+import Post from 'layouts/Post';
+
+export default Post;
 
 In many web apps, you want to trigger an action in response to a keypress when a certain component is showing. I ran into this while playing with [NuclearMail][1]. Think gmail style "y to archive" kind of shortcuts. So, building with React, we might have a `MessageView` component, which, when it is showing, we want to respond to the "y" keypress and archive the message. All we need is the `keyboardjs` library and some decorator glue code:
 

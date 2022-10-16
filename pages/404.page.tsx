@@ -51,7 +51,7 @@ export default function NotFoundPage(props: Props) {
         </p>
         <p>Perhaps you were looking for one of these?</p>
         {props.categories.map(({links, title}) => (
-          <>
+          <React.Fragment key={title}>
             <h2>{title}</h2>
             <ul>
               {links.map(({title, url}) => (
@@ -62,7 +62,7 @@ export default function NotFoundPage(props: Props) {
                 </li>
               ))}
             </ul>
-          </>
+          </React.Fragment>
         ))}
       </div>
     </Layout>
