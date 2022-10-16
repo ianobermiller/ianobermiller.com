@@ -10,17 +10,9 @@ import {load} from 'js-yaml';
  * @param options - Optional options to configure the output.
  * @returns A unified transformer.
  */
-export function remarkGetStaticProps({name} = {}) {
+export function remarkGetStaticProps() {
   return ast => {
     const imports = [];
-
-    if (name && !isValidIdentifierName(name)) {
-      throw new Error(
-        `If name is specified, this should be a valid identifier name, got: ${JSON.stringify(
-          name,
-        )}`,
-      );
-    }
 
     for (const node of ast.children) {
       let data;
@@ -28,15 +20,18 @@ export function remarkGetStaticProps({name} = {}) {
       if (node.type === 'yaml') {
         data = load(value);
       }
+
       if (data == null) {
         continue;
       }
-      if (!name && typeof data !== 'object') {
+
+      if (typeof data !== 'object') {
         throw new Error(
           `Expected frontmatter data to be an object, got:\n${value}`,
         );
       }
-      data = name ? {[name]: data} : data;
+
+      // TODO: since we can get file.path (arg after ast), we can actually scrape the related paths
 
       imports.push({
         type: 'mdxjsEsm',
@@ -48,7 +43,6 @@ export function remarkGetStaticProps({name} = {}) {
             body: [
               {
                 type: 'ExportNamedDeclaration',
-                // Id: { type: "Identifier", name: 'getStaticProps' },
                 source: null,
                 specifiers: [],
                 declaration: {
