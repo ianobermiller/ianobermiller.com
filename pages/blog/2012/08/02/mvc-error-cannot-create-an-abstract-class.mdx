@@ -1,10 +1,13 @@
-import Post from 'layouts/Post';
-
-export const metadata = {
-  title: 'MVC error: “Cannot create an abstract class”',
-  date: '2012-08-02',
-  categories: ['ASP.NET', 'MVC', 'T4'],
-};
+---
+title: 'MVC error: “Cannot create an abstract class”'
+author: iano
+date: 2012-08-02T22:44:03+00:00
+url: /blog/2012/08/02/mvc-error-cannot-create-an-abstract-class/
+categories:
+  - ASP.NET
+  - MVC
+  - T4
+---
 
 While debugging an MVC4 app, I ran into the following error: `System.MissingMethodException: Cannot create an abstract class`. It was only happening for a single Action, and I wasn't able to set a breakpoint in that action. After some trial and error, I was able to find the issue in the code:
 

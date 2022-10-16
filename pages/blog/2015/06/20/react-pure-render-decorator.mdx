@@ -1,22 +1,21 @@
-import Post from 'layouts/Post';
-
-export const metadata = {
-  title: 'React Pure Render Decorator',
-  date: '2015-06-20',
-  categories: [
-    'ES2015',
-    'JavaScript',
-    'React',
-    'decorators',
-  ],
-};
-
-export default Post;
+---
+title: React Pure Render Decorator
+author: iano
+date: 2015-06-20T13:45:26+00:00
+url: /blog/2015/06/20/react-pure-render-decorator/
+categories:
+  - ES2015
+  - JavaScript
+  - React
+tags:
+  - decorators
+---
 
 If you've adopted JavaScript classes when working with React, you may be missing `PureRenderMixin`. You can emulate it easily using decorators:
 
 ```javascript
 var shallowEqual = require('react/lib/shallowEqual');
+
 module.exports = function PureRender(Component) {
   Component.prototype.shouldComponentUpdate = function (
     nextProps,
