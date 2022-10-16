@@ -4,7 +4,7 @@ import React, {ReactElement} from 'react';
 import Layout from '../../layouts/Layout';
 import {getAllRecipesNameAndURL} from '../../lib/recipes';
 
-export async function getStaticProps({params}) {
+export async function getStaticProps() {
   return {props: {recipes: getAllRecipesNameAndURL()}};
 }
 

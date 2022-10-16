@@ -25,7 +25,7 @@ type StockyardsData = {
   quotes: [{name: string; low: string; high: string}];
 };
 
-function Stockyards(): ReactElement {
+function Stockyards() {
   const data = useWrapAPI<StockyardsData>('milwaukeestockyards/quotes/0.0.9');
 
   if (!data) {
@@ -78,7 +78,7 @@ type AgroData = {
   ];
 };
 
-function Agro(): ReactElement {
+function Agro() {
   const data = useWrapAPI<AgroData>('cme/grain-and-oilseed/0.0.3');
 
   if (!data) {
@@ -164,6 +164,6 @@ function useWrapAPI<T>(path: string): T | null {
     })
       .then(res => res.json())
       .then(setData);
-  }, []);
+  }, [path]);
   return data;
 }

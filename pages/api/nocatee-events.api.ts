@@ -2,7 +2,7 @@ import type {VercelRequest, VercelResponse} from '@vercel/node';
 import cheerio from 'cheerio';
 import {FormData} from 'formdata-node';
 import ical from 'ical-generator';
-import fetch from 'node-fetch';
+import fetch, {BodyInit} from 'node-fetch';
 
 const BASE_URL = 'https://residents.nocatee.com';
 
@@ -22,7 +22,7 @@ export default async function main(
     [
       fetch(`${BASE_URL}/events?category_no=5116`, {
         method: 'POST',
-        body: form as any,
+        body: form as BodyInit,
       }),
       fetch(`${BASE_URL}/events?category_no=5116&type=calendar`),
     ].map(f => f.then(res => res.text())),

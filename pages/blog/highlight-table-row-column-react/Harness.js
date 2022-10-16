@@ -1,9 +1,4 @@
-import React, {
-  Suspense,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, {Suspense, useMemo, useRef, useState} from 'react';
 
 function Harness({children}) {
   const [isVisible, setVisible] = useState(false);
@@ -25,27 +20,22 @@ function Harness({children}) {
         if (rafCount === 1) {
           requestAnimationFrame(recordTime);
         } else {
-          requestAnimationFrame(() =>
-            requestAnimationFrame(recordTime),
-          );
+          requestAnimationFrame(() => requestAnimationFrame(recordTime));
         }
         fn();
       };
     };
   }, []);
+
   return (
     <div style={STYLE}>
       <div ref={timingRef} />
       {isVisible ? (
         <HarnessContext.Provider value={wrapSetter}>
-          <Suspense fallback="Loading...">
-            {children}
-          </Suspense>
+          <Suspense fallback="Loading...">{children}</Suspense>
         </HarnessContext.Provider>
       ) : (
-        <button onClick={() => setVisible(true)}>
-          Render example
-        </button>
+        <button onClick={() => setVisible(true)}>Render example</button>
       )}
     </div>
   );
