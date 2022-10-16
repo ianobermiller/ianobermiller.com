@@ -1446,12 +1446,7 @@ estree-util-build-jsx@^2.0.0:
     estree-util-is-identifier-name "^2.0.0"
     estree-walker "^3.0.0"
 
-estree-util-is-identifier-name@^1.0.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/estree-util-is-identifier-name/-/estree-util-is-identifier-name-1.1.0.tgz#2e3488ea06d9ea2face116058864f6370b37456d"
-  integrity sha512-OVJZ3fGGt9By77Ix9NhaRbzfbDV/2rx9EP7YIDJTmsZSEc5kYn2vWcNccYyahJL2uAQZK2a5Or2i0wtIKTPoRQ==
-
-estree-util-is-identifier-name@^2.0.0:
+estree-util-is-identifier-name@^2.0.0, estree-util-is-identifier-name@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/estree-util-is-identifier-name/-/estree-util-is-identifier-name-2.0.1.tgz#cf07867f42705892718d9d89eb2d85eaa8f0fcb5"
   integrity sha512-rxZj1GkQhY4x1j/CSnybK9cGuMFQYFPLq0iNyopqf14aOVLFtMv7Esika+ObJWPWiOHuMOAHz3YkWoLYYRnzWQ==
@@ -1465,12 +1460,13 @@ estree-util-to-js@^1.1.0:
     astring "^1.8.0"
     source-map "^0.7.0"
 
-estree-util-value-to-estree@^1.0.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/estree-util-value-to-estree/-/estree-util-value-to-estree-1.3.0.tgz#1d3125594b4d6680f666644491e7ac1745a3df49"
-  integrity sha512-Y+ughcF9jSUJvncXwqRageavjrNPAI+1M/L3BI3PyLp1nmgYTGUXU6t5z1Y7OWuThoDdhPME07bQU+d5LxdJqw==
+estree-util-value-to-estree@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/estree-util-value-to-estree/-/estree-util-value-to-estree-2.0.0.tgz#6dc637006c5e43b70f88ae65c8dc1b546e8a8c46"
+  integrity sha512-FkLnkL5INXOWAXYxO3zNxaODCPbkpdB96WJKhNKmesT4ZEGuGRQ+oGfDyJXMCLvoVCDn2UV5M1svA/uZkizGNQ==
   dependencies:
-    is-plain-obj "^3.0.0"
+    "@types/estree" "^1.0.0"
+    is-plain-obj "^4.0.0"
 
 estree-util-visit@^1.0.0:
   version "1.2.0"
@@ -1936,11 +1932,6 @@ is-number@^7.0.0:
   resolved "https://registry.yarnpkg.com/is-number/-/is-number-7.0.0.tgz#7535345b896734d5f80c4d06c50955527a14f12b"
   integrity sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==
 
-is-plain-obj@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/is-plain-obj/-/is-plain-obj-3.0.0.tgz#af6f2ea14ac5a646183a5bbdb5baabbc156ad9d7"
-  integrity sha512-gwsOE28k+23GP1B6vFl1oVh/WOzmawBrKwo5Ev6wMKzPkaXaCDIQKzLnvsA42DRlbVTWorkgTKIviAKCWkfUwA==
-
 is-plain-obj@^4.0.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/is-plain-obj/-/is-plain-obj-4.1.0.tgz#d65025edec3657ce032fd7db63c97883eaed71f0"
@@ -1981,7 +1972,7 @@ js-yaml@^3.13.1:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
-js-yaml@^4.0.0, js-yaml@^4.1.0:
+js-yaml@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.1.0.tgz#c1fb65f8f5017901cdd2c951864ba18458a10602"
   integrity sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==
@@ -2963,16 +2954,6 @@ remark-frontmatter@^4.0.1:
     micromark-extension-frontmatter "^1.0.0"
     unified "^10.0.0"
 
-remark-mdx-next@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/remark-mdx-next/-/remark-mdx-next-0.1.1.tgz#d0e948562042b8dfbc9f5959037653bb773f2ce1"
-  integrity sha512-8NzqGNPmGbW6Vi8U1eyRCBwbPwz5zY40qMYGkX/Uw6KY5wOWE0eERyts8q9owYrC25ovlMQpE90b96YLQ4xRNw==
-  dependencies:
-    estree-util-is-identifier-name "^1.0.0"
-    estree-util-value-to-estree "^1.0.0"
-    js-yaml "^4.0.0"
-    toml "^3.0.0"
-
 remark-mdx@^2.0.0:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/remark-mdx/-/remark-mdx-2.1.3.tgz#6273e8b94d27ade35407a63bc8cdd04592f7be9f"
@@ -3273,11 +3254,6 @@ to-regex-range@^5.0.1:
   integrity sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==
   dependencies:
     is-number "^7.0.0"
-
-toml@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/toml/-/toml-3.0.0.tgz#342160f1af1904ec9d204d03a5d61222d762c5ee"
-  integrity sha512-y/mWCZinnvxjTKYhJ+pYxwD0mRLVvOtdS2Awbgxln6iEnt4rk0yBxeSBHkGJcPucRiG0e55mwWp+g/05rsrd6w==
 
 totalist@^1.0.0:
   version "1.1.0"
