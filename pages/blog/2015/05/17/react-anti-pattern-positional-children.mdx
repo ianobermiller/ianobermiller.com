@@ -10,7 +10,7 @@ import Post from 'layouts/Post';
 
 export default Post;
 
-When designing reusable components with React, you may need to dig into the `children` prop, say to wrap each child in another element or change the ordering. Once you've done so, you may also be tempted to do different things depending on the index of the child. An example from the Facebook codebase is the `<LeftRight>` component, which floats one child to the left, and another to the right. Its API looks like this:
+When designing reusable components with React, you may need to dig into the `children` prop, say to wrap each child in another element or change the ordering. Once you've done so, you may also be tempted to do different things depending on the index of the child. An example from the Facebook codebase is the `<LeftRight>` component, which floats one child to the left, and another to the right. Its API looks like this:
 
 ```jsx
 <LeftRight>
@@ -33,7 +33,7 @@ The props-based version:
 - Is easier to implement &#8211; no mucking about with `React.Children`
 - Is easier to use, since the API to the component is now explicit
 - Can have better validation, like requiring the props to be of a certain type
-- Is more flexible &#8211; what if `left` wasn't required?
+- Is more flexible &#8211; what if `left` wasn't required?
 
 This post was inspired by [spicyj's comment on a React issue][1].
 

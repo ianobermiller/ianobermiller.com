@@ -10,9 +10,10 @@ categories:
 import Post from 'layouts/Post';
 
 export default Post;
-[Radium][1] is a library for styling React components that I've spent a fair amount of development time on over the past few months. Radium uses inline styles exclusively, and there are some things you just can't do without CSS. Styling `:visited` links is one of them. Luckily, Radium provides a `<Style>` component which makes this pretty easy to accomplish.
 
-The `<Style>` component will render a `<style>` tag, and will prepend each selector with the specified `scopeSelector`. We use the name of the component as the class, but you could be extra careful and append a generated string to the class to be certain it won't conflict.
+[Radium][1] is a library for styling React components that I've spent a fair amount of development time on over the past few months. Radium uses inline styles exclusively, and there are some things you just can't do without CSS. Styling `:visited` links is one of them. Luckily, Radium provides a `<Style>` component which makes this pretty easy to accomplish.
+
+The `<Style>` component will render a `<style>` tag, and will prepend each selector with the specified `scopeSelector`. We use the name of the component as the class, but you could be extra careful and append a generated string to the class to be certain it won't conflict.
 
 ```javascript
 import {Component} from 'react';
@@ -54,7 +55,7 @@ export default class ListOfLinks extends Component {
 }
 ```
 
-You'll notice I also styled normal links, and that was just for convenience. If I style them inline, like `<a href="http://example1.com" style={{color: 'blue'}}>Example 1</a>`, I'd have to change the value for visited to `#999 !important` to make it override the inline style.
+You'll notice I also styled normal links, and that was just for convenience. If I style them inline, like `<a href="http://example1.com" style={{color: 'blue'}}>Example 1</a>`, I'd have to change the value for visited to `#999 !important` to make it override the inline style.
 
 Remember, the usual caveats of selectors apply to `<Style>`, so any children of `ListOfLinks` that render anchor tags will also be affected. For this reason, you should only use `<Style>` on components that don't render `{this.props.children}`.
 

@@ -18,11 +18,11 @@ export default Post;
 You want to use the latest features of ES6, ES7, and beyond for your next JavaScript library project, right? Or, you may want to use CoffeeScript or some other transpiler. Problem is, you don't want the burden to be on the user of your module to run the transpiler or use a specific build tool that will, e.g. browserify. Here is our list of requirements when transpiling a module:
 
 - You can use the latest features or language to author the module
-- NPM users consume plain (usually ES5-compatible) JavaScript
-- Users can also install from git directly through NPM, e.g. `https://github.com/FormidableLabs/radium.git`
+- NPM users consume plain (usually ES5-compatible) JavaScript
+- Users can also install from git directly through NPM, e.g. `https://github.com/FormidableLabs/radium.git`
 - Must work cross-platform (Unix-like and Windows)
 
-We've successfully used this technique to transpile [Radium][1], and both the Windows build via [AppVeyor][2] and the Linux build via [Travis][3] pass.
+We've successfully used this technique to transpile [Radium][1], and both the Windows build via [AppVeyor][2] and the Linux build via [Travis][3] pass.
 
 ## 1. Directory setup
 
@@ -51,7 +51,7 @@ To ensure the `lib` directory is populated when you publish your module, add the
 }
 ```
 
-Notice that we delete the `lib` directory before beginning to avoid any artifacts. We also use the `<a href="https://www.npmjs.com/package/rimraf">rimraf</a>` module instead of `rm -rf` to keep it cross-platform.
+Notice that we delete the `lib` directory before beginning to avoid any artifacts. We also use the `<a href="https://www.npmjs.com/package/rimraf">rimraf</a>` module instead of `rm -rf` to keep it cross-platform.
 
 ## 4. postinstall script
 
