@@ -47,6 +47,14 @@ export default function RecipePage({recipe}: Props): ReactElement {
           <Direction key={index}>{direction}</Direction>
         ))}
       </ol>
+      {recipe.source ? (
+        <p>
+          Adapated from{' '}
+          <a rel="noopener noreferrer" href={recipe.source.url}>
+            {recipe.source.name}.
+          </a>
+        </p>
+      ) : null}
     </Layout>
   );
 }

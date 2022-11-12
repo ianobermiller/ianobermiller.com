@@ -21,12 +21,13 @@ export function getRecipeEntries(): Array<RecipeEntry> {
 
 export interface Recipe {
   name: string;
-  description: string;
+  description?: string;
   ingredientGroups: Array<{
     ingredients: Array<string>;
     name: string;
   }>;
   directions: Array<string>;
+  source?: {name: string; url: string};
 }
 
 export function getRecipe(slug: string): Recipe {
