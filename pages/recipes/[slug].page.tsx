@@ -50,9 +50,13 @@ export default function RecipePage({recipe}: Props): ReactElement {
       {recipe.source ? (
         <p>
           Adapated from{' '}
-          <a rel="noopener noreferrer" href={recipe.source.url}>
-            {recipe.source.name}.
-          </a>
+          {recipe.source.url ? (
+            <a rel="noopener noreferrer" href={recipe.source.url}>
+              {recipe.source.name}.
+            </a>
+          ) : (
+            <span>{recipe.source.name}.</span>
+          )}
         </p>
       ) : null}
     </Layout>
