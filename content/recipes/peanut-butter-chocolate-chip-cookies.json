@@ -1,6 +1,7 @@
 {
   "name": "Peanut Butter Chocolate Chip Cookies",
   "description": "Old-fashioned",
+  "category": "Desserts",
   "time": {
     "total": "20 min",
     "prep": "12 min"

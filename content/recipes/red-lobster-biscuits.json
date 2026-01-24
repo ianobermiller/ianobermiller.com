@@ -1,6 +1,7 @@
 {
   "name": "Cheese Garlic Biscuits",
   "description": "A la Red Lobster",
+  "category": "Sides",
   "ingredientGroups": [
     {
       "ingredients": [

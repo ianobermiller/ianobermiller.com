@@ -1,5 +1,6 @@
 {
   "name": "Thin Crust Pizza",
+  "category": "Dinner",
   "time": {
     "total": "40 min",
     "prep": "15 min"

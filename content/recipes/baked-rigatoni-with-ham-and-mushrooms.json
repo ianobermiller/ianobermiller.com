@@ -1,6 +1,7 @@
 {
   "name": "Baked Rigatoni with Ham and Mushrooms",
   "description": "Rigatoni con Prosciutto e Funghi Secchi",
+  "category": "Dinner",
   "time": {
     "total": "40 min",
     "prep": "20 min"

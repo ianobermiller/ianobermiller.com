@@ -1,6 +1,7 @@
 {
   "name": "Morning Glory Muffins",
   "description": "",
+  "category": "Breakfast",
   "time": {
     "total": "30 min",
     "prep": "20 min"

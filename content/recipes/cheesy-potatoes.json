@@ -1,6 +1,7 @@
 {
   "name": "Cheesy Potatoes",
   "description": "Grandma Hunter's recipe",
+  "category": "Sides",
   "ingredientGroups": [
     {
       "ingredients": [

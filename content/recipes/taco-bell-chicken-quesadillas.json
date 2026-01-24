@@ -1,6 +1,7 @@
 {
   "name": "Taco Bell Chicken Quesadillas",
   "description": "Even better than the real thing.",
+  "category": "Dinner",
   "ingredientGroups": [
     {
       "name": "Creamy Jalapeno Sauce",

@@ -1,6 +1,7 @@
 {
   "name": "Sourdough Waffles",
   "description": "Light and fluffy sourdough waffles or pancakes using discard starter. Can be made same-day or fermented overnight.",
+  "category": "Breakfast",
   "time": {
     "total": "12 hours 30 min (with overnight fermentation) or 30 min (same-day)",
     "prep": "10 min",

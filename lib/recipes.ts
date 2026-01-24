@@ -23,6 +23,7 @@ export interface Recipe {
   name: string;
   description?: string;
   servings?: string;
+  category?: string;
   ingredientGroups: Array<{
     ingredients: Array<string>;
     name: string;
@@ -53,4 +54,40 @@ export function getAllRecipesNameAndURL(): Array<{
       };
     })
     .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+export interface RecipesByCategory {
+  [category: string]: Array<{
+    name: string;
+    url: string;
+  }>;
+}
+
+export function getAllRecipesGroupedByCategory(): RecipesByCategory {
+  const recipes = getRecipeEntries().map(({slug}) => {
+    const recipe = getRecipe(slug);
+    return {
+      name: recipe.name,
+      url: `/recipes/${slug}`,
+      category: recipe.category || 'Uncategorized',
+    };
+  });
+
+  const grouped: RecipesByCategory = {};
+  recipes.forEach(recipe => {
+    if (!grouped[recipe.category]) {
+      grouped[recipe.category] = [];
+    }
+    grouped[recipe.category].push({
+      name: recipe.name,
+      url: recipe.url,
+    });
+  });
+
+  // Sort recipes within each category
+  Object.keys(grouped).forEach(category => {
+    grouped[category].sort((a, b) => a.name.localeCompare(b.name));
+  });
+
+  return grouped;
 }
