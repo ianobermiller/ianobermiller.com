@@ -69,6 +69,16 @@ export default function RecipePage({recipe}: Props): ReactElement {
           <Direction key={index}>{direction}</Direction>
         ))}
       </ol>
+      {recipe.notes && recipe.notes.length > 0 && (
+        <>
+          <h2>Notes</h2>
+          <ul>
+            {recipe.notes.map((note, index) => (
+              <Note key={index}>{note}</Note>
+            ))}
+          </ul>
+        </>
+      )}
       {recipe.source ? (
         <p>
           Adapated from{' '}
@@ -93,6 +103,12 @@ const Ingredient = styled.li`
 const Direction = styled.li`
   list-style-type: decimal;
   margin-bottom: var(--space-m);
+  margin-left: var(--space-l);
+`;
+
+const Note = styled.li`
+  list-style-type: disc;
+  margin-bottom: var(--space-s);
   margin-left: var(--space-l);
 `;
 

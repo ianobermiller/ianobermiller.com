@@ -30,6 +30,7 @@ export interface Recipe {
   }>;
   directions: Array<string>;
   source?: {name: string; url: string};
+  notes?: Array<string>;
 }
 
 export function getRecipe(slug: string): Recipe {
