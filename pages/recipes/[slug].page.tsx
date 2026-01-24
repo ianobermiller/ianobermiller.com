@@ -28,6 +28,14 @@ export default function RecipePage({recipe}: Props): ReactElement {
   return (
     <Layout title={recipe.name}>
       <h1>{recipe.name}</h1>
+      {recipe.image && (
+        <RecipeImage 
+          src={recipe.image} 
+          alt={recipe.name}
+          width={800}
+          height={600}
+        />
+      )}
       {recipe.description && (
         <p>
           <i>{recipe.description}</i>
@@ -154,4 +162,15 @@ const ScaleButton = styled.button<{isActive: boolean}>`
     outline: 2px solid var(--accent-color);
     outline-offset: 2px;
   }
+`;
+
+const RecipeImage = styled.img`
+  width: 100%;
+  max-width: 600px;
+  max-height: 400px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: var(--space-l) 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;

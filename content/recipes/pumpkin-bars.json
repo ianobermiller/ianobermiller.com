@@ -1,6 +1,7 @@
 {
   "name": "Pumpkin Bars",
   "category": "Desserts",
+  "image": "/images/recipes/pumpkin-bars.jpg",
   "time": {
     "total": "1 hr 50 min",
     "prep": "20 min"

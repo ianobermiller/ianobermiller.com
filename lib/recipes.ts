@@ -24,6 +24,7 @@ export interface Recipe {
   description?: string;
   servings?: string;
   category?: string;
+  image?: string;
   ingredientGroups: Array<{
     ingredients: Array<string>;
     name: string;
