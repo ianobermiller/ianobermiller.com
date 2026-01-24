@@ -22,6 +22,7 @@ export function getRecipeEntries(): Array<RecipeEntry> {
 export interface Recipe {
   name: string;
   description?: string;
+  servings?: string;
   ingredientGroups: Array<{
     ingredients: Array<string>;
     name: string;
