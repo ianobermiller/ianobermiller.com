@@ -1,4 +1,10 @@
-import Document, {Head, Html, Main, NextScript} from 'next/document';
+import Document, {
+  DocumentContext,
+  Head,
+  Html,
+  Main,
+  NextScript,
+} from 'next/document';
 import React from 'react';
 
 // This small snippet runs before the page renders and sets a class on the
@@ -17,7 +23,7 @@ const codeToRunOnClient = `
   `;
 
 class MyDocument extends Document {
-  static async getInitialProps(ctx) {
+  static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
     return {...initialProps};
   }

@@ -25,9 +25,9 @@ export default function RecipesIndex({recipesByCategory}): ReactElement {
             {recipesByCategory[category].map(({name, url}, index) => {
               return (
                 <Recipe key={index}>
-                  <Link href={url} passHref={true}>
-                    <RecipeLink>{name}</RecipeLink>
-                  </Link>
+                  <RecipeLink as={Link} href={url}>
+                    {name}
+                  </RecipeLink>
                 </Recipe>
               );
             })}

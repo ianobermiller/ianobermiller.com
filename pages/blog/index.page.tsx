@@ -48,12 +48,10 @@ export default function BlogIndex({posts}: Props): ReactElement {
       <Posts>
         {posts.map(({date, title, url}) => (
           <PostEntry key={url}>
-            <Link href={url} passHref={true}>
-              <PostLink>
-                <PostTitle>{title || url}</PostTitle>
-                <DateText>{date}</DateText>
-              </PostLink>
-            </Link>
+            <PostLink as={Link} href={url}>
+              <PostTitle>{title || url}</PostTitle>
+              <DateText>{date}</DateText>
+            </PostLink>
           </PostEntry>
         ))}
       </Posts>

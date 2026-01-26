@@ -96,7 +96,7 @@ export function scaleIngredient(ingredient: string, scale: number): string {
   // 1. Mixed numbers with ranges: "1 1/2-2 3/4"
   const mixedRangeRegex =
     /\b(\d+)\s+(\d+)\/(\d+)\s*[-–]\s*(\d+)\s+(\d+)\/(\d+)\b/g;
-  let match;
+  let match: RegExpExecArray | null;
   while ((match = mixedRangeRegex.exec(result)) !== null) {
     const start1 = parseInt(match[1]) + parseInt(match[2]) / parseInt(match[3]);
     const start2 = parseInt(match[4]) + parseInt(match[5]) / parseInt(match[6]);
@@ -113,7 +113,11 @@ export function scaleIngredient(ingredient: string, scale: number): string {
   const partialMixedRangeRegex =
     /\b(\d+)\s*[-–]\s*(\d+)\s+(\d+)\/(\d+)\b|\b(\d+)\s+(\d+)\/(\d+)\s*[-–]\s*(\d+)\b/g;
   while ((match = partialMixedRangeRegex.exec(result)) !== null) {
-    if (replacements.some(r => match.index >= r.start && match.index < r.end))
+    if (
+      replacements.some(
+        r => match && match.index >= r.start && match.index < r.end,
+      )
+    )
       continue;
 
     let num1, num2;
@@ -138,7 +142,11 @@ export function scaleIngredient(ingredient: string, scale: number): string {
   // 3. Mixed numbers: "1 1/2"
   const mixedRegex = /\b(\d+)\s+(\d+)\/(\d+)\b/g;
   while ((match = mixedRegex.exec(result)) !== null) {
-    if (replacements.some(r => match.index >= r.start && match.index < r.end))
+    if (
+      replacements.some(
+        r => match && match.index >= r.start && match.index < r.end,
+      )
+    )
       continue;
 
     const value = parseInt(match[1]) + parseInt(match[2]) / parseInt(match[3]);
@@ -153,7 +161,11 @@ export function scaleIngredient(ingredient: string, scale: number): string {
   // 4. Fraction ranges: "1/4-1/2"
   const fractionRangeRegex = /\b(\d+)\/(\d+)\s*[-–]\s*(\d+)\/(\d+)\b/g;
   while ((match = fractionRangeRegex.exec(result)) !== null) {
-    if (replacements.some(r => match.index >= r.start && match.index < r.end))
+    if (
+      replacements.some(
+        r => match && match.index >= r.start && match.index < r.end,
+      )
+    )
       continue;
 
     const val1 = parseInt(match[1]) / parseInt(match[2]);
@@ -170,7 +182,11 @@ export function scaleIngredient(ingredient: string, scale: number): string {
   // 5. Standalone fractions: "3/4"
   const fractionRegex = /\b(\d+)\/(\d+)\b/g;
   while ((match = fractionRegex.exec(result)) !== null) {
-    if (replacements.some(r => match.index >= r.start && match.index < r.end))
+    if (
+      replacements.some(
+        r => match && match.index >= r.start && match.index < r.end,
+      )
+    )
       continue;
 
     const value = parseInt(match[1]) / parseInt(match[2]);
@@ -185,7 +201,11 @@ export function scaleIngredient(ingredient: string, scale: number): string {
   // 6. Decimal or whole number ranges: "1.5-2" or "3-6"
   const numberRangeRegex = /\b(\d+(?:\.\d+)?)\s*[-–]\s*(\d+(?:\.\d+)?)\b/g;
   while ((match = numberRangeRegex.exec(result)) !== null) {
-    if (replacements.some(r => match.index >= r.start && match.index < r.end))
+    if (
+      replacements.some(
+        r => match && match.index >= r.start && match.index < r.end,
+      )
+    )
       continue;
 
     const startNum = parseFloat(match[1]);
@@ -214,7 +234,11 @@ export function scaleIngredient(ingredient: string, scale: number): string {
   // 7. Decimals and whole numbers: "2.5" or "12"
   const numberRegex = /\b(\d+(?:\.\d+)?)\b/g;
   while ((match = numberRegex.exec(result)) !== null) {
-    if (replacements.some(r => match.index >= r.start && match.index < r.end))
+    if (
+      replacements.some(
+        r => match && match.index >= r.start && match.index < r.end,
+      )
+    )
       continue;
 
     const value = parseFloat(match[1]);

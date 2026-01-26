@@ -1,6 +1,6 @@
 import {readFileSync} from 'fs';
 import matter from 'gray-matter';
-import readdirp from 'readdirp';
+import {readdirp} from 'readdirp';
 
 export type Post = {
   date: string;
@@ -21,7 +21,10 @@ export async function getAllPosts(): Promise<Array<Post>> {
 
   posts = [];
 
-  for await (const {path} of readdirp(BLOG_DIRECTORY, {fileFilter: '*.mdx'})) {
+  const mdxFiles = readdirp(BLOG_DIRECTORY, {
+    fileFilter: f => f.basename.endsWith('.mdx'),
+  });
+  for await (const {path} of mdxFiles) {
     const slug = path.replace(/\.mdx$/, '').replace(/\/index$/, '');
     const fullPath = `${BLOG_DIRECTORY}${path}`;
     const fileContents = readFileSync(fullPath, 'utf8');

@@ -2,12 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "esModuleInterop": true,
-    "jsx": "preserve",
-    "lib": [
-      "dom",
-      "es2015",
-      "es2017"
-    ],
+    "jsx": "react-jsx",
+    "lib": ["dom", "es2015", "es2017"],
     "module": "commonjs",
     "noImplicitAny": true,
     "outDir": "./dist/",
@@ -23,11 +19,6 @@
     "isolatedModules": true,
     "incremental": true
   },
-  "include": [
-    "*.tsx",
-    "*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts"],
+  "exclude": ["node_modules"]
 }

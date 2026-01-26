@@ -25,10 +25,8 @@ export default function Layout({children, title}: Props): ReactElement {
 
       <Header>
         <h1>
-          <Link href="/">
-            <a className="h-card" rel="me">
-              Ian Obermiller
-            </a>
+          <Link href="/" className="h-card" rel="me">
+            Ian Obermiller
           </Link>
         </h1>
         <h2>Part time hacker, full time dad.</h2>
@@ -93,8 +91,8 @@ function NavLink({
     router.pathname === href || (partial && router.pathname.startsWith(href));
 
   return (
-    <Link href={href}>
-      <a className={isActive ? 'active' : null}>{children}</a>
+    <Link href={href} className={isActive ? 'active' : null}>
+      {children}
     </Link>
   );
 }

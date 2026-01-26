@@ -1,5 +1,5 @@
 import nextBundleAnalyzer from '@next/bundle-analyzer';
-import nextMDX from '@next/mdx';
+import createMDX from '@next/mdx';
 import remarkFrontmatter from 'remark-frontmatter';
 import remarkPrism from 'remark-prism';
 import remarkTOC from 'remark-toc';
@@ -8,9 +8,12 @@ import {remarkGetStaticProps} from './plugins/remark-getstaticprops.js';
 const BASE_CONFIG = {
   pageExtensions: ['page.tsx', 'md', 'mdx', 'api.ts'],
   reactStrictMode: true,
+  webpack: (config) => {
+    return config;
+  },
 };
 
-const withMDX = nextMDX({
+const withMDX = createMDX({
   extension: /\.mdx?$/,
   options: {
     remarkPlugins: [

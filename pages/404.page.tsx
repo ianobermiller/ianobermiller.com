@@ -56,9 +56,7 @@ export default function NotFoundPage(props: Props) {
             <ul>
               {links.map(({title, url}) => (
                 <li key={url}>
-                  <Link href={url}>
-                    <a>{title}</a>
-                  </Link>
+                  <Link href={url}>{title}</Link>
                 </li>
               ))}
             </ul>
