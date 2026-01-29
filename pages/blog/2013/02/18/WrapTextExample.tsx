@@ -65,7 +65,7 @@ interface Props {
   text: string;
 }
 
-function WrapText(props: Props): ReactElement {
+function WrapText(props: Props) {
   const text = prettyPrint(props.text, props.lineLength);
   return (
     <pre style={{position: 'relative'}}>
@@ -84,7 +84,7 @@ function WrapText(props: Props): ReactElement {
   );
 }
 
-export default function WrapTextExample(props: Props): ReactElement {
+export default function WrapTextExample(props: Props) {
   const [lineLength, setLineLength] = useState(props.lineLength);
   const [text, setText] = useState(props.text);
   return (

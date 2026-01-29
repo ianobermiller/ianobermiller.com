@@ -8,7 +8,7 @@ type Props = {
   title: string;
 };
 
-export default function Post({children, date, title}: Props): ReactElement {
+export default function Post({children, date, title}: Props) {
   return (
     <Layout title={title}>
       <article className="h-entry">

@@ -1,6 +1,12 @@
 import styled from '@emotion/styled';
 import Head from 'next/head';
-import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  ReactElement,
+  useEffect,
+  useState,
+} from 'react';
 import {parse as uuidParse, stringify as uuidStringify} from 'uuid';
 import {decode, encode} from './base64';
 import {decrypt, encrypt} from './crypto';
@@ -69,7 +75,7 @@ async function fetchMessage(data: Data): Promise<string> {
   return decrypted;
 }
 
-function DisplayMessage({id, secretKey}: Data): JSX.Element {
+function DisplayMessage({id, secretKey}: Data) {
   const [plainText, setPlainText] = useState<string>('');
   const [notice, setNotice] = useState<string | null>('Downloading message...');
   useEffect(() => {
@@ -136,9 +142,9 @@ function Input({setUploadResult}: {setUploadResult: (r: Data) => void}) {
     <form onSubmit={submit}>
       <p>
         Your message will be encrypted before being uploaded to a secure server.
-        Simply send the generated link to someone. When they open the link, the 
-        message will be downloaded, decrypted and immediately deleted by the server.
-        Unopened messages will be deleted after 7 days.
+        Simply send the generated link to someone. When they open the link, the
+        message will be downloaded, decrypted and immediately deleted by the
+        server. Unopened messages will be deleted after 7 days.
       </p>
       <TextArea
         value={text}
@@ -162,7 +168,7 @@ function Input({setUploadResult}: {setUploadResult: (r: Data) => void}) {
   );
 }
 
-function CopyLink({secretKey, id}: Data): JSX.Element {
+function CopyLink({secretKey, id}: Data) {
   const [didCopy, setDidCopy] = useState(false);
   async function onClick(e: React.MouseEvent<HTMLInputElement>) {
     e.currentTarget.select();

@@ -17,20 +17,22 @@ export async function getStaticPaths() {
   };
 }
 
-export function getStaticProps({params}): {props: Props} {
+export function getStaticProps({params}: {params: {slug: string}}): {
+  props: Props;
+} {
   const recipe = getRecipe(params.slug);
   return {props: {recipe}};
 }
 
-export default function RecipePage({recipe}: Props): ReactElement {
+export default function RecipePage({recipe}: Props) {
   const [scale, setScale] = useState(1);
 
   return (
     <Layout title={recipe.name}>
       <h1>{recipe.name}</h1>
       {recipe.image && (
-        <RecipeImage 
-          src={recipe.image} 
+        <RecipeImage
+          src={recipe.image}
           alt={recipe.name}
           width={800}
           height={600}
@@ -53,8 +55,7 @@ export default function RecipePage({recipe}: Props): ReactElement {
           <ScaleButton
             key={scaleValue}
             isActive={scale === scaleValue}
-            onClick={() => setScale(scaleValue)}
-          >
+            onClick={() => setScale(scaleValue)}>
             {scaleValue}x
           </ScaleButton>
         ))}

@@ -10,7 +10,7 @@ interface Props {
   title: string;
 }
 
-export default function Layout({children, title}: Props): ReactElement {
+export default function Layout({children, title}: Props) {
   return (
     <Root>
       <Head>
@@ -84,7 +84,7 @@ function NavLink({
   children: ReactNode;
   href: string;
   partial?: boolean;
-}): ReactElement {
+}) {
   const router = useRouter();
 
   const isActive =

@@ -15,7 +15,7 @@ function doesPreferDark(): boolean {
  * toggle it back to dark mode, it will remove the preference and follow the OS
  * once again.
  */
-export default function ColorSchemePicker(): ReactElement {
+export default function ColorSchemePicker() {
   // Don't render during SSR
   if (typeof window === 'undefined') {
     return null;

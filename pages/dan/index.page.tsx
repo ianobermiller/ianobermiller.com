@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import Head from 'next/head';
 import React, {ReactElement, useEffect, useState} from 'react';
 
-export default function DansQuotes(): ReactElement {
+export default function DansQuotes() {
   return (
     <Root>
       <Head>

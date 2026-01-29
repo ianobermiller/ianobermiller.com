@@ -2,13 +2,20 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 import React, {ReactElement} from 'react';
 import Layout from '../../layouts/Layout';
-import {getAllRecipesGroupedByCategory} from '../../lib/recipes';
+import {
+  getAllRecipesGroupedByCategory,
+  RecipesByCategory,
+} from '../../lib/recipes';
 
 export async function getStaticProps() {
   return {props: {recipesByCategory: getAllRecipesGroupedByCategory()}};
 }
 
-export default function RecipesIndex({recipesByCategory}): ReactElement {
+export default function RecipesIndex({
+  recipesByCategory,
+}: {
+  recipesByCategory: RecipesByCategory;
+}) {
   const categories = Object.keys(recipesByCategory).sort();
   const totalRecipes = categories.reduce(
     (sum, cat) => sum + recipesByCategory[cat].length,
