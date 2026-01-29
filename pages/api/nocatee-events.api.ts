@@ -1,5 +1,5 @@
 import type {VercelRequest, VercelResponse} from '@vercel/node';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import {FormData} from 'formdata-node';
 import ical from 'ical-generator';
 import fetch, {BodyInit} from 'node-fetch';
@@ -48,7 +48,8 @@ export default async function main(
     if (htmlEvent.type !== 'tag') continue;
 
     const id = htmlEvent.attribs.id.split('-')[1];
-    const jsonEvent = jsonEvents.find(e => e.id === id);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const jsonEvent = jsonEvents.find((e: any) => e.id === id);
     if (!jsonEvent) continue;
 
     const description = $('a + .txt', htmlEvent).text().trim();
@@ -73,5 +74,10 @@ export default async function main(
     });
   }
 
-  calendar.serve(response);
+  response.setHeader('Content-Type', 'text/calendar; charset=utf-8');
+  response.setHeader(
+    'Content-Disposition',
+    'attachment; filename="nocatee-events.ics"',
+  );
+  response.status(200).send(calendar.toString());
 }
