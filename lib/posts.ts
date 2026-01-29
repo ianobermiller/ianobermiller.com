@@ -11,7 +11,7 @@ export type Post = {
   isDraft: boolean;
 };
 
-export const BLOG_DIRECTORY = 'pages/blog/';
+const BLOG_DIRECTORY = 'pages/blog/';
 
 let posts: Array<Post> | null = null;
 export async function getAllPosts(): Promise<Array<Post>> {
